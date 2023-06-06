@@ -5,3 +5,5 @@ Hoi Lynne :)
 Hoi Jade!!
 
 sup bitches
+
+jij ook hoi isabelle
