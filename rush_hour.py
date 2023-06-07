@@ -10,14 +10,12 @@ class Rush_hour:
         self.cars = {}
 
         self.load_board()
-        self.print_board()
         
         # Load data
         self.load_cars(f"gameboards/Rushhour{game_name}.csv")
         self.current_car = self.cars['X']
-        print(self.current_car) 
         
-        self.find_car_coordinates()
+        self.add_cars()
         self.print_board()
 
     # Loop through board and add grid
@@ -54,23 +52,37 @@ class Rush_hour:
                 self.cars[car_name] = car
 
     def find_car_coordinates(self):
-        for car_key in self.cars:
-            self.current_car = self.cars[car_key]
-            for coordinates in self.current_car.car_coordinates:
-                x_coordinate = coordinates[0]
-                y_coordinate = coordinates[1]
-                # print(f"{x_coordinate}, {y_coordinate}")
-                self.add_cars(x_coordinate, y_coordinate, car_key)
+        coordinates_list = []
+        
+        for coordinates in self.current_car.car_coordinates:
+            x_coordinate = coordinates[0]
+            y_coordinate = coordinates[1]
+            coordinates_list.append((x_coordinate, y_coordinate))
+        
+        return coordinates_list
 
     # Add cars to grid
-    def add_cars(self, x_coordinate, y_coordinate, car_key):
+    def add_cars(self):
         
-        for col in range(self.dim):
-            for row in range(self.dim):
-                if col is x_coordinate and row is y_coordinate:
-                    self.board[col][row] = f"{car_key}"
-                
+        for car_key in self.cars:
+            self.current_car = self.cars[car_key]
+            list_coordinates = self.find_car_coordinates()
+            for coordinates in list_coordinates:
+                x_coordinate = coordinates[0]
+                y_coordinate = coordinates[1]
+                for row in range(self.dim):
+                    for col in range(self.dim):
+                        if row is x_coordinate and col is y_coordinate:
+                            self.board[row][col] = f"{car_key}" 
         return self.board
+    
+    def can_move(self, random_car):
+        self.current_car = self.cars[random_car]
+        self.find_car_coordinates()
+        for row in range(self.dim):
+            for col in range(self.dim):
+                pass 
+                
 
 if __name__ == "__main__":
 
@@ -83,3 +95,4 @@ if __name__ == "__main__":
     game_name = argv[1]
 
     rushhour = Rush_hour(game_name)
+
