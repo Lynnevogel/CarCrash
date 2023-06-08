@@ -1,4 +1,6 @@
 from cars import Car
+from sys import argv
+import random
 
 class Rush_hour:
     def __init__(self, game) -> None:
@@ -10,11 +12,11 @@ class Rush_hour:
         self.cars = {}
 
         self.load_board()
-        
+
         # Load data
         self.load_cars(f"gameboards/Rushhour{game_name}.csv")
         self.current_car = self.cars['X']
-        
+
         self.add_cars()
         self.print_board()
 
@@ -51,22 +53,12 @@ class Rush_hour:
                 car = Car(car_name, car_orientation, car_col, car_row, car_len)
                 self.cars[car_name] = car
 
-    def find_car_coordinates(self):
-        coordinates_list = []
-        
-        for coordinates in self.current_car.car_coordinates:
-            x_coordinate = coordinates[0]
-            y_coordinate = coordinates[1]
-            coordinates_list.append((x_coordinate, y_coordinate))
-        
-        return coordinates_list
-
     # Add cars to grid
     def add_cars(self):
         
         for car_key in self.cars:
             self.current_car = self.cars[car_key]
-            list_coordinates = self.find_car_coordinates()
+            list_coordinates = self.current_car.car_coordinates
             for coordinates in list_coordinates:
                 x_coordinate = coordinates[0]
                 y_coordinate = coordinates[1]
@@ -76,17 +68,44 @@ class Rush_hour:
                             self.board[row][col] = f"{car_key}" 
         return self.board
     
-    def can_move(self, random_car):
-        self.current_car = self.cars[random_car]
-        self.find_car_coordinates()
-        for row in range(self.dim):
-            for col in range(self.dim):
-                pass 
-                
+    def random_car(self):
+        random_car = random.choice(list(self.cars.keys()))
+        return self.cars[random_car]
+
+    def can_move(self, car):
+        self.current_car = car
+        list_coordinates = self.current_car.car_coordinates
+        for car_position in list_coordinates:
+            x, y = car_position
+            print(f"x: {x}, y: {y}")
+
+            if self.current_car.car_orientation == "H":
+                for dx, dy in [(1, 0), (-1, 0)]:
+                    new_y = y + dy
+                    new_x = x + dx
+                    print(f"new: ({new_x}, {new_y})")
+                    if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
+                        return new_y, new_x
+            elif self.current_car.car_orientation == "V":
+                for dx, dy in [(0, 1), (0, -1)]:
+                    new_y = y + dy
+                    new_x = x + dx
+                    print(f"new: ({new_y}, {new_x})")
+                    if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
+                        return new_y, new_x
+            else:
+                print("Invalid orientation")
+                return False
+        return False
+
+
+    def move(self, car, new_x, new_y):
+        print(car)
+        print(f"new x: {new_x}")
+        print(f"new y: {new_y}")
+
 
 if __name__ == "__main__":
-
-    from sys import argv
 
     if len(argv) != 2:
         print("Usage: python rush_hour.py [game]")
@@ -95,4 +114,13 @@ if __name__ == "__main__":
     game_name = argv[1]
 
     rushhour = Rush_hour(game_name)
+
+    random_car = rushhour.random_car()
+    print(random_car)
+    if rushhour.can_move(random_car):
+        new_x, new_y = rushhour.can_move(random_car)
+        print("can move car")
+        rushhour.move(random_car, new_x, new_y)
+    else:
+        print("cannot move car :(")
 
