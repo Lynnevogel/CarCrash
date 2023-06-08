@@ -24,14 +24,14 @@ class Rush_hour:
     def load_board(self):
         for row in range(self.dim):
             for col in range(self.dim):
-                self.board[col][row] = "-"
+                self.board[row][col] = "-"
 
         return self.board
     
     def print_board(self):
         for row in range(self.dim):
             for col in range(self.dim):
-                self.draw_grid(self.board[col][row])
+                self.draw_grid(self.board[row][col])
             print()
             print()
         return self.board
@@ -55,7 +55,6 @@ class Rush_hour:
 
     # Add cars to grid
     def add_cars(self):
-        
         for car_key in self.cars:
             self.current_car = self.cars[car_key]
             list_coordinates = self.current_car.car_coordinates
@@ -67,7 +66,7 @@ class Rush_hour:
                         if row is x_coordinate and col is y_coordinate:
                             self.board[row][col] = f"{car_key}" 
         return self.board
-    
+
     def random_car(self):
         random_car = random.choice(list(self.cars.keys()))
         return self.cars[random_car]
@@ -76,21 +75,21 @@ class Rush_hour:
         self.current_car = car
         list_coordinates = self.current_car.car_coordinates
         for car_position in list_coordinates:
-            x, y = car_position
-            print(f"x: {x}, y: {y}")
+            y, x = car_position
+            # print(f"y: {x}, x: {y}")
 
             if self.current_car.car_orientation == "H":
-                for dx, dy in [(1, 0), (-1, 0)]:
+                for dy, dx in [(1, 0), (-1, 0)]:
                     new_y = y + dy
                     new_x = x + dx
-                    print(f"new: ({new_x}, {new_y})")
+                    # print(f"new: ({new_y}, {new_x})")
                     if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
                         return new_y, new_x
             elif self.current_car.car_orientation == "V":
-                for dx, dy in [(0, 1), (0, -1)]:
+                for dy, dx in [(0, 1), (0, -1)]:
                     new_y = y + dy
                     new_x = x + dx
-                    print(f"new: ({new_y}, {new_x})")
+                    # print(f"new: ({new_y}, {new_x})")
                     if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
                         return new_y, new_x
             else:
@@ -98,9 +97,8 @@ class Rush_hour:
                 return False
         return False
 
-
     def move(self, car, new_x, new_y):
-        print(car)
+        # print(car)
         print(f"new x: {new_x}")
         print(f"new y: {new_y}")
 
@@ -118,9 +116,9 @@ if __name__ == "__main__":
     random_car = rushhour.random_car()
     print(random_car)
     if rushhour.can_move(random_car):
-        new_x, new_y = rushhour.can_move(random_car)
+        new_y, new_x = rushhour.can_move(random_car)
+        # print(f"new_y = {new_y}, new_x = {new_x}")
         print("can move car")
-        rushhour.move(random_car, new_x, new_y)
+        rushhour.move(random_car, new_y, new_x)
     else:
         print("cannot move car :(")
-
