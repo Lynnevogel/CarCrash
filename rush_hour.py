@@ -76,20 +76,20 @@ class Rush_hour:
         list_coordinates = self.current_car.car_coordinates
         for car_position in list_coordinates:
             y, x = car_position
-            # print(f"y: {x}, x: {y}")
+            print(f"y: {y}, x: {x}")
 
             if self.current_car.car_orientation == "H":
-                for dy, dx in [(1, 0), (-1, 0)]:
-                    new_y = y + dy
-                    new_x = x + dx
-                    # print(f"new: ({new_y}, {new_x})")
-                    if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
-                        return new_y, new_x
-            elif self.current_car.car_orientation == "V":
                 for dy, dx in [(0, 1), (0, -1)]:
                     new_y = y + dy
                     new_x = x + dx
-                    # print(f"new: ({new_y}, {new_x})")
+                    print(f"new: (y: {new_y}, x: {new_x})")
+                    if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
+                        return new_y, new_x
+            elif self.current_car.car_orientation == "V":
+                for dy, dx in [(1, 0), (-1, 0)]:
+                    new_y = y + dy
+                    new_x = x + dx
+                    print(f"new: ({new_y}, {new_x})")
                     if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
                         return new_y, new_x
             else:
@@ -97,7 +97,7 @@ class Rush_hour:
                 return False
         return False
 
-    def move(self, car, new_x, new_y):
+    def move(self, car, new_y, new_x):
         # print(car)
         print(f"new x: {new_x}")
         print(f"new y: {new_y}")

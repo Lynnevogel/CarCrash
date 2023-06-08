@@ -19,7 +19,7 @@ class Car:
             if self.car_orientation == "H":
                 self.car_end_coordinate = (self.car_row, self.car_col + 1)
             else:
-                self.car_end_coordinate = (self.car_row + 1, self.car_row)
+                self.car_end_coordinate = (self.car_row + 1, self.car_col)
             self.car_coordinates.append(self.car_end_coordinate)
         elif self.car_len == 3:
             if self.car_orientation == "H":
