@@ -76,20 +76,20 @@ class Rush_hour:
         list_coordinates = self.current_car.car_coordinates
         for car_position in list_coordinates:
             y, x = car_position
-            print(f"y: {y}, x: {x}")
+            # print(f"y: {y}, x: {x}")
 
             if self.current_car.car_orientation == "H":
                 for dy, dx in [(0, 1), (0, -1)]:
                     new_y = y + dy
                     new_x = x + dx
-                    print(f"new: (y: {new_y}, x: {new_x})")
+                    # print(f"new: (y: {new_y}, x: {new_x})")
                     if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
                         return new_y, new_x
             elif self.current_car.car_orientation == "V":
                 for dy, dx in [(1, 0), (-1, 0)]:
                     new_y = y + dy
                     new_x = x + dx
-                    print(f"new: ({new_y}, {new_x})")
+                    # print(f"new: ({new_y}, {new_x})")
                     if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
                         return new_y, new_x
             else:
@@ -98,9 +98,56 @@ class Rush_hour:
         return False
 
     def move(self, car, new_y, new_x):
-        # print(car)
-        print(f"new x: {new_x}")
-        print(f"new y: {new_y}")
+        self.current_car = car
+        # Position car needs to move to
+        new_car_coordinates = (new_y, new_x)
+        # Current car coordinates
+        old_car_coordinates = self.current_car.car_coordinates
+        
+        if self.current_car.car_orientation == "H":
+            # Biggest car coordinate on x-axis
+            car_x_coordinate = int(old_car_coordinates[1][1])
+            # Car needs to move on x-axis to this coordinate 
+            x_coordinate = new_car_coordinates[1]
+            # print(f"x: {x_coordinate}")
+
+            if x_coordinate > car_x_coordinate:
+                # add coordinates to back of list
+                old_car_coordinates.append(new_car_coordinates)
+                # remove coordinates from list top of list
+                old_car_coordinates.pop(0)
+                # print(f"old_car: {old_car_coordinates}")
+            else:
+                # add coordinates to top of list
+                old_car_coordinates.insert(0, new_car_coordinates)
+                # remove coordinates from back of list
+                old_car_coordinates.pop()
+                # print(f"old_car: {old_car_coordinates}")
+        
+        elif self.current_car.car_orientation == "V":
+            car_y_coordinate = int(old_car_coordinates[1][0])
+            y_coordinate = new_car_coordinates[0]
+            print(car_y_coordinate)
+            print(y_coordinate)
+            if y_coordinate > car_y_coordinate:
+                # add coordinates to back of list
+                old_car_coordinates.append(new_car_coordinates)
+                # remove coordinates from list top of list
+                old_car_coordinates.pop(0)
+                print(f"old_car: {old_car_coordinates}")
+            else:
+                # add coordinates to top of list
+                old_car_coordinates.insert(0, new_car_coordinates)
+                # remove coordinates from back of list
+                old_car_coordinates.pop()
+                print(f"old_car: {old_car_coordinates}")
+
+        self.current_car.car_coordinates = old_car_coordinates
+        self.load_board()
+        self.add_cars()
+        # print(f'car_coordinates: {self.current_car.car_coordinates}')
+        # print(f"new_car_coordinates: {new_car_coordinates}")
+        # print(f"old_car_coordinates: {old_car_coordinates}")
 
 
 if __name__ == "__main__":
@@ -120,5 +167,6 @@ if __name__ == "__main__":
         # print(f"new_y = {new_y}, new_x = {new_x}")
         print("can move car")
         rushhour.move(random_car, new_y, new_x)
+        rushhour.print_board()
     else:
         print("cannot move car :(")
