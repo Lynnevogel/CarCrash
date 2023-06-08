@@ -141,13 +141,14 @@ class Rush_hour:
 
     def is_won(self):
         if self.dim == 6:
-            red_car = self.cars["X"]
-            car_coordinates = red_car.car_coordinates
-            if (2, 5) in car_coordinates:
-                print("you won!!!")
-                return True
+            red_car_coordinates = self.cars["X"].car_coordinates
+            x_start = red_car_coordinates[1][1]
+            if x_start + 2 < self.dim:
+                if self.board[2][x_start + 1] == "-" and self.board[2][x_start + 2] == "-":
+                    print("You won!!!")
+                    return True
         return False
-            
+
 
 if __name__ == "__main__":
 
