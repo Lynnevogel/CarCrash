@@ -109,46 +109,45 @@ class Rush_hour:
             car_x_coordinate = int(old_car_coordinates[1][1])
             # Car needs to move on x-axis to this coordinate 
             x_coordinate = new_car_coordinates[1]
-            # print(f"x: {x_coordinate}")
 
             if x_coordinate > car_x_coordinate:
                 # add coordinates to back of list
                 old_car_coordinates.append(new_car_coordinates)
                 # remove coordinates from list top of list
                 old_car_coordinates.pop(0)
-                # print(f"old_car: {old_car_coordinates}")
             else:
                 # add coordinates to top of list
                 old_car_coordinates.insert(0, new_car_coordinates)
                 # remove coordinates from back of list
                 old_car_coordinates.pop()
-                # print(f"old_car: {old_car_coordinates}")
         
         elif self.current_car.car_orientation == "V":
             car_y_coordinate = int(old_car_coordinates[1][0])
             y_coordinate = new_car_coordinates[0]
-            print(car_y_coordinate)
-            print(y_coordinate)
             if y_coordinate > car_y_coordinate:
                 # add coordinates to back of list
                 old_car_coordinates.append(new_car_coordinates)
                 # remove coordinates from list top of list
                 old_car_coordinates.pop(0)
-                print(f"old_car: {old_car_coordinates}")
             else:
                 # add coordinates to top of list
                 old_car_coordinates.insert(0, new_car_coordinates)
                 # remove coordinates from back of list
                 old_car_coordinates.pop()
-                print(f"old_car: {old_car_coordinates}")
 
         self.current_car.car_coordinates = old_car_coordinates
         self.load_board()
         self.add_cars()
-        # print(f'car_coordinates: {self.current_car.car_coordinates}')
-        # print(f"new_car_coordinates: {new_car_coordinates}")
-        # print(f"old_car_coordinates: {old_car_coordinates}")
 
+    def is_won(self):
+        if self.dim == 6:
+            red_car = self.cars["X"]
+            car_coordinates = red_car.car_coordinates
+            if (2, 5) in car_coordinates:
+                print("you won!!!")
+                return True
+        return False
+            
 
 if __name__ == "__main__":
 
@@ -160,13 +159,16 @@ if __name__ == "__main__":
 
     rushhour = Rush_hour(game_name)
 
-    random_car = rushhour.random_car()
-    print(random_car)
-    if rushhour.can_move(random_car):
-        new_y, new_x = rushhour.can_move(random_car)
-        # print(f"new_y = {new_y}, new_x = {new_x}")
-        print("can move car")
-        rushhour.move(random_car, new_y, new_x)
-        rushhour.print_board()
-    else:
-        print("cannot move car :(")
+    while not rushhour.is_won():
+        random_car = rushhour.random_car()
+        print(random_car)
+        if rushhour.can_move(random_car):
+            new_y, new_x = rushhour.can_move(random_car)
+            rushhour.move(random_car, new_y, new_x)
+            rushhour.print_board()
+        else:
+            print("cannot move car :(")
+            continue  # Continue to the next iteration of the while loop
+
+        if rushhour.is_won():
+            break  #
