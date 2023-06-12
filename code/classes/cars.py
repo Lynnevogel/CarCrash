@@ -1,5 +1,12 @@
 class Car:
     def __init__(self, car_name: str, car_orientation: str, car_col: int, car_row: int, car_len: int) -> None:
+        """
+        Initializes a car object.
+        Preconditions:
+            - car_name is a string.
+            - car_orientation is either "H" or "V".
+            - car_col, car_row and car_len are positive integers.
+        """
         self.car_name: str = car_name
         self.car_orientation: str = car_orientation
         self.car_col: int = car_col
@@ -9,9 +16,17 @@ class Car:
         self.car_placement()
 
     def __repr__(self) -> str:
+        """
+        Returns a string representation of the car object.
+        Postconditions:
+            - Returns a string representation of the car object.
+        """
         return f"{self.car_name} + {self.car_orientation} + {self.car_col} + {self.car_row} + {self.car_len} + {self.car_coordinates}"
 
     def car_placement(self) -> None:
+        """
+        Determines the coordinates of the car based on its orientation and length.
+        """
         self.car_start_coordinate = (self.car_row, self.car_col)
         self.car_coordinates.append(self.car_start_coordinate)
 
@@ -32,4 +47,3 @@ class Car:
             self.car_coordinates.append(self.car_end_coordinate)
         else:
             print("Invalid car length")
-
