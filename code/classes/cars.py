@@ -27,22 +27,32 @@ class Car:
         """
         Determines the coordinates of the car based on its orientation and length.
         """
+        # Add start coordinates to coordinates list
         self.car_start_coordinate = (self.car_row, self.car_col)
         self.car_coordinates.append(self.car_start_coordinate)
 
+        # Check car lenght 
         if self.car_len == 2:
+            # Check orientation
             if self.car_orientation == "H":
+                # Find end car coordinates
                 self.car_end_coordinate = (self.car_row, self.car_col + 1)
             else:
+                # Find end car coordinates
                 self.car_end_coordinate = (self.car_row + 1, self.car_col)
+            # Append end coordinates to coordinates list
             self.car_coordinates.append(self.car_end_coordinate)
         elif self.car_len == 3:
+            # Check orientation
             if self.car_orientation == "H":
+                # Find middle and end car coordinates
                 self.car_middle_coordinate = (self.car_row, self.car_col + 1)
                 self.car_end_coordinate = (self.car_row, self.car_col + 2)
             else:
+                # Find middle and end car coordinates
                 self.car_middle_coordinate = (self.car_row + 1, self.car_col)
                 self.car_end_coordinate = (self.car_row + 2, self.car_col)
+            # Append middle and end coordinates to coordinates list
             self.car_coordinates.append(self.car_middle_coordinate)
             self.car_coordinates.append(self.car_end_coordinate)
         else:

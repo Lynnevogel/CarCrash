@@ -1,6 +1,8 @@
 from .cars import Car
-from sys import argv
+# from sys import argv
 import random
+import matplotlib.pyplot as plt
+import numpy as np
 
 class Rush_hour:
     def __init__(self, game_name: str) -> None:
@@ -12,15 +14,14 @@ class Rush_hour:
         # Extract dimension from name
         self.dim: int = int(game_name.strip().split("x")[0])
         # Initialize board
-        self.board: list[list[str]] = [[str(i+j) for j in range(self.dim)] for i in range(0, self.dim*self.dim, self.dim)]
-        # Initialize cars dictionary
+        self.board = [["-" for _ in range(self.dim)] for _ in range(self.dim)]        # Initialize cars dictionary
         self.cars: dict[str, Car] = {}
 
          # Load data
         self.load_cars(f"gameboards/Rushhour{game_name}.csv")
         self.current_car: Car = self.cars['X']
         
-        # intialize first board
+        # Intialize first board
         self.load_board()
         self.add_cars()
         self.print_board()
@@ -31,6 +32,7 @@ class Rush_hour:
         Postconditions:
             - The board is initialized with empty spaces ('-') in each cell.
         """
+        # Loop through board and initialize with '-'
         for row in range(self.dim):
             for col in range(self.dim):
                 self.board[row][col] = "-"
@@ -42,6 +44,7 @@ class Rush_hour:
         Postconditions:
             - The current state of the game board is printed to the console.
         """
+        # Loop through board and print corresponding grids
         for row in range(self.dim):
             for col in range(self.dim):
                 self.draw_grid(self.board[row][col])
@@ -56,6 +59,7 @@ class Rush_hour:
         Precondition:
             - Letter corresponds with a car and is a string.
         """
+        # Print letter of corresponding car
         print(f"{str(letter).rjust(4)}", end="")
 
     def load_cars(self, filename: str) -> None:
@@ -64,10 +68,13 @@ class Rush_hour:
         Preconditions:
             - The CSV file must exist and be properly formatted.
         """
+        # Load data file
         with open(filename) as cars_data:
             next(cars_data)
             for line in cars_data:
+                # Strip data when ','
                 cars = line.strip().split(",")
+                # Assign variable names with correct types
                 car_name = cars[0]
                 car_orientation = cars[1]
                 car_col = int(cars[2]) - 1
@@ -83,15 +90,22 @@ class Rush_hour:
             - The cars are added to the game board.
             - The updated game board is returned.
         """
+        # Loop through all cars in current gameboard
         for car_key in self.cars:
+            # Find current car
             self.current_car = self.cars[car_key]
+            # Find coordinates of current car
             list_coordinates = self.current_car.car_coordinates
             for coordinates in list_coordinates:
+                # Find x and y coordinate
                 x_coordinate = coordinates[0]
                 y_coordinate = coordinates[1]
+                # Loop through board
                 for row in range(self.dim):
                     for col in range(self.dim):
+                        # Find car coordinates in board
                         if row is x_coordinate and col is y_coordinate:
+                            # Add car_key to coordinate
                             self.board[row][col] = f"{car_key}" 
         return self.board
 
@@ -101,6 +115,7 @@ class Rush_hour:
         Postconditions:
             - A random car object is selected and returned.
         """
+        # Choice random car from all cars in current gameboard
         random_car = random.choice(list(self.cars.keys()))
         return self.cars[random_car]
 
@@ -113,22 +128,31 @@ class Rush_hour:
             - The possible coordinates for the car are determined and returned in a list.
         """
         self.current_car = car
+        # Find coordinates of current car
         list_coordinates = self.current_car.car_coordinates
         possible_coordinates = []
+        # Loop through car coordinates of current car
         for car_position in list_coordinates:
             y, x = car_position
 
+            # Check orientation
             if self.current_car.car_orientation == "H":
+                # Loop through horizontal grid 
                 for dy, dx in [(0, 1), (0, -1)]:
+                    # Assign new coordinates
                     new_y = y + dy
                     new_x = x + dx
+                    # Check if grid of new coordinates is empty and not out of bounds
                     if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
                         possible_coordinate = (new_y, new_x)
                         possible_coordinates.append(possible_coordinate)
             elif self.current_car.car_orientation == "V":
+                # Loop through vertical grid
                 for dy, dx in [(1, 0), (-1, 0)]:
+                    # Assign new coordinates
                     new_y = y + dy
                     new_x = x + dx
+                    # Check if grid of new coordinates is empty and not out of bounds
                     if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
                         possible_coordinate = (new_y, new_x)
                         possible_coordinates.append(possible_coordinate)
@@ -148,38 +172,55 @@ class Rush_hour:
         """
         self.current_car = car
 
+        # Check length of the list with possible coordinates/moves
         if len(possible_coordinates) == 0:
             print("Cannot move car.")
             return False
         elif len(possible_coordinates) == 1:
+            # Move car to new coordinates
             new_car_coordinates = possible_coordinates[0]
         elif len(possible_coordinates) == 2:
+            # Choice new coordinates randomly and move
             new_car_coordinates = random.choice(possible_coordinates)
 
         old_car_coordinates = self.current_car.car_coordinates
 
+        # Check orientation
         if self.current_car.car_orientation == "H":
+            # Assign old car coordinate x
             car_x_coordinate = int(old_car_coordinates[1][1])
+            # Assign new car coordinate x
             x_coordinate = new_car_coordinates[1]
-
+            # Check if car needs to move to the left or right
             if x_coordinate > car_x_coordinate:
+                # Add new coordinates to end of car coordinates list
                 old_car_coordinates.append(new_car_coordinates)
+                # Remove old coordinates from top of list
                 old_car_coordinates.pop(0)
             else:
+                # Add new coordinates at the top of car coordinates list
                 old_car_coordinates.insert(0, new_car_coordinates)
+                # Remove old coordinates at the end of the car coordinates list
                 old_car_coordinates.pop()
         elif self.current_car.car_orientation == "V":
+            # Assign old car coordinate y
             car_y_coordinate = int(old_car_coordinates[1][0])
+            # Assing new car coordinate y
             y_coordinate = new_car_coordinates[0]
-
+            # Check if car needst to move up or down
             if y_coordinate > car_y_coordinate:
+                # Add new car coordiantes to end of car coordinates list
                 old_car_coordinates.append(new_car_coordinates)
+                # Remove old coordinates from top of list
                 old_car_coordinates.pop(0)
             else:
+                # Add new coordinates at the top of the car coordinates list
                 old_car_coordinates.insert(0, new_car_coordinates)
+                # Remove old coordinates at the end of the car coordinates list
                 old_car_coordinates.pop()
 
         self.current_car.car_coordinates = old_car_coordinates
+        # Load board with new car coordinates
         self.load_board()
         self.add_cars()
         return True
@@ -190,23 +231,33 @@ class Rush_hour:
         Postconditions:
             - Returns True if the game has been won, False otherwise.
         """
+        # Check size of board
         if self.dim == 6:
+            # Find coordinates of red car ('player')
             red_car_coordinates = self.cars["X"].car_coordinates
+            # Find end coordinates of red car
             x_start = red_car_coordinates[1][1]
+            # Check if grid on the right of the car are all '-'
             while x_start + 1 < self.dim:
                 x_start += 1
                 if self.board[2][x_start] != "-":
                     return False
         elif self.dim == 9:
+            # Find coordinates of red car ('player')
             red_car_coordinates = self.cars["X"].car_coordinates
+            # Find end coordinates of red car
             x_start = red_car_coordinates[1][1]
+            # Check if grid on the right of the car are all '-'
             while x_start + 1 < self.dim:
                 x_start += 1
                 if self.board[4][x_start] != "-":
                     return False
         elif self.dim == 12:
+            # Find end coordinates of red car
             red_car_coordinates = self.cars["X"].car_coordinates
+            # Find end coordinates of red car
             x_start = red_car_coordinates[1][1]
+            # Check if grid on the right of the car are all '-'
             while x_start + 1 < self.dim:
                 x_start += 1
                 if self.board[5][x_start] != "-":

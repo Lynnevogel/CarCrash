@@ -5,30 +5,35 @@ import time
 
 if __name__ == "__main__":
     if len(argv) != 2:
-        # raise error if game name is not given
+        # Raise error if game name is not given
         print("Usage: python main.py [game]")
         exit(1)
 
-    # extract command line argument
+    # Extract command line argument
     game_name = argv[1]
-    # initialize game
+    # Initialize game
     rushhour = Rush_hour(game_name)
-    # start timer
+    # Start timer
     start_time = time.time()
+    # Counter
+    num_moves = 0
 
-    # run game until it is won
+    # Run game until it is won
     while not rushhour.is_won():
-        # pick a random car
+        # Pick a random car
         random_car = rushhour.random_car()
-        # move car
+        # Move car
         possible_coordinates = rushhour.can_move(random_car)
         rushhour.move(random_car, possible_coordinates)
-        # print board
+        # Print board
         rushhour.print_board()
+        # Count number of moves
+        num_moves += 1
 
-        # check if game is won
+        # Check if game is won
         if rushhour.is_won():
             end_time = time.time()
             elapsed_time = end_time - start_time
-            print(f"Puzzle was solved in {elapsed_time}s")
+            print(f"Puzzle was solved in {elapsed_time}s.")
+            print(f"Number of moves: {num_moves}")
             break
