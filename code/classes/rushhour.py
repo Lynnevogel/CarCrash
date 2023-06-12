@@ -1,4 +1,4 @@
-from cars import Car
+from .cars import Car
 from sys import argv
 import random
 
@@ -74,35 +74,48 @@ class Rush_hour:
     def can_move(self, car):
         self.current_car = car
         list_coordinates = self.current_car.car_coordinates
+        possible_coordinates = []
         for car_position in list_coordinates:
             y, x = car_position
             # print(f"y: {y}, x: {x}")
+
             if self.current_car.car_orientation == "H":
                 for dy, dx in [(0, 1), (0, -1)]:
                     new_y = y + dy
                     new_x = x + dx
-                    # print(f"new: (y: {new_y}, x: {new_x})")
                     if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
-                        return new_y, new_x
+                        possible_coordinate = (new_y, new_x)
+                        possible_coordinates.append(possible_coordinate)
+                        # print(f"possible coordinates: {possible_coordinates}")
             elif self.current_car.car_orientation == "V":
                 for dy, dx in [(1, 0), (-1, 0)]:
                     new_y = y + dy
                     new_x = x + dx
-                    # print(f"new: ({new_y}, {new_x})")
                     if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
-                        return new_y, new_x
+                        possible_coordinate = (new_y, new_x)
+                        possible_coordinates.append(possible_coordinate)
+                        # print(f"possible coordinates: {possible_coordinates}")
             else:
                 print("Invalid orientation")
-                return False
-        return False
+        return possible_coordinates
 
-    def move(self, car, new_y, new_x):
+
+    def move(self, car: Car, possible_coordinates: list[tuple[int, int]]) -> None:
         self.current_car = car
         # Position car needs to move to
-        new_car_coordinates = (new_y, new_x)
+        if len(possible_coordinates) == 0:
+            print("Cannot move car :/")
+            return False
+        elif len(possible_coordinates) == 1:
+            new_car_coordinates = possible_coordinates[0]
+            print(f"new car coordinates: {new_car_coordinates}")
+        elif len(possible_coordinates) == 2:
+            new_car_coordinates = random.choice(possible_coordinates)
+            print(f"new car coordinates 2: {new_car_coordinates}")
+
+        # new_car_coordinates = (new_y, new_x)
         # Current car coordinates
         old_car_coordinates = self.current_car.car_coordinates
-        
         if self.current_car.car_orientation == "H":
             # Biggest car coordinate on x-axis
             car_x_coordinate = int(old_car_coordinates[1][1])
@@ -112,14 +125,14 @@ class Rush_hour:
             if x_coordinate > car_x_coordinate:
                 # add coordinates to back of list
                 old_car_coordinates.append(new_car_coordinates)
-                # remove coordinates from list top of list
+                # remove coordinates from top of list
                 old_car_coordinates.pop(0)
             else:
                 # add coordinates to top of list
                 old_car_coordinates.insert(0, new_car_coordinates)
                 # remove coordinates from back of list
                 old_car_coordinates.pop()
-        
+
         elif self.current_car.car_orientation == "V":
             car_y_coordinate = int(old_car_coordinates[1][0])
             y_coordinate = new_car_coordinates[0]
@@ -137,6 +150,7 @@ class Rush_hour:
         self.current_car.car_coordinates = old_car_coordinates
         self.load_board()
         self.add_cars()
+        return True
 
     def is_won(self) -> bool:
         """
@@ -149,7 +163,7 @@ class Rush_hour:
             red_car_coordinates = self.cars["X"].car_coordinates
             x_start = red_car_coordinates[1][1]
             while x_start + 1 < self.dim:
-                print(x_start)
+                # print(x_start)
                 x_start += 1
                 if self.board[2][x_start] != "-":
                     return False
