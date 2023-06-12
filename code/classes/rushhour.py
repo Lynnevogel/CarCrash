@@ -168,4 +168,22 @@ class Rush_hour:
                 if self.board[2][x_start] != "-":
                     return False
             print("You won!!")
+        elif self.dim == 9:
+            red_car_coordinates = self.cars["X"].car_coordinates
+            x_start = red_car_coordinates[1][1]
+            while x_start + 1 < self.dim:
+                # print(x_start)
+                x_start += 1
+                if self.board[4][x_start] != "-":
+                    return False
+            print("You won!!")
+        elif self.dim == 12:
+            red_car_coordinates = self.cars["X"].car_coordinates
+            x_start = red_car_coordinates[1][1]
+            while x_start + 1 < self.dim:
+                # print(x_start)
+                x_start += 1
+                if self.board[5][x_start] != "-":
+                    return False
+            print("You won!!")
         return True
