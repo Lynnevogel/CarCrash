@@ -2,6 +2,7 @@ from code.classes.cars import Car
 from code.classes.rushhour import Rush_hour
 from sys import argv
 import random
+import time
 
 
 if __name__ == "__main__":
@@ -14,6 +15,8 @@ if __name__ == "__main__":
 
     rushhour = Rush_hour(game_name)
 
+    start_time = time.time()
+
     while not rushhour.is_won():
         random_car = rushhour.random_car()
         print(random_car)
@@ -23,4 +26,7 @@ if __name__ == "__main__":
         rushhour.print_board()
 
         if rushhour.is_won():
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print(elapsed_time)
             break

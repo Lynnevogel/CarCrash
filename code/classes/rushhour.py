@@ -3,32 +3,31 @@ from sys import argv
 import random
 
 class Rush_hour:
-    def __init__(self, game_name) -> None:
+    def __init__(self, game_name: str) -> None:
         # Extract dimension from name
-        self.dim = int(game_name.strip().split("x")[0])
+        self.dim: int = int(game_name.strip().split("x")[0])
         # Initialize board
-        self.board = [[i+j for j in range(self.dim)] for i in range(0, self.dim*self.dim, self.dim)]
+        self.board: list[list[str]] = [[str(i+j) for j in range(self.dim)] for i in range(0, self.dim*self.dim, self.dim)]
         # Intialize cars dictionary
-        self.cars = {}
+        self.cars: dict[str, Car] = {}
 
         self.load_board()
-
+ 
         # Load data
         self.load_cars(f"gameboards/Rushhour{game_name}.csv")
-        self.current_car = self.cars['X']
+        self.current_car: Car = self.cars['X']
 
         self.add_cars()
         self.print_board()
 
     # Loop through board and add grid
-    def load_board(self):
+    def load_board(self) -> list[list[str]]:
         for row in range(self.dim):
             for col in range(self.dim):
                 self.board[row][col] = "-"
-
         return self.board
-    
-    def print_board(self):
+
+    def print_board(self) -> list[list[str]]:
         for row in range(self.dim):
             for col in range(self.dim):
                 self.draw_grid(self.board[row][col])
@@ -36,11 +35,11 @@ class Rush_hour:
             print()
         return self.board
 
-    def draw_grid(self, number):
+    def draw_grid(self, number: str) -> None:
         print(f"{str(number).rjust(4)}", end="")
 
     # Load car data
-    def load_cars(self, filename):
+    def load_cars(self, filename: str) -> None:
         with open(filename) as cars_data:
             next(cars_data)
             for line in cars_data:
@@ -54,7 +53,7 @@ class Rush_hour:
                 self.cars[car_name] = car
 
     # Add cars to grid
-    def add_cars(self):
+    def add_cars(self) -> list[list[str]]:
         for car_key in self.cars:
             self.current_car = self.cars[car_key]
             list_coordinates = self.current_car.car_coordinates
@@ -67,11 +66,11 @@ class Rush_hour:
                             self.board[row][col] = f"{car_key}" 
         return self.board
 
-    def random_car(self):
+    def random_car(self) -> Car:
         random_car = random.choice(list(self.cars.keys()))
         return self.cars[random_car]
 
-    def can_move(self, car):
+    def can_move(self, car: Car) -> list[tuple[int, int]]:
         self.current_car = car
         list_coordinates = self.current_car.car_coordinates
         possible_coordinates = []
@@ -99,8 +98,7 @@ class Rush_hour:
                 print("Invalid orientation")
         return possible_coordinates
 
-
-    def move(self, car: Car, possible_coordinates: list[tuple[int, int]]) -> None:
+    def move(self, car: Car, possible_coordinates: list[tuple[int, int]]) -> bool:
         self.current_car = car
         # Position car needs to move to
         if len(possible_coordinates) == 0:
