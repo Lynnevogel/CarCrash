@@ -3,9 +3,9 @@ from sys import argv
 import random
 
 class Rush_hour:
-    def __init__(self, game) -> None:
+    def __init__(self, game_name) -> None:
         # Extract dimension from name
-        self.dim = int(game.strip().split("x")[0])
+        self.dim = int(game_name.strip().split("x")[0])
         # Initialize board
         self.board = [[i+j for j in range(self.dim)] for i in range(0, self.dim*self.dim, self.dim)]
         # Intialize cars dictionary
@@ -77,7 +77,6 @@ class Rush_hour:
         for car_position in list_coordinates:
             y, x = car_position
             # print(f"y: {y}, x: {x}")
-
             if self.current_car.car_orientation == "H":
                 for dy, dx in [(0, 1), (0, -1)]:
                     new_y = y + dy
@@ -139,37 +138,20 @@ class Rush_hour:
         self.load_board()
         self.add_cars()
 
-    def is_won(self):
+    def is_won(self) -> bool:
+        """
+        Checks if car X is in the winning configuration.
+        pre: board is a 2D-list of size dim * dim
+        post: returns True if the board is in the winning position
+        (otherwise False)
+        """
         if self.dim == 6:
             red_car_coordinates = self.cars["X"].car_coordinates
             x_start = red_car_coordinates[1][1]
-            if x_start + 2 < self.dim:
-                if self.board[2][x_start + 1] == "-" and self.board[2][x_start + 2] == "-":
-                    print("You won!!!")
-                    return True
-        return False
-
-
-if __name__ == "__main__":
-
-    if len(argv) != 2:
-        print("Usage: python rush_hour.py [game]")
-        exit(1)
-
-    game_name = argv[1]
-
-    rushhour = Rush_hour(game_name)
-
-    while not rushhour.is_won():
-        random_car = rushhour.random_car()
-        print(random_car)
-        if rushhour.can_move(random_car):
-            new_y, new_x = rushhour.can_move(random_car)
-            rushhour.move(random_car, new_y, new_x)
-            rushhour.print_board()
-        else:
-            print("cannot move car :(")
-            continue  # Continue to the next iteration of the while loop
-
-        if rushhour.is_won():
-            break  #
+            while x_start + 1 < self.dim:
+                print(x_start)
+                x_start += 1
+                if self.board[2][x_start] != "-":
+                    return False
+            print("You won!!")
+        return True
