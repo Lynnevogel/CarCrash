@@ -1,5 +1,4 @@
 from .cars import Car
-# from sys import argv
 import random
 import matplotlib.pyplot as plt
 import numpy as np
@@ -263,3 +262,24 @@ class Rush_hour:
                 if self.board[5][x_start] != "-":
                     return False
         return True
+
+    def visualize_board(self):
+        # Create a 6x6 grid
+        grid = np.zeros((self.dim, self.dim))
+
+        # Create a color map for each car
+        cmap = plt.cm.get_cmap('gist_rainbow')
+
+        # Loop through the board and assign values to the grid based on the car positions
+        for row in range(self.dim):
+            for col in range(self.dim):
+                if self.board[row][col] != "-":
+                    grid[row][col] =  random.randint(1, 10)
+
+        # Display the plot
+        plt.figure(figsize=(self.dim, self.dim))
+        plt.imshow(grid, cmap=cmap)
+        plt.xticks(np.arange(self.dim))
+        plt.yticks(np.arange(self.dim))
+        plt.gca().invert_yaxis()  # Invert the y-axis
+        plt.show()

@@ -36,4 +36,6 @@ if __name__ == "__main__":
             elapsed_time = end_time - start_time
             print(f"Puzzle was solved in {elapsed_time}s.")
             print(f"Number of moves: {num_moves}")
+            print(type(rushhour.board))
+            rushhour.visualize_board()
             break
