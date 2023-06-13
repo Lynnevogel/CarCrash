@@ -13,7 +13,13 @@ class Car:
         self.car_row: int = car_row
         self.car_len: int = car_len
         self.car_coordinates: list[tuple[int, int]] = []
+
+        # self.dim: int = int(game_name.strip().split("x")[0])
+        # self.load_cars(f"gameboards/Rushhour{game_name}.csv")
+        
         self.car_placement()
+
+        
 
     def __repr__(self) -> str:
         """

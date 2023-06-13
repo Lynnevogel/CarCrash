@@ -3,7 +3,7 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 
-class Rush_hour:
+class Board:
     def __init__(self, game_name: str) -> None:
         """
         Initializes the Rush Hour game.
@@ -159,7 +159,7 @@ class Rush_hour:
                 print("Invalid orientation")
         return possible_coordinates
 
-    def move(self, car: Car, possible_coordinates: list[tuple[int, int]]) -> bool:
+    def move(self, car: Car, new_car_coordinates: list[tuple[int, int]]) -> bool:
         """
         Moves a car to a new position on the game board.
         Preconditions:
@@ -171,17 +171,9 @@ class Rush_hour:
         """
         self.current_car = car
 
-        # Check length of the list with possible coordinates/moves
-        if len(possible_coordinates) == 0:
-            print("Cannot move car.")
+        if len(new_car_coordinates) == 0:
             return False
-        elif len(possible_coordinates) == 1:
-            # Move car to new coordinates
-            new_car_coordinates = possible_coordinates[0]
-        elif len(possible_coordinates) == 2:
-            # Choice new coordinates randomly and move
-            new_car_coordinates = random.choice(possible_coordinates)
-
+        
         old_car_coordinates = self.current_car.car_coordinates
 
         # Check orientation
