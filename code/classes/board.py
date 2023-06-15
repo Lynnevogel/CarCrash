@@ -86,9 +86,11 @@ class Board:
     def add_cars(self, board) -> list[list[str]]:
         """
         Adds the cars to the game board.
+        Preconditions:
+            - The board were the cars need to be added
         Postconditions:
             - The cars are added to the game board.
-            - The updated game board is returned.
+            - The updated game board with the cars is returned.
         """
         # Loop through all cars in current gameboard
         for car_key in self.cars:
@@ -130,6 +132,7 @@ class Board:
         self.current_car = self.cars[car_key]
         # Find coordinates of current car
         list_coordinates = self.current_car.car_coordinates
+        # Make list to add boards
         copy_boards = []
         # Loop through car coordinates of current car
         for car_position in list_coordinates:
@@ -145,9 +148,11 @@ class Board:
                     # Check if grid of new coordinates is empty and not out of bounds
                     if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
                         possible_coordinate = (new_y, new_x) 
+                        # Make copy of board
                         copy_board = copy.deepcopy(self)
+                        # Make movement in copied board
                         copy_board.move(car_key, possible_coordinate)
-                        # new_board = self.change_copy_board(car, copy_board, possible_coordinate)   
+                        # Add copied board with movement cars to list
                         copy_boards.append(copy_board)
             elif self.current_car.car_orientation == "V":
                 # Loop through vertical grid
@@ -158,25 +163,28 @@ class Board:
                     # Check if grid of new coordinates is empty and not out of bounds
                     if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
                         possible_coordinate = (new_y, new_x)
+                        # Make copy of board
                         copy_board = copy.deepcopy(self)
+                        # Make movement in copied board
                         copy_board.move(car_key, possible_coordinate)
-                        # new_board = self.change_copy_board(car, copy_board, possible_coordinate)
+                        # Add copied board with movement cars to list
                         copy_boards.append(copy_board)
 
             else:
                 print("Invalid orientation")
 
+        # If car cannot move, an empty list and False wil be returned
         if len(copy_boards) == 0:
             return copy_boards, False
 
         return copy_boards, True
 
-    def move(self, car_key: Car, new_car_coordinates: list[tuple[int, int]]) -> bool:
+    def move(self, car_key: Car, new_car_coordinates: list[tuple[int, int]]) -> list:
         """
         Moves a car to a new position on the game board.
         Preconditions:
             - car is a Car object.
-            - The 'possible_coordinates' is a list of possible coordinates for the variable car.
+            - The 'new_car_coordinates' is a list of possible coordinates for the variable car.
         Postconditions:
             - The car is moved to the new position on the game board.
             - Returns True if the car is successfully moved, False otherwise.
@@ -184,9 +192,11 @@ class Board:
         self.current_car = self.cars[car_key]
         new_board = []
 
+        # If car cannot move return empty list
         if len(new_car_coordinates) == 0:
             return new_board
-
+        
+        # Assign current car coordinates
         current_car_coordinates = self.current_car.car_coordinates
 
         # Check orientation
