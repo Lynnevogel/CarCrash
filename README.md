@@ -37,3 +37,11 @@ Hieronder is een lijst te vinden van de mappen en bestanden in de repository van
     - **/code/classes**: bevat de code voor de verschillende classes.
 - **/gameboards**: bevat de verschillende datafiles met spelborden voor het runnen van het programma.
 - **/images**: bevat een afbeelding van de berekende statespace.
+
+### Taakverdeling
+
+De taakverdeling moet nog verder uitgewerkt worden maar dit is de voorlopige taakverdeling. 
+
+- Lynne: visualisatie
+- Isabelle: A* algoritme 
+- Jade: breadth first search
