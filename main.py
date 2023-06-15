@@ -24,10 +24,11 @@ if __name__ == "__main__":
         # Random algorithm
         # Pick a random car
         random_car = board.random_car()
-        # random_car = input("choose car: ")
         print(random_car)
         # Find possible coordinates
         copy_boards, true_or_false = board.can_move_car(random_car)
+        print(copy_boards)
+
         if true_or_false == True:
             board = random_move(copy_boards)
             # Print board
@@ -37,10 +38,7 @@ if __name__ == "__main__":
             num_moves += 1
         else:
             print("cannot move car")
-        # Choice movement
-        
-        # Move car
-        # board.move(random_car, move)
+
         
 
         # Check if game is won

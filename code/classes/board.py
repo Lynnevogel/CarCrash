@@ -1,8 +1,9 @@
 from .cars import Car
 import random
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 import copy
+from typing import Any
 
 class Board:
     def __init__(self, game_name: str) -> None:
@@ -83,7 +84,7 @@ class Board:
                 car = Car(car_name, car_orientation, car_col, car_row, car_len)
                 self.cars[car_name] = car
 
-    def add_cars(self, board) -> list[list[str]]:
+    def add_cars(self, board: list[list[str]]) -> list[list[str]]:
         """
         Adds the cars to the game board.
         Preconditions:
@@ -111,21 +112,21 @@ class Board:
                             board[row][col] = f"{car_key}"
         return board
 
-    def random_car(self) -> Car:
+    def random_car(self) -> str:
         """
         Returns a randomly selected car.
         Postconditions:
-            - A random car object is selected and returned.
+            - A random carkey is selected and returned.
         """
-        # Choice random car from all cars in current gameboard
+        # Choice random carkey from all cars in current gameboard
         random_car = random.choice(list(self.cars.keys()))
         return random_car
 
-    def can_move_car(self, car_key: Car) -> list[tuple[int, int]]:
+    def can_move_car(self, car_key: str) -> tuple[list[Any], bool]:
         """
         Determines the possible moves for a given car.
         Precondition:
-            - car is a Car object.
+            - car_key is a string
         Postconditions:
             - The possible coordinates for the car are determined and returned in a list.
         """
@@ -176,10 +177,11 @@ class Board:
         # If car cannot move, an empty list and False wil be returned
         if len(copy_boards) == 0:
             return copy_boards, False
-
+        print(f"copy_boards: {copy_boards}")
+        print(type(copy_boards))
         return copy_boards, True
 
-    def move(self, car_key: Car, new_car_coordinates: list[tuple[int, int]]) -> list:
+    def move(self, car_key: str, new_car_coordinates: tuple[int, int]) -> list[list[str]]:
         """
         Moves a car to a new position on the game board.
         Preconditions:
@@ -190,7 +192,7 @@ class Board:
             - Returns True if the car is successfully moved, False otherwise.
         """
         self.current_car = self.cars[car_key]
-        new_board = []
+        new_board: list[list[str]] = []
 
         # If car cannot move return empty list
         if len(new_car_coordinates) == 0:
@@ -237,7 +239,7 @@ class Board:
         # Load board with new car coordinates
         new_board = self.load_board()
         new_board = self.add_cars(new_board)
-        # self.print_board()
+
         return new_board
 
     def is_won(self) -> bool:
