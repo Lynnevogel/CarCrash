@@ -24,16 +24,24 @@ if __name__ == "__main__":
         # Random algorithm
         # Pick a random car
         random_car = board.random_car()
+        # random_car = input("choose car: ")
+        print(random_car)
         # Find possible coordinates
-        possible_coordinates = board.can_move(random_car)
+        copy_boards, true_or_false = board.can_move_car(random_car)
+        if true_or_false == True:
+            board = random_move(copy_boards)
+            # Print board
+            print("this is the chosen board:")
+            board.print_board()
+            # Count number of moves
+            num_moves += 1
+        else:
+            print("cannot move car")
         # Choice movement
-        move = random_move(possible_coordinates)
+        
         # Move car
-        board.move(random_car, move)
-        # Print board
-        board.print_board()
-        # Count number of moves
-        num_moves += 1
+        # board.move(random_car, move)
+        
 
         # Check if game is won
         if board.is_won():
@@ -41,6 +49,5 @@ if __name__ == "__main__":
             elapsed_time = end_time - start_time
             print(f"Puzzle was solved in {elapsed_time}s.")
             print(f"Number of moves: {num_moves}")
-            print(type(board.board))
-            board.visualize_board()
+            # board.visualize_board()
             break

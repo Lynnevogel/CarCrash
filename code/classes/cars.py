@@ -19,8 +19,6 @@ class Car:
         
         self.car_placement()
 
-        
-
     def __repr__(self) -> str:
         """
         Returns a string representation of the car object.
