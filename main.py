@@ -1,4 +1,6 @@
 from code.classes.board import Board
+from code.algorithms.random import random_move
+from code.visualization.color_blocks import visualize_board
 from sys import argv
 import time
 from code.algorithms.random import random_move
@@ -8,8 +10,10 @@ from code.algorithms.breadth import breadth_first
 if __name__ == "__main__":
     if len(argv) < 2:
         # Raise error if game name is not given
-        print("Usage: python main.py [game]")
+        print("Usage: python main.py [game] [algorithm]")
         exit(1)
+    elif len(argv) == 2:
+        algorithm = 'random'
     elif len(argv) == 3:
         algorithm = argv[2]
 
@@ -24,8 +28,8 @@ if __name__ == "__main__":
 
     # Run game until it is won
     while not board.is_won():
-        if algorithm == 'random' or len(argv) == 1:
-            # Random algorithm
+        # Random algorithm
+        if algorithm == 'random':
             # Pick a random car
             random_car = board.random_car()
             print(random_car)
@@ -47,13 +51,11 @@ if __name__ == "__main__":
             start_state = board
             breadth_first(start_state)
 
-        
-
         # Check if game is won
         if board.is_won():
             end_time = time.time()
             elapsed_time = end_time - start_time
             print(f"Puzzle was solved in {elapsed_time}s.")
             print(f"Number of moves: {num_moves}")
-            # board.visualize_board()
+            visualize_board(board.board, board.cars)
             break
