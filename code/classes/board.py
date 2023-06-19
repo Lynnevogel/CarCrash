@@ -25,6 +25,9 @@ class Board:
         self.add_cars(self.board)
         self.print_board()
 
+    def __repr__(self) -> str:
+        return f"{self.print_board()}"
+
     def load_board(self) -> list[list[str]]:
         """
         Loads the initial empty board.
@@ -120,7 +123,7 @@ class Board:
         random_car = random.choice(list(self.cars.keys()))
         return random_car
 
-    def can_move_car(self, car_key: str) -> tuple[list[Any], bool]:
+    def get_possible_moves(self, car_key: str) -> tuple[list[Any], bool]:
         """
         Determines the possible moves for a given car.
         Precondition:
@@ -175,8 +178,65 @@ class Board:
         # If car cannot move, an empty list and False wil be returned
         if len(copy_boards) == 0:
             return copy_boards, False
-        print(f"copy_boards: {copy_boards}")
-        print(type(copy_boards))
+
+        return copy_boards, True
+    
+    def get_possible_moves_2(self, board, car_key: str) -> tuple[list[Any], bool]:
+        """
+        Determines the possible moves for a given car.
+        Precondition:
+            - car_key is a string
+        Postconditions:
+            - The possible coordinates for the car are determined and returned in a list.
+        """
+        self.current_car = self.cars[car_key]
+        # Find coordinates of current car
+        list_coordinates = self.current_car.car_coordinates
+        # Make list to add boards
+        copy_boards = []
+        # Loop through car coordinates of current car
+        for car_position in list_coordinates:
+            y, x = car_position
+
+            # Check orientation
+            if self.current_car.car_orientation == "H":
+                # Loop through horizontal grid 
+                for dy, dx in [(0, 1), (0, -1)]:
+                    # Assign new coordinates
+                    new_y = y + dy
+                    new_x = x + dx
+                    # Check if grid of new coordinates is empty and not out of bounds
+                    if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
+                        possible_coordinate = (new_y, new_x) 
+                        # Make copy of board
+                        copy_board = copy.deepcopy(board)
+                        # Make movement in copied board
+                        copy_board.move(car_key, possible_coordinate)
+                        # Add copied board with movement cars to list
+                        copy_boards.append(copy_board)
+            elif self.current_car.car_orientation == "V":
+                # Loop through vertical grid
+                for dy, dx in [(1, 0), (-1, 0)]:
+                    # Assign new coordinates
+                    new_y = y + dy
+                    new_x = x + dx
+                    # Check if grid of new coordinates is empty and not out of bounds
+                    if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
+                        possible_coordinate = (new_y, new_x)
+                        # Make copy of board
+                        copy_board = copy.deepcopy(self)
+                        # Make movement in copied board
+                        copy_board.move(car_key, possible_coordinate)
+                        # Add copied board with movement cars to list
+                        copy_boards.append(copy_board)
+
+            else:
+                print("Invalid orientation")
+
+        # If car cannot move, an empty list and False wil be returned
+        if len(copy_boards) == 0:
+            return copy_boards, False
+
         return copy_boards, True
 
     def move(self, car_key: str, new_car_coordinates: tuple[int, int]) -> list[list[str]]:

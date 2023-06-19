@@ -4,7 +4,6 @@ from code.classes.board import Car
 import copy
 
 
-
 def breadth_first(start_state):
     queue = Queue()
     queue.enqueue(start_state)
@@ -17,7 +16,7 @@ def breadth_first(start_state):
         elif counter < 5:
             all_cars = state.cars.keys()
             for car in all_cars:
-                possible_moves, _ = state.can_move_car(car)
+                possible_moves, _ = state.get_possible_moves(car)
                 queue.enqueue(possible_moves)
             print(f"queue: {queue}")
         counter += 1
