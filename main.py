@@ -53,7 +53,15 @@ if __name__ == "__main__":
         depth_first = DepthFirst(board)
         depth_first.go()
 
+
+   
+   
+
     end_time = time.time()
     elapsed_time = round((end_time - start_time), 4)
     print(f"Puzzle was solved in {elapsed_time}s.")
     print(f"Number of moves: {num_moves}")
+<<<<<<< Updated upstream
+=======
+    # visualize_board(board.board, board.cars)
+>>>>>>> Stashed changes
