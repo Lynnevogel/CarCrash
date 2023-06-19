@@ -26,7 +26,18 @@ if __name__ == "__main__":
     num_moves = 0
     # Start timer
     start_time = time.time()
+# -------------------------------------- Random search ------------------------------------------------------------------------------
+    if algorithm == 'random':
+        # Run game until it is won
+        while not board.is_won():
+            # Random algorithm
+            
+                # Pick a random car
+                random_car = board.random_car()
+                # Find possible boards
+                copy_boards, can_move = board.get_possible_moves_2(board, random_car)
 
+<<<<<<< Updated upstream
     # depth_first = DepthFirst(board)
     # depth_first.go()
 
@@ -48,11 +59,28 @@ if __name__ == "__main__":
             else:
                 print("cannot move car")
         elif algorithm == 'bf':
+=======
+                if can_move:
+                    # Pick a random move
+                    board = random_move(copy_boards)
+                    board.print_board()
+                    num_moves += 1
+                else:
+                    print("cannot move car")
+                    
+# -------------------------------------- Breadth-first search ------------------------------------------------------------------------
+    elif algorithm == 'bf':
+>>>>>>> Stashed changes
             start_state = board
             breadth_first(start_state)
-        elif algorithm == 'df':
-            depth_first = DepthFirst(board)
-            depth_first.go()
+# -------------------------------------- Depth-first search ------------------------------------------------------------------------
+    elif algorithm == 'df':
+        depth_first = DepthFirst(board)
+        depth_first.go()
+
+
+   
+   
 
     end_time = time.time()
     elapsed_time = round((end_time - start_time), 4)
