@@ -3,6 +3,8 @@ from code.algorithms.random import random_move
 from code.visualization.color_blocks import visualize_board
 from code.algorithms.breadth_first import breadth_first
 from code.algorithms.depth_first import DepthFirst
+from code.algorithms.astar import AStar
+
 from sys import argv
 import time
 
@@ -29,7 +31,6 @@ if __name__ == "__main__":
     if algorithm == 'random':
         # Run game until it is won
         while not board.is_won():
-            # Random algorithm
             # Pick a random car
             random_car = board.random_car()
             # Find possible boards
@@ -52,10 +53,13 @@ if __name__ == "__main__":
     elif algorithm == 'df':
         depth_first = DepthFirst(board)
         depth_first.go()
+# ------------------------------------------ A* search ------------------------------------------------------------------------
+    elif algorithm == 'astar':
+        astar = AStar(board) 
+        astar.solve()
 
 
-   
-   
+
 
     end_time = time.time()
     elapsed_time = round((end_time - start_time), 4)

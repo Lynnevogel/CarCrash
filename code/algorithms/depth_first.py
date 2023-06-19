@@ -1,11 +1,12 @@
 import copy
-
+from code.classes.board import Board
+from typing import Optional, Any
 
 class DepthFirst:
     """
     A Depth First algorithm...
     """
-    def __init__(self, board) -> None:
+    def __init__(self, board: Board) -> None:
         self.board = copy.deepcopy(board)
         self.states = [copy.deepcopy(self.board)]
         self.existing_boards = [self.board.board]
@@ -13,17 +14,17 @@ class DepthFirst:
         self.best_solution = None
         self.best_value = float('inf')
 
-    def get_next_state(self):
+    def get_next_state(self) -> Board:
         return self.states.pop()
 
-    def get_all_possible_states(self, moves, can_move):
+    def get_all_possible_states(self, moves: list[Any], can_move: bool) -> None:
         if can_move:
             for move in moves:
                 if move.board not in self.existing_boards:
                     self.states.append(move)
                     self.existing_boards.append(move.board)
 
-    def check_solution(self, new_board, depth):
+    def check_solution(self, new_board: Optional[Board], depth: int) -> None:
         new_value = depth
         print(f"New value: {new_value}")
         old_value = self.best_value
@@ -36,7 +37,7 @@ class DepthFirst:
             print(f"New best value: {self.best_value}")
         
 
-    def go(self):
+    def go(self) -> None:
         depth = 0
         while self.states:
             new_board = self.get_next_state()

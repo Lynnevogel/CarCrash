@@ -340,6 +340,6 @@ class Board:
                     return False
         return True
 
-    def track_moves(self, car_key, direction):
+    def track_moves(self, car_key: str, direction: str) -> None:
         print(f"car key: {car_key}")
         print(f"direction: {direction}")
