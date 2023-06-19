@@ -1,7 +1,6 @@
 from code.classes.board import Board
 from code.algorithms.random import random_move
 from code.visualization.color_blocks import visualize_board
-# from code.visualization.shiny import shiny
 from code.algorithms.breadth_first import breadth_first
 from code.algorithms.depth_first import DepthFirst
 from sys import argv
@@ -26,14 +25,11 @@ if __name__ == "__main__":
     num_moves = 0
     # Start timer
     start_time = time.time()
-
-    # depth_first = DepthFirst(board)
-    # depth_first.go()
-
-    # Run game until it is won
-    while not board.is_won():
-        # Random algorithm
-        if algorithm == 'random':
+# -------------------------------------- Random search ------------------------------------------------------------------------------
+    if algorithm == 'random':
+        # Run game until it is won
+        while not board.is_won():
+            # Random algorithm
             # Pick a random car
             random_car = board.random_car()
             # Find possible boards
@@ -47,12 +43,15 @@ if __name__ == "__main__":
                 num_moves += 1
             else:
                 print("cannot move car")
-        elif algorithm == 'bf':
-            start_state = board
-            breadth_first(start_state)
-        elif algorithm == 'df':
-            depth_first = DepthFirst(board)
-            depth_first.go()
+                 
+# -------------------------------------- Breadth-first search ------------------------------------------------------------------------
+    elif algorithm == 'bf':
+        start_state = board
+        breadth_first(start_state)
+# -------------------------------------- Depth-first search ------------------------------------------------------------------------
+    elif algorithm == 'df':
+        depth_first = DepthFirst(board)
+        depth_first.go()
 
     end_time = time.time()
     elapsed_time = round((end_time - start_time), 4)

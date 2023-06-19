@@ -3,6 +3,7 @@ import random
 import copy
 from typing import Any
 
+
 class Board:
     def __init__(self, game_name: str) -> None:
         """
@@ -338,3 +339,7 @@ class Board:
                 if self.board[5][x_start] != "-":
                     return False
         return True
+
+    def track_moves(self, car_key, direction):
+        print(f"car key: {car_key}")
+        print(f"direction: {direction}")
