@@ -27,8 +27,8 @@ if __name__ == "__main__":
     # Start timer
     start_time = time.time()
 
-    depth_first = DepthFirst(board)
-    depth_first.go()
+    # depth_first = DepthFirst(board)
+    # depth_first.go()
 
     # Run game until it is won
     while not board.is_won():
@@ -43,6 +43,7 @@ if __name__ == "__main__":
                 # Pick a random move
                 board = random_move(copy_boards)
                 board.print_board()
+                visualize_board(board.board, board.cars, save_path=f"code/visualization/board_images/board{num_moves}.png")
                 num_moves += 1
             else:
                 print("cannot move car")
@@ -57,4 +58,3 @@ if __name__ == "__main__":
     elapsed_time = round((end_time - start_time), 4)
     print(f"Puzzle was solved in {elapsed_time}s.")
     print(f"Number of moves: {num_moves}")
-    visualize_board(board.board, board.cars)

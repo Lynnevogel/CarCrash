@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def visualize_board(board, cars):
+def visualize_board(board, cars, save_path=None):
     dim = len(board)
     car_list = []
 
@@ -98,4 +98,9 @@ def visualize_board(board, cars):
     # timer = fig.canvas.new_timer(interval = 1000)
     # timer.add_callback(plt.close)
     # timer.start()
-    plt.show()
+
+    # Save the plot as an image
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+
+    # plt.show()
