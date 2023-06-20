@@ -60,12 +60,11 @@ if __name__ == "__main__":
         astar.solve()
 # ------------------------------------------ Hill Climber search ------------------------------------------------------------------------
     elif algorithm == 'hillclimber':
-        
-        solution = board.directions
-        hill_climber = HillClimber(board, solution)
-        hill_climber.go()
-
-
+        random = Random(board)
+        random_solution = random.go()
+        solution = random_solution.directions
+        hill_climber = HillClimber(random_solution, board, solution)
+        hill_climber.go(100)
 
     end_time = time.time()
     elapsed_time = round((end_time - start_time), 4)

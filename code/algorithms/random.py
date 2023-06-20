@@ -1,6 +1,7 @@
 from code.classes.board import Board
 from typing import Union
 import random
+from code.visualization.color_blocks import visualize_board
 
 class Random:
     def __init__(self, board) -> None:
@@ -30,3 +31,5 @@ class Random:
             else:
                 print("cannot move car")
         print(f"number of moves: {num_moves}")
+        # visualize_board(self.board.board, self.board.cars, None)
+        return self.board
