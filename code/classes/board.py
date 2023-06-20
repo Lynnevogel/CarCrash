@@ -27,8 +27,8 @@ class Board:
         self.add_cars(self.board)
         self.print_board()
 
-    def __repr__(self) -> str:
-        return f"{self.print_board()}"
+    # def __repr__(self) -> str:
+    #     return f"{self.print_board()}"
 
     def load_board(self) -> list[list[str]]:
         """
@@ -345,3 +345,53 @@ class Board:
                 if self.board[5][x_start] != "-":
                     return False
         return True
+
+    def use_solution(self, board, solution):
+        """
+        Uses a given solution to move the board into winning configuration.
+        """
+        for move in solution:
+            # Get car key and direction from move
+            car_key = move[0]
+            direction = move[1]
+            # Get car object from board.cars
+            board.current_car = board.cars[car_key]
+            # Assign current car coordinates
+            current_car_coordinates = board.current_car.car_coordinates
+            # print(f"car key: {car_key}, direction: {direction}, current car: {self.current_car}, coordinates: {current_car_coordinates}")
+
+            if direction == "right":
+                # print("right")
+                new_y_coordinate = int(current_car_coordinates[0][0])
+                new_x_coordinate = current_car_coordinates[1][1] + 1
+                new_right_car_coordinate = (new_y_coordinate, new_x_coordinate)
+                new_left_car_coordinate = current_car_coordinates[1]
+                # print(f"new coordinates: ({new_left_car_coordinate}, {new_right_car_coordinate})")
+            elif direction == "left":
+                # print("left")
+                new_y_coordinate = int(current_car_coordinates[0][0])
+                new_x_coordinate = current_car_coordinates[0][1] - 1
+                new_left_car_coordinate = (new_y_coordinate, new_x_coordinate)
+                new_right_car_coordinate = current_car_coordinates[0]
+                # print(f"new coordinates: ({new_left_car_coordinate}, {new_right_car_coordinate})")
+            elif direction == "up":
+                # print("up")
+                new_x_coordinate = int(current_car_coordinates[1][1])
+                new_y_coordinate = current_car_coordinates[0][0] - 1
+                new_left_car_coordinate = (new_y_coordinate, new_x_coordinate)
+                new_right_car_coordinate = current_car_coordinates[0]
+                # print(f"new coordinates: ({new_left_car_coordinate}, {new_right_car_coordinate})")
+            elif direction == "down":
+                # print("down")
+                new_x_coordinate = int(current_car_coordinates[1][1])
+                new_y_coordinate = current_car_coordinates[1][0] + 1
+                new_right_car_coordinate = (new_y_coordinate, new_x_coordinate)
+                new_left_car_coordinate = current_car_coordinates[1]
+                # print(f"new coordinates: ({new_left_car_coordinate}, {new_right_car_coordinate})")
+
+            # print(f"current car: {board.current_car}")
+            board.current_car.car_coordinates = [new_left_car_coordinate, new_right_car_coordinate]
+            # print(f"new coordinates? {board.current_car.car_coordinates}")
+            board.load_board()
+            board.add_cars(board.board)
+            board.print_board()

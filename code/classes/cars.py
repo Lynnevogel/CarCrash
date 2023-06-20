@@ -21,7 +21,7 @@ class Car:
         Postconditions:
             - Returns a string representation of the car object.
         """
-        return f"{self.car_name} + {self.car_orientation} + {self.car_col} + {self.car_row} + {self.car_len} + {self.car_coordinates}"
+        return f"{self.car_name} + {self.car_orientation} + {self.car_len} + {self.car_coordinates}"
 
     def car_placement(self) -> None:
         """

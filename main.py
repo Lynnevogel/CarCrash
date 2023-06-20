@@ -49,7 +49,14 @@ if __name__ == "__main__":
         solution = random_solution.directions
 
         hill_climber = HillClimber(random_solution, board, solution)
-        hill_climber.go(100)
+        hill_climber.go(500)
+    elif algorithm == 'test':
+        random = Random(board)
+        random_solution = random.go()
+        solution = random_solution.directions
+        random_solution.use_solution(board, solution)
+
+        
 
     end_time = time.time()
     elapsed_time = round((end_time - start_time), 4)
