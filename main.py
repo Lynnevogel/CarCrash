@@ -1,9 +1,10 @@
 from code.classes.board import Board
-from code.algorithms.random import random_move
+from code.algorithms.random import Random
 from code.visualization.color_blocks import visualize_board
 from code.algorithms.breadth_first import breadth_first
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.astar import AStar
+from code.algorithms.hillclimber import HillClimber
 
 from sys import argv
 import time
@@ -23,27 +24,27 @@ if __name__ == "__main__":
     game_name = argv[1]
     # Initialize game
     board = Board(game_name)
-    # Counter
-    num_moves = 0
     # Start timer
     start_time = time.time()
 # -------------------------------------- Random search ------------------------------------------------------------------------------
     if algorithm == 'random':
+        random = Random(board)
+        random.go()
         # Run game until it is won
-        while not board.is_won():
-            # Pick a random car
-            random_car = board.random_car()
-            # Find possible boards
-            copy_boards, can_move = board.get_possible_moves_2(board, random_car)
+        # while not board.is_won():
+        #     # Pick a random car
+        #     random_car = board.random_car()
+        #     # Find possible boards
+        #     copy_boards, can_move = board.get_possible_moves_2(board, random_car)
 
-            if can_move:
-                # Pick a random move
-                board = random_move(copy_boards)
-                board.print_board()
-                visualize_board(board.board, board.cars, save_path=f"code/visualization/board_images/board{num_moves}.png")
-                num_moves += 1
-            else:
-                print("cannot move car")
+        #     if can_move:
+        #         # Pick a random move
+        #         board = random_move(copy_boards)
+        #         board.print_board()
+        #         # visualize_board(board.board, board.cars, save_path=f"code/visualization/board_images/board{num_moves}.png")
+        #         num_moves += 1
+        #     else:
+        #         print("cannot move car")
                  
 # -------------------------------------- Breadth-first search ------------------------------------------------------------------------
     elif algorithm == 'bf':
@@ -57,11 +58,15 @@ if __name__ == "__main__":
     elif algorithm == 'astar':
         astar = AStar(board) 
         astar.solve()
-
+# ------------------------------------------ Hill Climber search ------------------------------------------------------------------------
+    elif algorithm == 'hillclimber':
+        
+        solution = board.directions
+        hill_climber = HillClimber(board, solution)
+        hill_climber.go()
 
 
 
     end_time = time.time()
     elapsed_time = round((end_time - start_time), 4)
     print(f"Puzzle was solved in {elapsed_time}s.")
-    print(f"Number of moves: {num_moves}")

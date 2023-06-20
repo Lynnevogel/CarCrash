@@ -3,6 +3,7 @@ import numpy as np
 from code.classes.cars import Car
 from typing import Union, Any
 
+
 def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: Union[None, Any]) -> None:
     dim = len(board)
     car_list = []
