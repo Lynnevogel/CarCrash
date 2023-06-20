@@ -29,24 +29,8 @@ if __name__ == "__main__":
 # -------------------------------------- Random search ------------------------------------------------------------------------------
     if algorithm == 'random':
         random = Random(board)
-        random.go()
-        # Run game until it is won
-        # while not board.is_won():
-        #     # Pick a random car
-        #     random_car = board.random_car()
-        #     # Find possible boards
-        #     copy_boards, can_move = board.get_possible_moves_2(board, random_car)
-
-        #     if can_move:
-        #         # Pick a random move
-        #         board = random_move(copy_boards)
-        #         board.print_board()
-        #         # visualize_board(board.board, board.cars, save_path=f"code/visualization/board_images/board{num_moves}.png")
-        #         num_moves += 1
-        #     else:
-        #         print("cannot move car")
-                 
-# -------------------------------------- Breadth-first search ------------------------------------------------------------------------
+        random.go()        
+# ------------------------------------- Breadth-first search ------------------------------------------------------------------------
     elif algorithm == 'bf':
         start_state = board
         breadth_first(start_state)
@@ -58,11 +42,12 @@ if __name__ == "__main__":
     elif algorithm == 'astar':
         astar = AStar(board) 
         astar.solve()
-# ------------------------------------------ Hill Climber search ------------------------------------------------------------------------
+# -------------------------------------- Hill Climber search ------------------------------------------------------------------------
     elif algorithm == 'hillclimber':
         random = Random(board)
         random_solution = random.go()
         solution = random_solution.directions
+
         hill_climber = HillClimber(random_solution, board, solution)
         hill_climber.go(100)
 
