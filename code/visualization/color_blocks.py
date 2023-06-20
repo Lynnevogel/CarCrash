@@ -14,7 +14,7 @@ def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: Uni
     grid = np.zeros((dim, dim), dtype=int)
 
     # Define color mappings for each car using hex values
-    car_colors = {'A': '#f8371c',
+    car_colors = {'A': '#1f9dfa',
                   'B': '#f7175d',
                   'C': '#b314e2',
                   'D': '#6a2af2',
@@ -22,10 +22,10 @@ def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: Uni
                   'F': '#24cdf5',
                   'G': '#16aa93',
                   'H': '#43c92d',
-                  'I': '#fb8504',
+                  'I': '#ff4d00',
                   'J': '#d5e70f',
-                  'K': '#fcec61',
-                  'L': '#ffb800',
+                  'K': '#d4de6a',
+                  'L': '#facc00',
                   'M': '#f09c39',
                   'N': '#eb6437',
                   'O': '#ff6561',
@@ -57,7 +57,7 @@ def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: Uni
                   'AQ': '#ae0456',
                   'AR': '#2c0fd3',
                   'AS': '#0f6972',
-                  'X': '#1f9dfa'}
+                  'X': '#e00d0d'}
 
     # Loop through the board and assign values to the grid based on the car positions
     for row in range(dim):
@@ -102,7 +102,7 @@ def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: Uni
     # timer.start()
 
     # Save the plot as an image
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    # if save_path:
+    #     plt.savefig(save_path, dpi=300, bbox_inches='tight')
 
     # plt.show()

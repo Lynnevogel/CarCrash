@@ -16,6 +16,7 @@ class Board:
         # Initialize board
         self.board = [["-" for _ in range(self.dim)] for _ in range(self.dim)]
         self.cars: dict[str, Car] = {}
+        self.directions = []
 
          # Load data
         self.load_cars(f"gameboards/Rushhour{game_name}.csv")
@@ -268,11 +269,13 @@ class Board:
             x_coordinate = new_car_coordinates[1]
             # Check if car needs to move to the left or right
             if x_coordinate > car_x_coordinate:
+                direction = "right"
                 # Add new coordinates to end of car coordinates list
                 current_car_coordinates.append(new_car_coordinates)
                 # Remove old coordinates from top of list
                 current_car_coordinates.pop(0)
             else:
+                direction = "left"
                 # Add new coordinates at the top of car coordinates list
                 current_car_coordinates.insert(0, new_car_coordinates)
                 # Remove old coordinates at the end of the car coordinates list
@@ -284,17 +287,20 @@ class Board:
             y_coordinate = new_car_coordinates[0]
             # Check if car needst to move up or down
             if y_coordinate > car_y_coordinate:
+                direction = "down"
                 # Add new car coordiantes to end of car coordinates list
                 current_car_coordinates.append(new_car_coordinates)
                 # Remove old coordinates from top of list
                 current_car_coordinates.pop(0)
             else:
+                direction = "up"
                 # Add new coordinates at the top of the car coordinates list
                 current_car_coordinates.insert(0, new_car_coordinates)
                 # Remove old coordinates at the end of the car coordinates list
                 current_car_coordinates.pop()
 
         self.current_car.car_coordinates = current_car_coordinates
+        self.directions.append([car_key, direction])
         # Load board with new car coordinates
         new_board = self.load_board()
         new_board = self.add_cars(new_board)
@@ -339,7 +345,3 @@ class Board:
                 if self.board[5][x_start] != "-":
                     return False
         return True
-
-    def track_moves(self, car_key: str, direction: str) -> None:
-        print(f"car key: {car_key}")
-        print(f"direction: {direction}")
