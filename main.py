@@ -1,7 +1,7 @@
 from code.classes.board import Board
 from code.algorithms.random import Random
 from code.visualization.color_blocks import visualize_board
-from code.algorithms.breadth_first import breadth_first
+from code.algorithms.breadth_first import BreadthFirst
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.astar import AStar
 from code.algorithms.hillclimber import HillClimber
@@ -32,8 +32,8 @@ if __name__ == "__main__":
         random.go()        
 # ------------------------------------- Breadth-first search ------------------------------------------------------------------------
     elif algorithm == 'bf':
-        start_state = board
-        breadth_first(start_state)
+        breadth_first = BreadthFirst(board)
+        breadth_first.go()
 # -------------------------------------- Depth-first search ------------------------------------------------------------------------
     elif algorithm == 'df':
         depth_first = DepthFirst(board)

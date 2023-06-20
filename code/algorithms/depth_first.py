@@ -37,9 +37,9 @@ class DepthFirst:
         elif move_count > 0: 
             self.number_of_moves.append([new_board.directions, move_count])
         
-        if depth <= self.best_value:
-            self.best_solution = new_board
-            self.best_value = depth
+        # if depth <= self.best_value:
+        #     self.best_solution = new_board
+        #     self.best_value = depth
         print(move_count)
 
 
