@@ -10,6 +10,7 @@ class DepthFirst:
         self.board = copy.deepcopy(board)
         self.states = [copy.deepcopy(self.board)]
         self.existing_boards = [self.board.board]
+        self.number_of_moves = []
         
         self.best_solution = None
         self.best_value = float('inf')
@@ -26,36 +27,35 @@ class DepthFirst:
 
 
     def check_solution(self, new_board: Optional[Board], depth: int) -> None:
-        new_value = depth
-        # print(f"New value: {new_value}")
-        old_value = self.best_value
-        print(f"old value: {self.best_value}")
-        print(f"best value: {self.best_value}")
-        print(f"depth: {depth}")
 
-        if new_value <= old_value:
+        move_count = len(new_board.directions)
+        
+        if self.number_of_moves:
+                lowest_value = min(move[1] for move in self.number_of_moves)
+                if move_count < lowest_value:
+                    self.number_of_moves.append([new_board.directions, move_count])
+        elif move_count > 0: 
+            self.number_of_moves.append([new_board.directions, move_count])
+        
+        if depth <= self.best_value:
             self.best_solution = new_board
-            self.best_value = new_value
-        # print(f"best solution: {len(self.best_solution)}")
+            self.best_value = depth
+        print(move_count)
 
 
     def go(self) -> None:
         depth = 0
-        
         while self.states:
-            # print(f"aantal borden: {len(self.existing_boards)}")
-            # print(f"states: {self.states}")  
-            # print(f"aantal states: {len(self.states)}")
             new_board = self.get_next_state()
-            depth += 1 
-            print(f"best value: {self.best_value}")
-
+            depth += 1
             if new_board.is_won():
-                # print("WON")
+                print("WON")
+                # print(new_board.directions)
+
                 self.check_solution(new_board, depth)
             else:
                 for car in new_board.cars:
                     child = copy.deepcopy(new_board)
                     moves, can_move = child.get_possible_moves_2(child, car)
                     self.get_all_possible_states(moves, can_move)
-        print(f"aantal directions: {len(new_board.directions)}")
+        print(self.number_of_moves)
