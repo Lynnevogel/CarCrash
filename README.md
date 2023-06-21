@@ -8,7 +8,7 @@ Rush Hour is een schuifpuzzel bestaande uit een veld, gevuld met auto's. Doorgaa
 De statespace van de case kan berekend worden door alle mogelijke plaatsen voor alle auto's bij elkaar op te tellen. Wanneer het bord n lang is, kan de auto op n - lengte_auto aantal plekken staan. Hierbij wordt geen rekening gehouden met dat auto's niet over elkaar heen mogen bewegen. Dit geldt hetzelfde voor de vrachtwagens. Dit levert de volgende formule op:
 
 ```
-(n - lengte) ^ aantal_auto's + (n - lengte_vrachtwagen) ^ aantal_vrachtwagens
+(n - lengte_auto) ^ aantal_auto's + (n - lengte_vrachtwagen) ^ aantal_vrachtwagens
 ```
 
 ## Aan de slag
