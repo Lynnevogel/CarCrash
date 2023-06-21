@@ -23,10 +23,10 @@ class HillClimber:
 
         for iteration in range(iterations):
             new_solution = self.get_new_solution()
-            
+
             if len(new_solution.directions) < self.best_solution:
                 self.best_solution = len(new_solution.directions)
                 self.solution = new_solution.directions
-                
+      
         print(f"new best solution: {self.best_solution}")
         print(f"new best directions: {self.solution}")
