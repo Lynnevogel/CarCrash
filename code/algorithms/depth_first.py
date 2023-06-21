@@ -27,7 +27,6 @@ class DepthFirst:
             for move in moves:
                 if move.board not in self.existing_boards:
                     self.states.append(move)
-                    self.existing_boards.append(move.board)
 
 
     def check_solution(self, new_board: Optional[Board], depth: int) -> None:
@@ -46,9 +45,7 @@ class DepthFirst:
 
     def go(self) -> None:
         depth = 0
-        # while self.states:
-        for i in range(3):
-            print(i)
+        while self.states:
             new_board = self.get_next_state()
             depth += 1
             if new_board.is_won():
@@ -61,5 +58,5 @@ class DepthFirst:
                 for car in new_board.cars:
                     child = copy.deepcopy(new_board)
                     moves, can_move = child.get_possible_moves_2(child, car)
-                    self.get_all_possible_states(moves, can_move)
+                    self.get_all_possible_states(new_board, can_move, moves)
         print(self.number_of_moves)
