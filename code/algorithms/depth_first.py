@@ -25,13 +25,13 @@ class DepthFirst:
                     self.states.append(move)
                     self.existing_boards.append(move.board)
 
-
     def check_solution(self, new_board: Optional[Board], depth: int) -> None:
 
         move_count = len(new_board.directions)
-        
+
         if self.number_of_moves:
                 lowest_value = min(move[1] for move in self.number_of_moves)
+                print(f"lowest_value: {lowest_value}")
                 if move_count < lowest_value:
                     self.number_of_moves.append([new_board.directions, move_count])
         elif move_count > 0: 
@@ -45,8 +45,11 @@ class DepthFirst:
 
     def go(self) -> None:
         depth = 0
-        while self.states:
+        # while self.states:
+        for i in range(3):
+            print(i)
             new_board = self.get_next_state()
+            print(f"new board: {new_board}")
             depth += 1
             if new_board.is_won():
                 print("WON")
@@ -58,4 +61,6 @@ class DepthFirst:
                     child = copy.deepcopy(new_board)
                     moves, can_move = child.get_possible_moves_2(child, car)
                     self.get_all_possible_states(moves, can_move)
+                    print(f"moves: {moves}")
         print(self.number_of_moves)
+        

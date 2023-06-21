@@ -29,7 +29,7 @@ if __name__ == "__main__":
 # -------------------------------------- Random search ------------------------------------------------------------------------------
     if algorithm == 'random':
         random = Random(board)
-        random.go()        
+        random.go()     
 # ------------------------------------- Breadth-first search ------------------------------------------------------------------------
     elif algorithm == 'bf':
         breadth_first = BreadthFirst(board)

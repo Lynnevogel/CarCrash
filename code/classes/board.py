@@ -2,6 +2,7 @@ from .cars import Car
 import random
 import copy
 from typing import Any
+import csv
 
 
 class Board:
@@ -27,8 +28,8 @@ class Board:
         self.add_cars(self.board)
         self.print_board()
 
-    # def __repr__(self) -> str:
-    #     return f"{self.print_board()}"
+    def __repr__(self) -> str:
+        return f"{self.print_board()}"
 
     def load_board(self) -> list[list[str]]:
         """
@@ -269,13 +270,13 @@ class Board:
             x_coordinate = new_car_coordinates[1]
             # Check if car needs to move to the left or right
             if x_coordinate > car_x_coordinate:
-                direction = "right"
+                direction = 1
                 # Add new coordinates to end of car coordinates list
                 current_car_coordinates.append(new_car_coordinates)
                 # Remove old coordinates from top of list
                 current_car_coordinates.pop(0)
             else:
-                direction = "left"
+                direction = -1
                 # Add new coordinates at the top of car coordinates list
                 current_car_coordinates.insert(0, new_car_coordinates)
                 # Remove old coordinates at the end of the car coordinates list
@@ -287,13 +288,13 @@ class Board:
             y_coordinate = new_car_coordinates[0]
             # Check if car needst to move up or down
             if y_coordinate > car_y_coordinate:
-                direction = "down"
+                direction = 1
                 # Add new car coordiantes to end of car coordinates list
                 current_car_coordinates.append(new_car_coordinates)
                 # Remove old coordinates from top of list
                 current_car_coordinates.pop(0)
             else:
-                direction = "up"
+                direction = -1
                 # Add new coordinates at the top of the car coordinates list
                 current_car_coordinates.insert(0, new_car_coordinates)
                 # Remove old coordinates at the end of the car coordinates list
@@ -395,3 +396,15 @@ class Board:
             board.load_board()
             board.add_cars(board.board)
             board.print_board()
+
+    def output(self, solution):
+        with open("output/output.csv", "w") as file:
+            writer = csv.writer(file)
+            field = ["car", "move"]
+
+            writer.writerow(field)
+
+            for move in solution:
+                car_key = move[0]
+                direction = move[1]
+                writer.writerow([car_key, direction])
