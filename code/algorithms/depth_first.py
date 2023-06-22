@@ -12,8 +12,9 @@ class DepthFirst:
         self.states = [copy.deepcopy(self.board)]
         self.archive = {self.board.get_representation(self.board)}
         self.number_of_moves = []
-        self.depth_list = []
-        self.depth = 0  
+
+        self.depth_list_won = []
+        self.lowest_depth_won = 0
     
         self.best_solution = []
         self.best_value = float('inf')
@@ -61,9 +62,6 @@ class DepthFirst:
             new_board = self.get_next_state()
             new_board_representation = new_board.get_representation(new_board)
             self.archive.add(new_board_representation)
-            self.depth += 1
-            self.depth_list.append(self.depth)
-            print(f"depth: {self.depth}")
             print(f"states: {len(self.states)}")
             if new_board.is_won():
                 print("WON")

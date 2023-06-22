@@ -5,6 +5,7 @@ from code.algorithms.breadth_first import BreadthFirst
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.astar import AStar
 from code.algorithms.hillclimber import HillClimber
+from code.algorithms.depthfirstlimit import DepthFirstLimit
 from code.algorithms.iterativedeepening import IterativeDeepening
 
 from sys import argv
@@ -53,9 +54,9 @@ if __name__ == "__main__":
         hill_climber.go(500)
     
     # ----------------------------------- Iterative Deepening  ------------------------------------------------------------------------
-    elif algorithm == 'iterative':
-        iterative = IterativeDeepening(board)
-        iterative.go()
+    elif algorithm == 'depthlimit':
+        depth_limit = DepthFirstLimit(board)
+        depth_limit.go()
 
         
 
