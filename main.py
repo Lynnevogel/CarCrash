@@ -5,6 +5,7 @@ from code.algorithms.breadth_first import BreadthFirst
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.astar import AStar
 from code.algorithms.hillclimber import HillClimber
+from code.algorithms.iterativedeepening import IterativeDeepening
 
 from sys import argv
 import time
@@ -50,11 +51,11 @@ if __name__ == "__main__":
 
         hill_climber = HillClimber(random_solution, board, solution)
         hill_climber.go(500)
-    elif algorithm == 'test':
-        random = Random(board)
-        random_solution = random.go()
-        solution = random_solution.directions
-        random_solution.use_solution(board, solution)
+    
+    # ----------------------------------- Iterative Deepening  ------------------------------------------------------------------------
+    elif algorithm == 'iterative':
+        iterative = IterativeDeepening(board)
+        iterative.go()
 
         
 

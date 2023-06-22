@@ -28,11 +28,11 @@ class Board:
         # Intialize first board
         self.load_board()
         self.add_cars(self.board)
-        # self.print_board()
+        self.print_board()
 
 
-    def __repr__(self) -> str:
-        return f"{self.print_board()}"
+    # def __repr__(self) -> str:
+    #     return f"{self.print_board()}"
     
     def get_representation(self, board):
         representation = re.sub(r"[^\w-]", "", str(board))
@@ -380,7 +380,7 @@ class Board:
             board.current_car.car_coordinates = [new_left_car_coordinate, new_right_car_coordinate]
             board.load_board()
             board.add_cars(board.board)
-            board.print_board()
+            # board.print_board()
 
     def output(self, solution: list[list[str]]) -> None:
         """
