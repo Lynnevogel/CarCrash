@@ -57,6 +57,8 @@ class DepthFirst:
             new_board = self.get_next_state()
             new_board_representation = new_board.get_representation(new_board)
             self.archive.add(new_board_representation)
+            
+
             # print(self.archive)
             if new_board.is_won():
                 print("WON")

@@ -23,14 +23,14 @@ class Board:
          # Load data
         self.load_cars(f"gameboards/Rushhour{game_name}.csv")
         self.current_car: Car = self.cars['X']
-        
+
         # Intialize first board
         self.load_board()
         self.add_cars(self.board)
         self.print_board()
 
-    def __repr__(self) -> str:
-        return f"{self.print_board()}"
+    # def __repr__(self) -> str:
+    #     return f"{self.print_board()}"
 
     def get_representation(self, board):
         representation = re.sub(r"[^\w-]", "", str(board))
@@ -111,15 +111,9 @@ class Board:
             list_coordinates = self.current_car.car_coordinates
             for coordinates in list_coordinates:
                 # Find x and y coordinate
-                x_coordinate = coordinates[0]
-                y_coordinate = coordinates[1]
-                # Loop through board
-                for row in range(self.dim):
-                    for col in range(self.dim):
-                        # Find car coordinates in board
-                        if row is x_coordinate and col is y_coordinate:
-                            # Add car_key to coordinate
-                            board[row][col] = f"{car_key}"
+                x_coordinate = coordinates[1]
+                y_coordinate = coordinates[0]
+                board[y_coordinate][x_coordinate] = f"{car_key}"
         return board
 
     def random_car(self) -> str:
@@ -199,17 +193,17 @@ class Board:
         Postconditions:
             - The possible coordinates for the car are determined and returned in a list.
         """
-        self.current_car = self.cars[car_key]
+        board.current_car = board.cars[car_key]
         # Find coordinates of current car
-        list_coordinates = self.current_car.car_coordinates
+        list_coordinates = board.current_car.car_coordinates
         # Make list to add boards
         copy_boards = []
         # get first car coordinate
         y, x = list_coordinates[0]
         # Check orientation
-        if self.current_car.car_orientation == "H":
+        if board.current_car.car_orientation == "H":
             check_list = [(0, self.current_car.car_len), (0, -1)]
-        elif self.current_car.car_orientation == "V":
+        elif board.current_car.car_orientation == "V":
             check_list = [(self.current_car.car_len, 0), (-1, 0)]
         else:
             print("Invalid orientation")
@@ -219,7 +213,7 @@ class Board:
             new_y = y + dy
             new_x = x + dx
             # Check if grid of new coordinates is empty and not out of bounds
-            if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
+            if new_y >= 0 and new_y < board.dim and new_x >= 0 and new_x < board.dim and board.board[new_y][new_x] == "-":
                 possible_coordinate = (new_y, new_x) 
                 # Make copy of board
                 copy_board = copy.deepcopy(board)
@@ -257,7 +251,7 @@ class Board:
         # Check orientation
         if self.current_car.car_orientation == "H":
             # Assign old car coordinate x
-            car_x_coordinate = int(current_car_coordinates[1][1])
+            car_x_coordinate = int(current_car_coordinates[-1][1])
             # Assign new car coordinate x
             x_coordinate = new_car_coordinates[1]
             # Check if car needs to move to the left or right
@@ -275,7 +269,7 @@ class Board:
                 current_car_coordinates.pop()
         elif self.current_car.car_orientation == "V":
             # Assign old car coordinate y
-            car_y_coordinate = int(current_car_coordinates[1][0])
+            car_y_coordinate = int(current_car_coordinates[-1][0])
             # Assing new car coordinate y
             y_coordinate = new_car_coordinates[0]
             # Check if car needst to move up or down
