@@ -184,6 +184,7 @@ class Board:
 
         return copy_boards, True
     
+    
     def get_possible_moves_2(self, board, car_key: str) -> tuple[list[Any], bool]:
         """
         Determines the possible moves for a given car.
@@ -199,39 +200,26 @@ class Board:
         copy_boards = []
         # Loop through car coordinates of current car
         for car_position in list_coordinates:
-            y, x = car_position
-
             # Check orientation
+            y, x = car_position
             if self.current_car.car_orientation == "H":
+                check_list = [(0, 1), (0, -1)]
+            else:
+                check_list = [(1, 0), (-1, 0)]
                 # Loop through horizontal grid 
-                for dy, dx in [(0, 1), (0, -1)]:
-                    # Assign new coordinates
-                    new_y = y + dy
-                    new_x = x + dx
-                    # Check if grid of new coordinates is empty and not out of bounds
-                    if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
-                        possible_coordinate = (new_y, new_x) 
-                        # Make copy of board
-                        copy_board = copy.deepcopy(board)
-                        # Make movement in copied board
-                        copy_board.move(car_key, possible_coordinate)
-                        # Add copied board with movement cars to list
-                        copy_boards.append(copy_board)
-            elif self.current_car.car_orientation == "V":
-                # Loop through vertical grid
-                for dy, dx in [(1, 0), (-1, 0)]:
-                    # Assign new coordinates
-                    new_y = y + dy
-                    new_x = x + dx
-                    # Check if grid of new coordinates is empty and not out of bounds
-                    if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
-                        possible_coordinate = (new_y, new_x)
-                        # Make copy of board
-                        copy_board = copy.deepcopy(self)
-                        # Make movement in copied board
-                        copy_board.move(car_key, possible_coordinate)
-                        # Add copied board with movement cars to list
-                        copy_boards.append(copy_board)
+            for dy, dx in check_list:
+                # Assign new coordinates
+                new_y = y + dy
+                new_x = x + dx
+                # Check if grid of new coordinates is empty and not out of bounds
+                if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
+                    possible_coordinate = (new_y, new_x) 
+                    # Make copy of board
+                    copy_board = copy.deepcopy(board)
+                    # Make movement in copied board
+                    copy_board.move(car_key, possible_coordinate)
+                    # Add copied board with movement cars to list
+                    copy_boards.append(copy_board)
 
             else:
                 print("Invalid orientation")

@@ -41,7 +41,7 @@ if __name__ == "__main__":
 # ------------------------------------------ A* search ------------------------------------------------------------------------
     elif algorithm == 'astar':
         astar = AStar(board) 
-        astar.solve()
+        astar.go()
 # -------------------------------------- Hill Climber search ------------------------------------------------------------------------
     elif algorithm == 'hillclimber':
         random = Random(board)
