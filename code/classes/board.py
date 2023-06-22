@@ -3,6 +3,7 @@ import random
 import copy
 from typing import Any
 import csv
+import re
 
 
 class Board:
@@ -28,8 +29,13 @@ class Board:
         self.add_cars(self.board)
         self.print_board()
 
-    def __repr__(self) -> str:
-        return f"{self.print_board()}"
+    # def __repr__(self) -> str:
+    #     return f"{self.print_board()}"
+    
+    def get_representation(self, board):
+        representation = re.sub(r"[^\w-]", "", str(board))
+        representation = re.sub(r"'", "", representation)
+        return representation
 
     def load_board(self) -> list[list[str]]:
         """

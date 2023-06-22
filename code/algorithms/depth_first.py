@@ -10,7 +10,7 @@ class DepthFirst:
     def __init__(self, board: Board) -> None:
         self.board = copy.deepcopy(board)
         self.states = [copy.deepcopy(self.board)]
-        self.archive = [self.board.board]
+        self.archive = {self.board.get_representation(self.board)}
         self.number_of_moves = []
     
         self.best_solution = []
@@ -27,9 +27,10 @@ class DepthFirst:
         Adds states to the states list and keeps an archive of states that should not be 
         added to the states list.
         """
+        
         if can_move:
             for move in moves:
-                if move.board not in self.archive:
+                if move.get_representation(move.board) not in self.archive:
                     self.states.append(move)
 
     def check_solution(self, new_board: Optional[Board]) -> None:
@@ -40,7 +41,6 @@ class DepthFirst:
 
         if self.number_of_moves:
                 lowest_value = min(self.number_of_moves)
-                print(f"lowest_value: {lowest_value}")
                 if move_count < lowest_value:
                     self.number_of_moves.append(move_count)
                     self.best_solution = []
@@ -54,14 +54,16 @@ class DepthFirst:
         """
         while self.states:
             new_board = self.get_next_state()
-            self.archive.append(new_board.board)
+            new_board_representation = new_board.get_representation(new_board)
+            self.archive.add(new_board_representation)
             if new_board.is_won():
                 print("WON")
                 # remove winning state from archive
-                self.archive.pop()
-                print(self.archive)
+                self.archive.remove(new_board_representation)
+                # print(self.archive)
                 # check whether solution is better than current best solution
                 self.check_solution(new_board)
+                print(f"best solution: {self.best_solution}")
             else:
                 for car in new_board.cars:
                     child = copy.deepcopy(new_board)
