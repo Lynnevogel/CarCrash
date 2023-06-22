@@ -53,10 +53,15 @@ if __name__ == "__main__":
         hill_climber = HillClimber(random_solution, board, solution)
         hill_climber.go(500)
     
-    # ----------------------------------- Iterative Deepening  ------------------------------------------------------------------------
-    elif algorithm == 'depthlimit':
+    # ----------------------------------- Depth First Limit  ------------------------------------------------------------------------
+    elif algorithm == 'dfl':
         depth_limit = DepthFirstLimit(board)
         depth_limit.go()
+
+    # ----------------------------------- Iterative Deepening  ------------------------------------------------------------------------
+    elif algorithm == 'iterative':
+        iterative = IterativeDeepening(board)
+        iterative.go()
 
         
 
