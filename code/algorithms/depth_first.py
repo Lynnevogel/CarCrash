@@ -30,7 +30,7 @@ class DepthFirst:
         
         if can_move:
             for move in moves:
-                if move.get_representation(move.board) not in self.archive:
+                if move.get_representation(move) not in self.archive and len(move.directions) < 30:
                     self.states.append(move)
 
     def check_solution(self, new_board: Optional[Board]) -> None:
@@ -48,6 +48,8 @@ class DepthFirst:
                     self.best_solution.append(new_board.directions)
         elif move_count > 0:
             self.number_of_moves.append(move_count)
+            
+        print(f"number of moves: {move_count}")
 
     def go(self) -> None:
         """
@@ -64,10 +66,9 @@ class DepthFirst:
                 print("WON")
                 # remove winning state from archive
                 self.archive.remove(new_board_representation)
-                # print(self.archive)
+                print(self.archive)
                 # check whether solution is better than current best solution
                 self.check_solution(new_board)
-                print(f"best solution: {self.best_solution}")
             else:
                 for car in new_board.cars:
                     child = copy.deepcopy(new_board)
