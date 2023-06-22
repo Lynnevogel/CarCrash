@@ -19,6 +19,7 @@ class Random:
         while not self.board.is_won():
             # Pick a random car
             random_car = self.board.random_car()
+            print(random_car)
             # Find possible boards
             copy_boards, can_move = self.board.get_possible_moves_2(self.board, random_car)
 

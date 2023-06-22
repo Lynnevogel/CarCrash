@@ -29,9 +29,9 @@ class Board:
         self.add_cars(self.board)
         self.print_board()
 
-    # def __repr__(self) -> str:
-    #     return f"{self.print_board()}"
-    
+    def __repr__(self) -> str:
+        return f"{self.print_board()}"
+
     def get_representation(self, board):
         representation = re.sub(r"[^\w-]", "", str(board))
         representation = re.sub(r"'", "", representation)
@@ -204,32 +204,29 @@ class Board:
         list_coordinates = self.current_car.car_coordinates
         # Make list to add boards
         copy_boards = []
-        # Loop through car coordinates of current car
-        for car_position in list_coordinates:
-            # Check orientation
-            y, x = car_position
-            if self.current_car.car_orientation == "H":
-                check_list = [(0, 1), (0, -1)]
-            elif self.current_car.car_orientation == "V":
-                check_list = [(1, 0), (-1, 0)]
-            else:
-                print("Invalid orientation")
-                # Loop through horizontal grid 
-            for dy, dx in check_list:
-                # Assign new coordinates
-                new_y = y + dy
-                new_x = x + dx
-                # Check if grid of new coordinates is empty and not out of bounds
-                if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
-                    possible_coordinate = (new_y, new_x) 
-                    # Make copy of board
-                    copy_board = copy.deepcopy(board)
-                    # Make movement in copied board
-                    copy_board.move(car_key, possible_coordinate)
-                    # Add copied board with movement cars to list
-                    copy_boards.append(copy_board)
-
-            
+        # get first car coordinate
+        y, x = list_coordinates[0]
+        # Check orientation
+        if self.current_car.car_orientation == "H":
+            check_list = [(0, self.current_car.car_len), (0, -1)]
+        elif self.current_car.car_orientation == "V":
+            check_list = [(self.current_car.car_len, 0), (-1, 0)]
+        else:
+            print("Invalid orientation")
+            # Loop through horizontal grid 
+        for dy, dx in check_list:
+            # Assign new coordinates
+            new_y = y + dy
+            new_x = x + dx
+            # Check if grid of new coordinates is empty and not out of bounds
+            if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
+                possible_coordinate = (new_y, new_x) 
+                # Make copy of board
+                copy_board = copy.deepcopy(board)
+                # Make movement in copied board
+                copy_board.move(car_key, possible_coordinate)
+                # Add copied board with movement cars to list
+                copy_boards.append(copy_board)
 
         # If car cannot move, an empty list and False wil be returned
         if len(copy_boards) == 0:

@@ -38,6 +38,7 @@ class DepthFirst:
         Checks whether the solution contains less moves than the current best solution.
         """
         move_count = len(new_board.directions)
+        print(f"move count: {move_count}")
 
         if self.number_of_moves:
                 lowest_value = min(self.number_of_moves)
@@ -56,6 +57,7 @@ class DepthFirst:
             new_board = self.get_next_state()
             new_board_representation = new_board.get_representation(new_board)
             self.archive.add(new_board_representation)
+            # print(self.archive)
             if new_board.is_won():
                 print("WON")
                 # remove winning state from archive
