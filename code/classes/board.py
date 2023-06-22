@@ -4,6 +4,7 @@ import copy
 from typing import Any
 import csv
 import re
+import time
 
 
 class Board:
@@ -27,7 +28,8 @@ class Board:
         # Intialize first board
         self.load_board()
         self.add_cars(self.board)
-        self.print_board()
+        # self.print_board()
+
 
     def __repr__(self) -> str:
         return f"{self.print_board()}"
@@ -36,6 +38,11 @@ class Board:
         representation = re.sub(r"[^\w-]", "", str(board))
         representation = re.sub(r"'", "", representation)
         return representation+str(len(board.directions))
+    
+    def get_representation_breadth(self, board):
+        representation = re.sub(r"[^\w-]", "", str(board))
+        representation = re.sub(r"'", "", representation)
+        return representation
 
     def load_board(self) -> list[list[str]]:
         """
