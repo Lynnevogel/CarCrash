@@ -204,8 +204,10 @@ class Board:
             y, x = car_position
             if self.current_car.car_orientation == "H":
                 check_list = [(0, 1), (0, -1)]
-            else:
+            elif self.current_car.car_orientation == "V":
                 check_list = [(1, 0), (-1, 0)]
+            else:
+                print("Invalid orientation")
                 # Loop through horizontal grid 
             for dy, dx in check_list:
                 # Assign new coordinates
@@ -221,8 +223,7 @@ class Board:
                     # Add copied board with movement cars to list
                     copy_boards.append(copy_board)
 
-            else:
-                print("Invalid orientation")
+            
 
         # If car cannot move, an empty list and False wil be returned
         if len(copy_boards) == 0:
