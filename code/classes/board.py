@@ -347,7 +347,7 @@ class Board:
                     return False
         return True
 
-    def use_solution(self, board, solution):
+    def use_solution(self, board: "Board", solution: list[list[str]]) -> None:
         """
         Uses a given solution to move the board into winning configuration.
         """
@@ -389,7 +389,10 @@ class Board:
             board.add_cars(board.board)
             board.print_board()
 
-    def output(self, solution):
+    def output(self, solution: list[list[str]]) -> None:
+        """
+        Writes a solution for a board into a csv file.
+        """
         with open("output/output.csv", "w") as file:
             writer = csv.writer(file)
             field = ["car", "move"]
