@@ -62,3 +62,7 @@ class HillClimber(BreadthFirst):
         Checks whether possible moves is in the possible states set.
         """
         return move_representation in self.all_random_states
+
+    def run_iterations(self, iterations):
+        for iteration in iterations:
+            pass
