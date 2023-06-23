@@ -33,9 +33,6 @@ class Board:
 
     def __repr__(self) -> str:
         return f"{self.print_board()}"
-
-    # def __repr__(self) -> str:
-    #     return f"{self.print_board()}"
     
     def get_representation(self, board):
         representation = re.sub(r"[^\w-]", "", str(board))
@@ -121,8 +118,8 @@ class Board:
             list_coordinates = self.current_car.car_coordinates
             for coordinates in list_coordinates:
                 # Find x and y coordinate
-                x_coordinate = coordinates[1]
                 y_coordinate = coordinates[0]
+                x_coordinate = coordinates[1]
                 board[y_coordinate][x_coordinate] = f"{car_key}"
         return board
 
@@ -359,27 +356,43 @@ class Board:
             if board.current_car.car_orientation == "H":
                 if direction == 1:
                     new_y_coordinate = int(current_car_coordinates[0][0])
-                    new_x_coordinate = current_car_coordinates[1][1] + 1
+                    new_x_coordinate = current_car_coordinates[-1][1] + 1
                     new_right_car_coordinate = (new_y_coordinate, new_x_coordinate)
                     new_left_car_coordinate = current_car_coordinates[1]
+                    print(f"current car coordinates before appending: {current_car_coordinates}")
+                    current_car_coordinates.append(new_right_car_coordinate)
+                    current_car_coordinates.pop(0)
+                    print(f"current car coordinates: {current_car_coordinates}")
                 elif direction == -1:
                     new_y_coordinate = int(current_car_coordinates[0][0])
-                    new_x_coordinate = current_car_coordinates[0][1] - 1
+                    new_x_coordinate = current_car_coordinates[0][-1] - 1
                     new_left_car_coordinate = (new_y_coordinate, new_x_coordinate)
                     new_right_car_coordinate = current_car_coordinates[0]
+                    print(f"current car coordinates before appending: {current_car_coordinates}")
+                    current_car_coordinates.insert(0, new_left_car_coordinate)
+                    current_car_coordinates.pop()
+                    print(f"current car coordinates: {current_car_coordinates}")
             elif board.current_car.car_orientation == "V":
                 if direction == -1:
-                    new_x_coordinate = int(current_car_coordinates[1][1])
+                    new_x_coordinate = int(current_car_coordinates[0][1])
                     new_y_coordinate = current_car_coordinates[0][0] - 1
                     new_left_car_coordinate = (new_y_coordinate, new_x_coordinate)
                     new_right_car_coordinate = current_car_coordinates[0]
+                    print(f"current car coordinates before appending: {current_car_coordinates}")
+                    current_car_coordinates.insert(0, new_left_car_coordinate)
+                    current_car_coordinates.pop()
+                    print(f"current car coordinates: {current_car_coordinates}")
                 elif direction == 1:
-                    new_x_coordinate = int(current_car_coordinates[1][1])
-                    new_y_coordinate = current_car_coordinates[1][0] + 1
+                    new_x_coordinate = int(current_car_coordinates[0][1])
+                    new_y_coordinate = current_car_coordinates[-1][0] + 1
                     new_right_car_coordinate = (new_y_coordinate, new_x_coordinate)
                     new_left_car_coordinate = current_car_coordinates[1]
+                    print(f"current car coordinates before appending: {current_car_coordinates}")
+                    current_car_coordinates.append(new_right_car_coordinate)
+                    current_car_coordinates.pop(0)
+                    print(f"current car coordinates: {current_car_coordinates}")
 
-            board.current_car.car_coordinates = [new_left_car_coordinate, new_right_car_coordinate]
+            board.current_car.car_coordinates = current_car_coordinates
             board.load_board()
             board.add_cars(board.board)
             # board.print_board()
