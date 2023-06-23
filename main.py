@@ -47,8 +47,7 @@ if __name__ == "__main__":
 # -------------------------------------- Hill Climber search ------------------------------------------------------------------------
     elif algorithm == 'hillclimber':
         hill_climber = HillClimber(board)
-        hill_climber.generate_random_solutions(3)
-        hill_climber.go()
+        hill_climber.run_iterations(3)
     elif algorithm == 'test':
         random = Random(board)
         random_solution = random.go()

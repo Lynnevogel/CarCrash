@@ -64,5 +64,7 @@ class HillClimber(BreadthFirst):
         return move_representation in self.all_random_states
 
     def run_iterations(self, iterations):
-        for iteration in iterations:
-            pass
+        for _ in range(iterations):
+            self.generate_random_solutions(3)
+            self.go()
+            self.all_random_states = set()

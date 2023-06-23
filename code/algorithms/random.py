@@ -34,5 +34,5 @@ class Random:
         # visualize_board(self.board.board, self.board.cars, None)
 
         # print(f"directions: {self.board.directions}")
-        self.board.output(self.board.directions)
+        # self.board.output(self.board.directions)
         return self.board
