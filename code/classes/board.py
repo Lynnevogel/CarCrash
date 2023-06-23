@@ -359,38 +359,30 @@ class Board:
                     new_x_coordinate = current_car_coordinates[-1][1] + 1
                     new_right_car_coordinate = (new_y_coordinate, new_x_coordinate)
                     new_left_car_coordinate = current_car_coordinates[1]
-                    print(f"current car coordinates before appending: {current_car_coordinates}")
                     current_car_coordinates.append(new_right_car_coordinate)
                     current_car_coordinates.pop(0)
-                    print(f"current car coordinates: {current_car_coordinates}")
                 elif direction == -1:
                     new_y_coordinate = int(current_car_coordinates[0][0])
                     new_x_coordinate = current_car_coordinates[0][-1] - 1
                     new_left_car_coordinate = (new_y_coordinate, new_x_coordinate)
                     new_right_car_coordinate = current_car_coordinates[0]
-                    print(f"current car coordinates before appending: {current_car_coordinates}")
                     current_car_coordinates.insert(0, new_left_car_coordinate)
                     current_car_coordinates.pop()
-                    print(f"current car coordinates: {current_car_coordinates}")
             elif board.current_car.car_orientation == "V":
                 if direction == -1:
                     new_x_coordinate = int(current_car_coordinates[0][1])
                     new_y_coordinate = current_car_coordinates[0][0] - 1
                     new_left_car_coordinate = (new_y_coordinate, new_x_coordinate)
                     new_right_car_coordinate = current_car_coordinates[0]
-                    print(f"current car coordinates before appending: {current_car_coordinates}")
                     current_car_coordinates.insert(0, new_left_car_coordinate)
                     current_car_coordinates.pop()
-                    print(f"current car coordinates: {current_car_coordinates}")
                 elif direction == 1:
                     new_x_coordinate = int(current_car_coordinates[0][1])
                     new_y_coordinate = current_car_coordinates[-1][0] + 1
                     new_right_car_coordinate = (new_y_coordinate, new_x_coordinate)
                     new_left_car_coordinate = current_car_coordinates[1]
-                    print(f"current car coordinates before appending: {current_car_coordinates}")
                     current_car_coordinates.append(new_right_car_coordinate)
                     current_car_coordinates.pop(0)
-                    print(f"current car coordinates: {current_car_coordinates}")
 
             board.current_car.car_coordinates = current_car_coordinates
             board.load_board()

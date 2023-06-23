@@ -15,7 +15,7 @@ class DepthFirst:
 
         self.depth_list_won = []
         self.lowest_depth_won = 0
-    
+
         self.best_solution = []
         self.best_value = float('inf')
 
@@ -50,7 +50,6 @@ class DepthFirst:
                     self.best_solution.append(new_board.directions)
         elif move_count > 0:
             self.number_of_moves.append(move_count)
-
 
     def go(self) -> None:
         """

@@ -13,6 +13,7 @@ class HillClimber(BreadthFirst):
         self.states = [copy.deepcopy(self.starting_board)]
         self.archive = {self.starting_board.get_representation(self.starting_board)}
         self.number_of_moves = []
+        self.win_count = 0
         self.best_solution = []
         self.best_value = float('inf')
         self.depth_list = []
