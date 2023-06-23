@@ -5,61 +5,68 @@ from code.algorithms.breadth_first import BreadthFirst
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.astar import AStar
 from code.algorithms.hillclimber import HillClimber
-from code.algorithms.depthfirstlimit import DepthFirstLimit
-from code.algorithms.iterativedeepening import IterativeDeepening
+from experiment import start_time, end_time
 
 from sys import argv
 import time
 
 
+
 if __name__ == "__main__":
     if len(argv) < 2:
         # Raise error if game name is not given
-        print("Usage: python main.py [game] [optional: [algorithm]]")
+        print("Usage: python main.py [game] [algorithm]")
         exit(1)
-    elif len(argv) == 2:
-        algorithm = 'random'
     elif len(argv) == 3:
         algorithm = argv[2]
+    elif len(argv) == 4:
+        algorithm = argv[2]
+        amount_of_times = int(argv[3])
 
     # Extract command line argument
     game_name = argv[1]
     # Initialize game
     board = Board(game_name)
     # Start timer
-    start_time = time.time()
+    
+    
+    for i in range(amount_of_times):
 # -------------------------------------- Random search ------------------------------------------------------------------------------
-    if algorithm == 'random':
-        random = Random(board)
-        random.go()     
+        if algorithm == 'random':
+            start_time()
+            random = Random(board)
+            random.go()
+            i += 1
+            end_time(start_time)
 # ------------------------------------- Breadth-first search ------------------------------------------------------------------------
-    elif algorithm == 'bf':
-        breadth_first = BreadthFirst(board)
-        breadth_first.go()
+        elif algorithm == 'bf':
+            start_time()
+            breadth_first = BreadthFirst(board)
+            breadth_first.go()
+            i += 1
+            end_time(start_time)
 # -------------------------------------- Depth-first search ------------------------------------------------------------------------
-    elif algorithm == 'df':
-        depth_first = DepthFirst(board)
-        depth_first.go()
+        elif algorithm == 'df':
+            start_time()
+            depth_first = DepthFirst(board)
+            depth_first.go()
+            i += 1
+            end_time(start_time)
 # ------------------------------------------ A* search ------------------------------------------------------------------------
-    elif algorithm == 'astar':
-        astar = AStar(board) 
-        astar.go()
+        elif algorithm == 'astar':
+            start_time()
+            astar = AStar(board) 
+            astar.go()
+            i += 1
+            end_time(start_time)
 # -------------------------------------- Hill Climber search ------------------------------------------------------------------------
-    elif algorithm == 'hillclimber':
-        hill_climber = HillClimber(board)
-        hill_climber.run_iterations(3)
-    elif algorithm == 'test':
-        random = Random(board)
-        random_solution = random.go()
-        solution = random_solution.directions
-        random_solution.use_solution(board, solution)
-    # ----------------------------------- Iterative Deepening  ------------------------------------------------------------------------
-    elif algorithm == 'iterative':
-        iterative = IterativeDeepening(board)
-        iterative.go()
+        elif algorithm == 'hillclimber':
+            start_time()
+            random = Random(board)
+            random_solution = random.go()
+            solution = random_solution.directions
 
-        
-
-    end_time = time.time()
-    elapsed_time = round((end_time - start_time), 4)
-    print(f"Puzzle was solved in {elapsed_time}s.")
+            hill_climber = HillClimber(random_solution, board, solution)
+            hill_climber.go(500)
+            i += 1
+            end_time(start_time)
