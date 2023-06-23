@@ -6,7 +6,11 @@ from typing import Any, Optional
 
 
 class HillClimber(BreadthFirst):
+    """
+    
+    """
     def __init__(self, starting_board) -> None:
+        # hill climber attributes
         self.starting_board = copy.deepcopy(starting_board)
         self.all_random_states = set()
         # breadth first attributes
@@ -36,13 +40,11 @@ class HillClimber(BreadthFirst):
         """
         self.iterations = iterations
 
-        for iteration in range(iterations):
+        for _ in range(iterations):
             current_board = copy.deepcopy(self.starting_board)
             new_random_solution = self.generate_new_random_solution()
             boards_random_solution = current_board.use_solution(current_board, new_random_solution)
             self.all_random_states.update(boards_random_solution)
-        
-        print(f"all random states: {self.all_random_states}, {len(self.all_random_states)}")
 
     def add_all_possible_states(self, new_board, can_move: bool, moves: list[Any]) -> None:
         """
@@ -53,7 +55,6 @@ class HillClimber(BreadthFirst):
             for move in moves:
                 move_representation = move.get_representation_breadth(move)
                 valid_move = self.check_move_in_all_random_states(move_representation)
-                print(valid_move)
                 if move_representation not in self.archive and valid_move:
                     self.states.append(move)
                     self.archive.add(move_representation)
@@ -65,7 +66,11 @@ class HillClimber(BreadthFirst):
         return move_representation in self.all_random_states
 
     def run_iterations(self, iterations):
+        """
+        Iterates the random solutions and breadth first search an x amount of times.
+        """
         for _ in range(iterations):
             self.generate_random_solutions(3)
-            self.go()
+            best_solution = self.go()
+            print(f"best solution go: {best_solution}")
             self.all_random_states = set()

@@ -74,7 +74,11 @@ class BreadthFirst():
                     moves, can_move = child.get_possible_moves_2(child, car)
                     # add possible board states to list of states
                     self.add_all_possible_states(new_board, can_move, moves)
-
+        
         # print best solution and amount of moves
         print(f"lowest amount of moves: {self.number_of_moves[-1]}")
         print(f"moves of best solution: {self.best_solution}")
+
+        return self.best_solution
+
+        
