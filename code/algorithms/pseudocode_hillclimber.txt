@@ -25,3 +25,9 @@ while queue is not empty:
 
 
     kijk in lijst met alle borden wat mogelijke moves zijn. damn dat is ingewikkeld
+get possible moves for car:
+get car
+zoek borden waar alle cars op dezelfde plek staan behalve huidige car
+zet dat bord in states
+
+zoek borden waar alle cars op dezelfde plek staan behalve huidige car:

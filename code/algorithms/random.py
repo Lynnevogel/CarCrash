@@ -33,6 +33,6 @@ class Random:
         print(f"number of moves: {num_moves}")
         # visualize_board(self.board.board, self.board.cars, None)
 
-        print(f"directions: {self.board.directions}")
+        # print(f"directions: {self.board.directions}")
         self.board.output(self.board.directions)
         return self.board

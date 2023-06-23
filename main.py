@@ -45,13 +45,14 @@ if __name__ == "__main__":
         astar.go()
 # -------------------------------------- Hill Climber search ------------------------------------------------------------------------
     elif algorithm == 'hillclimber':
+        hill_climber = HillClimber(board)
+        hill_climber.generate_random_solutions(3)
+        hill_climber.go()
+    elif algorithm == 'test':
         random = Random(board)
         random_solution = random.go()
         solution = random_solution.directions
-
-        hill_climber = HillClimber(random_solution, board, solution)
-        hill_climber.go(500)
-    
+        random_solution.use_solution(board, solution)
     # ----------------------------------- Iterative Deepening  ------------------------------------------------------------------------
     elif algorithm == 'iterative':
         iterative = IterativeDeepening(board)

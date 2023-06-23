@@ -20,6 +20,7 @@ class Board:
         self.board = [["-" for _ in range(self.dim)] for _ in range(self.dim)]
         self.cars: dict[str, Car] = {}
         self.directions = []
+        self.set_boards = set()
 
          # Load data
         self.load_cars(f"gameboards/Rushhour{game_name}.csv")
@@ -30,6 +31,8 @@ class Board:
         self.add_cars(self.board)
         self.print_board()
 
+    def __repr__(self) -> str:
+        return f"{self.print_board()}"
 
     # def __repr__(self) -> str:
     #     return f"{self.print_board()}"
@@ -191,7 +194,6 @@ class Board:
 
         return copy_boards, True
     
-    
     def get_possible_moves_2(self, board, car_key: str) -> tuple[list[Any], bool]:
         """
         Determines the possible moves for a given car.
@@ -344,6 +346,7 @@ class Board:
         """
         Uses a given solution to move the board into winning configuration.
         """
+        board.set_boards = {board.get_representation_breadth(board)}
         for move in solution:
             # Get car key and direction from move
             car_key = move[0]
@@ -354,7 +357,6 @@ class Board:
             current_car_coordinates = board.current_car.car_coordinates
 
             if board.current_car.car_orientation == "H":
-
                 if direction == 1:
                     new_y_coordinate = int(current_car_coordinates[0][0])
                     new_x_coordinate = current_car_coordinates[1][1] + 1
@@ -381,6 +383,9 @@ class Board:
             board.load_board()
             board.add_cars(board.board)
             # board.print_board()
+            board.set_boards.add(board.get_representation_breadth(board))
+
+        return board.set_boards
 
     def output(self, solution: list[list[str]]) -> None:
         """
