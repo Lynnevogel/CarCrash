@@ -67,6 +67,7 @@ class BreadthFirst():
                 self.archive.remove(new_board_representation)
                 # check whether solution is better than current best solution
                 self.check_solution(new_board)
+                print(f"solution found (breadth first): {len(new_board.directions)}, {new_board.directions}")
             else:
                 for car in new_board.cars:
                     child = copy.deepcopy(new_board)
@@ -76,8 +77,8 @@ class BreadthFirst():
                     self.add_all_possible_states(new_board, can_move, moves)
         
         # print best solution and amount of moves
-        print(f"lowest amount of moves: {self.number_of_moves[-1]}")
-        print(f"moves of best solution: {self.best_solution}")
+        print(f"lowest amount of moves (breadth first): {self.number_of_moves[-1]}")
+        print(f"moves of best solution (breadth first): {self.best_solution}")
 
         return self.best_solution
 

@@ -7,7 +7,7 @@ from typing import Any, Optional
 
 class HillClimber(BreadthFirst):
     """
-    
+
     """
     def __init__(self, starting_board) -> None:
         # hill climber attributes
@@ -71,6 +71,23 @@ class HillClimber(BreadthFirst):
         """
         for _ in range(iterations):
             self.generate_random_solutions(3)
+            # add state so breadth first can start
+            self.states = [copy.deepcopy(self.starting_board)]
+            self.archive = {self.starting_board.get_representation(self.starting_board)}
             best_solution = self.go()
-            print(f"best solution go: {best_solution}")
+            self.check_for_best_solution(best_solution)
             self.all_random_states = set()
+
+        print(f"final best solution: {self.best_solution}")
+        print(f"final lowest amount of moves: {self.number_of_moves[-1]}")
+    
+    def check_for_best_solution(self, solution):
+        """
+
+        """
+        current_best_solution = len(self.best_solution)
+        new_solution = len(solution)
+
+        if new_solution < current_best_solution:
+            self.best_solution = solution
+            self.number_of_moves.append(len(new_solution))
