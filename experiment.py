@@ -1,18 +1,20 @@
 import os
 from code.algorithms.random import Random
 import time
+import csv
     
 def run_experiment(game_name, algorithm, amount_of_times):
     os.system("python3 main.py " + str(game_name) + " " + str(algorithm) + " " + amount_of_times)
 
 
-def output(self, solution: list[list[str]]) -> None:
+def output_experiment(time, solution: list[list[str]]) -> None:
     """
     Writes a solution for a board into a csv file.
     """
-    with open("output/output.csv", "w") as file:
+    
+    with open("output/experiment_output.csv", "w") as file:
         writer = csv.writer(file)
-        field = ["car", "move"]
+        field = ["time", "number of moves", "solution", "amount of states"]
 
         writer.writerow(field)
 
