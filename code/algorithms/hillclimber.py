@@ -81,7 +81,7 @@ class HillClimber(BreadthFirst):
             self.check_for_best_solution(best_solution)
             # add statespace of solution to list
             self.state_spaces.append(len(self.all_random_states))
-            self.all_random_states = set()
+            # self.all_random_states = set()
 
         print(f"final best solution: {self.best_solution}")
         print(f"final lowest amount of moves: {self.number_of_moves[-1]}")
@@ -105,6 +105,6 @@ class HillClimber(BreadthFirst):
             solution = self.best_solution
         else:
             solution = self.best_solution[0]
-        print(f"length solution: {len(solution)}")
-        state_space = max(self.state_spaces)
+            number_of_moves = len(self.best_solution[0])
+        state_space = max(self.state_spaces) + 1
         return number_of_moves, number_of_states, solution, state_space

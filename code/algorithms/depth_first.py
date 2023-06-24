@@ -33,7 +33,7 @@ class DepthFirst:
         """
         if can_move:
             for move in moves:
-                if move.get_representation(move) not in self.archive and len(move.directions) < 40:
+                if move.get_representation(move) not in self.archive and len(move.directions) < 100:
                     self.states.append(move)
 
     def check_solution(self, new_board: Optional[Board]) -> None:
@@ -75,9 +75,9 @@ class DepthFirst:
                     # add possible board states to list of states
                     self.add_all_possible_states(new_board, can_move, moves)
         # print best solution and amount of moves
-        print(f"lowest amount of moves: {self.number_of_moves[-1]}")
-        print(f"moves of best solution: {self.best_solution}")
-        print(f"all states: {len(self.all_states)}")
+        # print(f"lowest amount of moves: {self.number_of_moves[-1]}")
+        # print(f"moves of best solution: {self.best_solution}")
+        # print(f"all states: {len(self.all_states)}")
 
     def generate_output(self):
         number_of_moves = len(self.best_solution)
@@ -86,4 +86,5 @@ class DepthFirst:
             solution = self.best_solution
         else:
             solution = self.best_solution[0]
+            number_of_moves = len(self.best_solution[0])
         return number_of_moves, number_of_states, solution

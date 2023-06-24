@@ -71,7 +71,7 @@ if __name__ == "__main__":
             print(f"number of moves: {number_of_moves}")
             print(f"number of states: {number_of_states}")
             print(f"solution: {solution}")
-            output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution)
+            # output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution)
 
             i += 1
 # -------------------------------------- Depth-first search ------------------------------------------------------------------------
@@ -138,6 +138,6 @@ if __name__ == "__main__":
             print(f"number of states: {number_of_states}")
             print(f"solution: {solution}")
             print(f"state space: {state_space}")
-            output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution, state_space)
+            # output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution, state_space)
 
             i += 1
