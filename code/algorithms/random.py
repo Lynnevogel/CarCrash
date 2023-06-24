@@ -36,3 +36,10 @@ class Random:
             # print(f"directions: {self.board.directions}")
             # self.board.output(self.board.directions)
         return self.board
+    
+    def generate_output(self):
+        number_of_moves = len(self.board.directions)
+        number_of_states = len(self.board.directions)
+        solution = self.board.directions
+        return number_of_moves, number_of_states, solution
+        

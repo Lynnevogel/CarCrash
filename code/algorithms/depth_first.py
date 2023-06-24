@@ -12,6 +12,7 @@ class DepthFirst:
         self.states = [copy.deepcopy(self.board)]
         self.archive = {self.board.get_representation(self.board)}
         self.number_of_moves = []
+        self.all_states = {self.board.get_representation(self.board)}
 
         self.depth_list_won = []
         self.lowest_depth_won = 0
@@ -30,7 +31,6 @@ class DepthFirst:
         Adds states to the states list and keeps an archive of states that should not be 
         added to the states list.
         """
-        
         if can_move:
             for move in moves:
                 if move.get_representation(move) not in self.archive and len(move.directions) < 40:
@@ -59,6 +59,7 @@ class DepthFirst:
             new_board = self.get_next_state()
             new_board_representation = new_board.get_representation(new_board)
             self.archive.add(new_board_representation)
+            self.all_states.add(new_board_representation)
             # print(f"states: {len(self.states)}")
             if new_board.is_won():
                 print("WON")
@@ -76,3 +77,13 @@ class DepthFirst:
         # print best solution and amount of moves
         print(f"lowest amount of moves: {self.number_of_moves[-1]}")
         print(f"moves of best solution: {self.best_solution}")
+        print(f"all states: {len(self.all_states)}")
+
+    def generate_output(self):
+        number_of_moves = len(self.best_solution)
+        number_of_states = len(self.all_states)
+        if len(self.best_solution) > 1:
+            solution = self.best_solution
+        else:
+            solution = self.best_solution[0]
+        return number_of_moves, number_of_states, solution

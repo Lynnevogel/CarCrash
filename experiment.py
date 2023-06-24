@@ -1,46 +1,43 @@
-import os
 from code.algorithms.random import Random
 import time
 import csv
-    
+import subprocess
+
 def run_experiment(game_name, algorithm, amount_of_times):
-    os.system("python3 main.py " + str(game_name) + " " + str(algorithm) + " " + amount_of_times)
+    command = f"python3 main.py {game_name} {algorithm} {amount_of_times}"
+    subprocess.run(command, shell=True)
 
 
-def output_experiment(time, solution: list[list[str]]) -> None:
+def output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution: list[list[str]], state_space=None) -> None:
     """
     Writes a solution for a board into a csv file.
     """
-    
-    with open("output/experiment_output.csv", "w") as file:
+    with open(f"output/experiment_output_{game}_{algorithm}_{n}_{time}.csv", "w") as file:
         writer = csv.writer(file)
-        field = ["time", "number of moves", "solution", "amount of states"]
+        field = ["n", "game", "algorithm", "dimension", "time", "number of moves", "number of states", "won", "state space", "solution: car", "solution: direction"]
 
         writer.writerow(field)
 
         for move in solution:
             car_key = move[0]
             direction = move[1]
-            writer.writerow([car_key, direction])
+            writer.writerow([n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, state_space, car_key, direction])
+
 
 def start_time():
-    start_time = time.time()
-    return start_time
+    start = time.time()
+    return start
 
-def end_time(start_time):
-    end_time = time.time()
-    elapsed_time = round((end_time - start_time), 4)
+
+def end_time(start):
+    end = time.time()
+    elapsed_time = round((end - start), 6)
     print(f"Puzzle was solved in {elapsed_time}s.")
-    
-# if __name__ == "__main__":
-#     game_name = "6x6_0"
-#     algorithm = "random"
-#     amount_of_times = "2"
-#     run_experiment(game_name, algorithm, amount_of_times)
-#     Algoritm = Random
-#     for i in range(amount_of_times):
-#         algorithm = Algoritm(board)
-#         algorithm.go()  
-#         i += 1
-#         print(f"run: {i}")
-#         print(f"aantal runs: {i}")
+    return elapsed_time
+
+
+if __name__ == "__main__":
+    game_name = "6x6_0"
+    algorithm = "random"
+    amount_of_times = "1"
+    run_experiment(game_name, algorithm, amount_of_times)

@@ -17,6 +17,8 @@ class HillClimber(BreadthFirst):
         self.states = [copy.deepcopy(self.starting_board)]
         self.archive = {self.starting_board.get_representation(self.starting_board)}
         self.number_of_moves = []
+        self.all_states = {self.starting_board.get_representation(self.starting_board)}
+        self.state_spaces = []
         self.win_count = 0
         self.best_solution = []
         self.best_value = float('inf')
@@ -70,17 +72,21 @@ class HillClimber(BreadthFirst):
         Iterates the random solutions and breadth first search an x amount of times.
         """
         for _ in range(iterations):
-            self.generate_random_solutions(3)
+            self.generate_random_solutions(2)
             # add state so breadth first can start
             self.states = [copy.deepcopy(self.starting_board)]
             self.archive = {self.starting_board.get_representation(self.starting_board)}
+            self.all_states = {self.starting_board.get_representation(self.starting_board)}
             best_solution = self.go()
             self.check_for_best_solution(best_solution)
+            # add statespace of solution to list
+            self.state_spaces.append(len(self.all_random_states))
             self.all_random_states = set()
 
         print(f"final best solution: {self.best_solution}")
         print(f"final lowest amount of moves: {self.number_of_moves[-1]}")
-    
+        print(f"state spaces: {self.state_spaces}, max: {max(self.state_spaces)}")
+
     def check_for_best_solution(self, solution):
         """
 
@@ -90,4 +96,15 @@ class HillClimber(BreadthFirst):
 
         if new_solution < current_best_solution:
             self.best_solution = solution
-            self.number_of_moves.append(len(new_solution))
+            self.number_of_moves = len(new_solution)
+
+    def generate_output(self):
+        number_of_moves = len(self.best_solution)
+        number_of_states = len(self.all_states)
+        if len(self.best_solution) > 1:
+            solution = self.best_solution
+        else:
+            solution = self.best_solution[0]
+        print(f"length solution: {len(solution)}")
+        state_space = max(self.state_spaces)
+        return number_of_moves, number_of_states, solution, state_space

@@ -5,12 +5,13 @@ import copy
 from typing import Optional, Any
 
 
-class BreadthFirst():
+class BreadthFirst(DepthFirst):
     def __init__(self, board: Board) -> None:
         self.board = copy.deepcopy(board)
         self.states = [copy.deepcopy(self.board)]
         self.archive = {self.board.get_representation(self.board)}
         self.number_of_moves = []
+        self.all_states = {self.board.get_representation(self.board)}
 
         self.win_count = 0
         self.best_solution = []
@@ -60,6 +61,7 @@ class BreadthFirst():
             new_board = self.get_next_state()
             new_board_representation = new_board.get_representation(new_board)
             self.archive.add(new_board_representation)
+            self.all_states.add(new_board_representation)
             # print(f"states: {len(self.states)}")
             if new_board.is_won():
                 print("WON")
@@ -81,5 +83,4 @@ class BreadthFirst():
         print(f"moves of best solution (breadth first): {self.best_solution}")
 
         return self.best_solution
-
         
