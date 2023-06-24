@@ -6,6 +6,7 @@ from code.visualization.color_blocks import visualize_board
 class Random:
     def __init__(self, board) -> None:
         self.board = board
+        self.num_moves = 0
 
     def random_move(self, possible_boards: list[Board]) -> Union[Board, None]:
         if len(possible_boards) == 0:
@@ -14,7 +15,6 @@ class Random:
             return random.choice(possible_boards)
 
     def go(self):
-        num_moves = 0
         # Run game until it is won
         while not self.board.is_won():
             # Pick a random car
@@ -27,10 +27,10 @@ class Random:
                 self.board = self.random_move(copy_boards)
                 # self.board.print_board()
                 # visualize_board(board.board, board.cars, save_path=f"code/visualization/board_images/board{num_moves}.png")
-                num_moves += 1
+                self.num_moves += 1
             else:
                 print("cannot move car")
-            print(f"number of moves: {num_moves}")
+            print(f"number of moves: {self.num_moves}")
             # visualize_board(self.board.board, self.board.cars, None)
 
             # print(f"directions: {self.board.directions}")
@@ -38,8 +38,8 @@ class Random:
         return self.board
 
     def generate_output(self):
-        number_of_moves = len(self.board.move_set)
-        number_of_states = len(self.board.move_set)
+        number_of_moves = self.num_moves
+        number_of_states = self.num_moves
         solution = self.board.directions
         return number_of_moves, number_of_states, solution
         
