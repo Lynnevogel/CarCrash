@@ -25,7 +25,7 @@ class Random:
             if can_move:
                 # Pick a random move
                 self.board = self.random_move(copy_boards)
-                self.board.print_board()
+                # self.board.print_board()
                 # visualize_board(board.board, board.cars, save_path=f"code/visualization/board_images/board{num_moves}.png")
                 num_moves += 1
             else:
@@ -36,10 +36,10 @@ class Random:
             # print(f"directions: {self.board.directions}")
             # self.board.output(self.board.directions)
         return self.board
-    
+
     def generate_output(self):
-        number_of_moves = len(self.board.directions)
-        number_of_states = len(self.board.directions)
+        number_of_moves = len(self.board.move_set)
+        number_of_states = len(self.board.move_set)
         solution = self.board.directions
         return number_of_moves, number_of_states, solution
         

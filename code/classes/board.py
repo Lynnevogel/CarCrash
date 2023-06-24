@@ -20,6 +20,8 @@ class Board:
         self.board = [["-" for _ in range(self.dim)] for _ in range(self.dim)]
         self.cars: dict[str, Car] = {}
         self.directions = []
+        self.move_set = set()
+        self.last_move = None
         self.set_boards = set()
 
          # Load data
@@ -30,10 +32,10 @@ class Board:
         self.load_board()
         self.add_cars(self.board)
         self.print_board()
-
+    
     def __repr__(self) -> str:
         return f"{self.print_board()}"
-    
+
     def get_representation(self, board):
         representation = re.sub(r"[^\w-]", "", str(board))
         representation = re.sub(r"'", "", representation)
@@ -293,7 +295,14 @@ class Board:
                 current_car_coordinates.pop()
 
         self.current_car.car_coordinates = current_car_coordinates
-        self.directions.append([car_key, direction])
+        # adding move to move set
+        move_id = 1
+        if self.last_move:
+            move_id = int(self.last_move.split()[-1]) + 1
+        move = f"{car_key} {direction} {move_id}"
+        self.move_set.add(move)
+        self.last_move = move
+        
         # Load board with new car coordinates
         new_board = self.load_board()
         new_board = self.add_cars(new_board)
@@ -406,3 +415,18 @@ class Board:
                 car_key = move[0]
                 direction = move[1]
                 writer.writerow([car_key, direction])
+
+    def order_strings_by_id(self):
+        ordered_strings = sorted(self.move_set, key=lambda s: int(s.split(" ")[-1]))
+        return ordered_strings
+
+    def make_solution(self, ordered_solution):
+        for string in ordered_solution:
+            car, direction, _ = string.split(" ")
+            self.directions.append([car, int(direction)])
+        return self.directions
+    
+    def order_solution(self):
+        ordered_solution = self.order_strings_by_id()
+        solution = self.make_solution(ordered_solution)
+        return solution

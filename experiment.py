@@ -37,7 +37,7 @@ def end_time(start):
 
 
 if __name__ == "__main__":
-    game_name = "6x6_0"
-    algorithm = "depthfirst"
-    amount_of_times = "1"
+    game_name = "6x6_3"
+    algorithm = "random"
+    amount_of_times = "100"
     run_experiment(game_name, algorithm, amount_of_times)

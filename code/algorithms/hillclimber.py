@@ -32,7 +32,8 @@ class HillClimber(BreadthFirst):
         """
         random_algorithm = Random(self.starting_board)
         new_random_solution = random_algorithm.go()
-        new_random_solution = new_random_solution.directions
+        new_random_solution = random_algorithm.board.order_solution()
+        print(new_random_solution)
         return new_random_solution
 
     def generate_random_solutions(self, iterations):
@@ -46,6 +47,7 @@ class HillClimber(BreadthFirst):
             current_board = copy.deepcopy(self.starting_board)
             new_random_solution = self.generate_new_random_solution()
             boards_random_solution = current_board.use_solution(current_board, new_random_solution)
+            print(f"boards random solution: {boards_random_solution}")
             self.all_random_states.update(boards_random_solution)
 
     def add_all_possible_states(self, new_board, can_move: bool, moves: list[Any]) -> None:

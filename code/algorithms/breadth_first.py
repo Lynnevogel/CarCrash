@@ -22,17 +22,18 @@ class BreadthFirst(DepthFirst):
         Checks whether the solution contains less moves than the current best solution.
         """
         self.win_count += 1
-        move_count = len(new_board.directions)
+        solution = new_board.order_solution()
+        move_count = len(solution)
 
         if self.win_count == 1:
-            self.best_solution = new_board.directions
+            self.best_solution = solution
 
         if self.number_of_moves:
                 lowest_value = min(self.number_of_moves)
                 if move_count < lowest_value:
                     self.number_of_moves.append(move_count)
                     self.best_solution = []
-                    self.best_solution.append(new_board.directions)
+                    self.best_solution.append(solution)
         elif move_count > 0:
             self.number_of_moves.append(move_count)
 
@@ -69,7 +70,7 @@ class BreadthFirst(DepthFirst):
                 self.archive.remove(new_board_representation)
                 # check whether solution is better than current best solution
                 self.check_solution(new_board)
-                print(f"solution found (breadth first): {len(new_board.directions)}, {new_board.directions}")
+                print(f"solution found (breadth first): {len(self.best_solution)}, {self.best_solution}")
             else:
                 for car in new_board.cars:
                     child = copy.deepcopy(new_board)
@@ -79,8 +80,8 @@ class BreadthFirst(DepthFirst):
                     self.add_all_possible_states(new_board, can_move, moves)
         
         # print best solution and amount of moves
-        print(f"lowest amount of moves (breadth first): {self.number_of_moves[-1]}")
-        print(f"moves of best solution (breadth first): {self.best_solution}")
+        # print(f"lowest amount of moves (breadth first): {self.number_of_moves[-1]}")
+        # print(f"moves of best solution (breadth first): {self.best_solution}")
 
         return self.best_solution
         

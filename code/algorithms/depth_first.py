@@ -33,21 +33,22 @@ class DepthFirst:
         """
         if can_move:
             for move in moves:
-                if move.get_representation(move) not in self.archive and len(move.directions) < 100:
+                if move.get_representation(move) not in self.archive and len(move.move_set) < 100:
                     self.states.append(move)
 
     def check_solution(self, new_board: Optional[Board]) -> None:
         """
         Checks whether the solution contains less moves than the current best solution.
         """
-        move_count = len(new_board.directions)
+        solution = new_board.order_solution()
+        move_count = len(solution)
 
         if self.number_of_moves:
                 lowest_value = min(self.number_of_moves)
                 if move_count < lowest_value:
                     self.number_of_moves.append(move_count)
                     self.best_solution = []
-                    self.best_solution.append(new_board.directions)
+                    self.best_solution.append(solution)
         elif move_count > 0:
             self.number_of_moves.append(move_count)
 
