@@ -118,10 +118,10 @@ if __name__ == "__main__":
             won = 1
 
             number_of_moves, number_of_states, solution, state_space = hill_climber.generate_output()
-            print(f"Number of moves: {number_of_moves}")
-            print(f"Number of states: {number_of_states}")
-            print(f"Solution: {solution}")
-            print(f"State space: {state_space}")
-            output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution, state_space)
+            print(f"number of moves: {number_of_moves}")
+            print(f"number of states: {number_of_states}")
+            print(f"solution: {solution}")
+            print(f"state space: {state_space}")
+            # output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution, state_space)
 
             i += 1

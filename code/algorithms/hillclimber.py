@@ -80,7 +80,7 @@ class HillClimber(BreadthFirst):
         Iterates the random solutions and breadth first search an x amount of times.
         """
         for _ in range(iterations):
-            self.generate_random_solutions(10)
+            self.generate_random_solutions(2)
             # add state so breadth first can start
             self.states = [copy.deepcopy(self.starting_board)]
             self.archive = {self.starting_board.get_representation(self.starting_board)}
