@@ -5,10 +5,22 @@ from code.visualization.color_blocks import visualize_board
 
 class Random:
     def __init__(self, board) -> None:
+        """
+        Initialize Random class with current board and counter for number of moves.
+        Preconditions:
+        - board is a Board object with the current board
+        """
         self.board = board
         self.num_moves = 0
 
     def random_move(self, possible_boards: list[Board]) -> Union[Board, None]:
+        """
+        Chooses a random board from the possible board, if list is not empty.  
+        Preconditions: 
+        - possible_boards is a list of Board objects, that are possible state from the current board
+        Postconditions:
+        - A random chosen board is returned
+        """
         if len(possible_boards) == 0:
             return None
         else:
@@ -19,7 +31,7 @@ class Random:
         while not self.board.is_won():
             # Pick a random car
             random_car = self.board.random_car()
-            # Find possible boards
+            # Find possible boards, when moving the random chosen car
             copy_boards, can_move = self.board.get_possible_moves_2(self.board, random_car)
 
             if can_move:
@@ -38,6 +50,9 @@ class Random:
         return self.board
 
     def generate_output(self):
+        """
+        Return generated ouput from every run, to save for the experiment
+        """
         number_of_moves = self.num_moves
         number_of_states = self.num_moves
         solution = self.board.directions

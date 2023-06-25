@@ -12,7 +12,7 @@ class Board:
         """
         Initializes the Rush Hour game.
         Preconditions:
-            - The game_name format must be 'NxN_M', where N and M are positive integers.
+        - game_name is a string the format must be 'NxN_M', where N and M are positive integers
         """
         # Extract dimension from name
         self.dim: int = int(game_name.strip().split("x")[0])
@@ -230,7 +230,7 @@ class Board:
                 # Add copied board with movement cars to list
                 copy_boards.append(copy_board)
 
-        # If car cannot move, an empty list and False wil be returned
+        # If car cannot move, an empty tuple[list[]] and False wil be returned
         if len(copy_boards) == 0:
             return copy_boards, False
 
