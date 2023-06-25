@@ -49,6 +49,6 @@ Hieronder is een lijst te vinden van de mappen en bestanden in de repository van
 
 De taakverdeling moet nog verder uitgewerkt worden maar dit is de voorlopige taakverdeling. 
 
-- Lynne: visualisatie, depth first
-- Isabelle: A* algoritme, depth first limit
-- Jade: breadth first search
+- Lynne: visualisatie, depth first, experiment
+- Isabelle: A* algoritme, depth first limit, experiment
+- Jade: depth first en breadth first search, experiment
