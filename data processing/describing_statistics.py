@@ -1,5 +1,7 @@
 import numpy as np
 from scipy import stats
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 data = [1, 2, 3, 3, 3, 4, 4, 5]
@@ -20,3 +22,6 @@ print(f"iqr: {iqr}")
 statistic, p_value = stats.shapiro(data)
 print("Shapiro-Wilk Test Statistic:", statistic)
 print("P-value:", p_value)
+
+plt.hist(data)
+plt.show()
