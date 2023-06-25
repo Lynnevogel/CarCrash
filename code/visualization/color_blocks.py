@@ -5,6 +5,14 @@ from typing import Union, Any
 
 
 def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: Union[None, Any]) -> None:
+    """
+    Visualizes the game board and car positions.
+    Preconditions:
+    - board is a nested list with strings representing the game board.
+    - cars is a dictionary containing car objects, where the keys are car IDs and the values are Car objects.
+    - SAVEPATH KAN WEG?
+    """
+
     dim = len(board)
     car_list = []
 

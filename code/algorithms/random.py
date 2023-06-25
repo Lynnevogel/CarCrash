@@ -26,13 +26,13 @@ class Random:
         else:
             return random.choice(possible_boards)
 
-    def go(self):
+    def go(self) -> "Board":
         # Run game until it is won
         while not self.board.is_won():
             # Pick a random car
             random_car = self.board.random_car()
             # Find possible boards, when moving the random chosen car
-            copy_boards, can_move = self.board.get_possible_moves_2(self.board, random_car)
+            copy_boards, can_move = self.board.get_possible_moves(self.board, random_car)
 
             if can_move:
                 # Pick a random move

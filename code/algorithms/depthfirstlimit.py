@@ -29,7 +29,7 @@ class DepthFirstLimit(DepthFirst):
                 for car in new_board.cars:
                     child = copy.deepcopy(new_board)
                     # get possible board states from current car
-                    moves, can_move = child.get_possible_moves_2(child, car)
+                    moves, can_move = child.get_possible_moves(child, car)
                     # add possible board states to list of states
                     self.add_all_possible_states(new_board, can_move, moves)
         # print best solution and amount of moves

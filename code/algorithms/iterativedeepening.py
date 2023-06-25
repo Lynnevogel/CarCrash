@@ -104,7 +104,7 @@ class IterativeDeepening:
                 for car in new_board.cars:
                     child = copy.deepcopy(new_board)
                     # get possible board states from current car
-                    moves, can_move = child.get_possible_moves_2(child, car)
+                    moves, can_move = child.get_possible_moves(child, car)
                     print(f"moves: {moves}")
                     print(f"canmove: {can_move}")
 
