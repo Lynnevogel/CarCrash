@@ -14,8 +14,8 @@ import time
 
 if __name__ == "__main__":
     if len(argv) < 2:
-        # Raise error if game name is not given
-        print("Usage: python main.py [game] [algorithm]")
+        # Raise error if game name, algorithm or amount of runs is not given
+        print("Usage: python main.py [game] [algorithm] [amount of runs]")
         exit(1)
     elif len(argv) == 3:
         algorithm = argv[2]
@@ -36,7 +36,7 @@ if __name__ == "__main__":
             random.go()
             elapsed_time = end_time(start)
 
-            # output
+            # Get output
             n = i + 1
             game = game_name
             algorithm = algorithm
@@ -45,15 +45,16 @@ if __name__ == "__main__":
             won = 1
 
             number_of_moves, number_of_states, solution = random.generate_output()
+            # General solution (moet ws nog weg)
             solution = [["A", 1]]
-            print(f"number of moves: {number_of_moves}")
-            print(f"number of states: {number_of_states}")
-            print(f"solution: {solution}")
+            print(f"Number of moves: {number_of_moves}")
+            print(f"Number of states: {number_of_states}")
+            print(f"Solution: {solution}")
             output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution)
 
             ordered_solution = random.board.order_solution()
-            print(f"ordered solution: {ordered_solution}")
-            print(f"time: {time}")
+            print(f"Ordered solution: {ordered_solution}")
+            print(f"Time: {time}")
 
             i += 1
 
@@ -64,7 +65,7 @@ if __name__ == "__main__":
             breadth_first.go()
             elapsed_time = end_time(start)
 
-            # output
+            # Get output
             n = i + 1
             game = game_name
             algorithm = algorithm
@@ -73,9 +74,9 @@ if __name__ == "__main__":
             won = 1
 
             number_of_moves, number_of_states, solution = breadth_first.generate_output()
-            print(f"number of moves: {number_of_moves}")
-            print(f"number of states: {number_of_states}")
-            print(f"solution: {solution}")
+            print(f"Number of moves: {number_of_moves}")
+            print(f"Number of states: {number_of_states}")
+            print(f"Solution: {solution}")
             output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution)
 
             i += 1
@@ -86,7 +87,7 @@ if __name__ == "__main__":
             depth_first.go()
             elapsed_time = end_time(start)
 
-            # output
+            # Get output
             n = i + 1
             game = game_name
             algorithm = algorithm
@@ -95,31 +96,9 @@ if __name__ == "__main__":
             won = 1
 
             number_of_moves, number_of_states, solution = depth_first.generate_output()
-            print(f"number of moves: {number_of_moves}")
-            print(f"number of states: {number_of_states}")
-            print(f"solution: {solution}")
-            output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution)
-
-            i += 1
-# ------------------------------------------ A* search ------------------------------------------------------------------------
-        elif algorithm == 'astar':
-            start = start_time()
-            astar = AStar(board) 
-            astar.go()
-            elapsed_time = end_time(start)
-
-            # output
-            n = i + 1
-            game = game_name
-            algorithm = algorithm
-            dimension = board.dim
-            time = elapsed_time
-            won = 1
-
-            number_of_moves, number_of_states, solution = astar.generate_output()
-            print(f"number of moves: {number_of_moves}")
-            print(f"number of states: {number_of_states}")
-            print(f"solution: {solution}")
+            print(f"Number of moves: {number_of_moves}")
+            print(f"Number of states: {number_of_states}")
+            print(f"Solution: {solution}")
             output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution)
 
             i += 1
@@ -130,7 +109,7 @@ if __name__ == "__main__":
             hill_climber.run_iterations(2)
             elapsed_time = end_time(start)
 
-            # output
+            # Get output
             n = i + 1
             game = game_name
             algorithm = algorithm
@@ -143,6 +122,6 @@ if __name__ == "__main__":
             print(f"number of states: {number_of_states}")
             print(f"solution: {solution}")
             print(f"state space: {state_space}")
-            output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution, state_space)
+            # output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution, state_space)
 
             i += 1

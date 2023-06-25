@@ -1,0 +1,2 @@
+n,game,algorithm,dimension,time,number of moves,number of states,won,state space,solution: car,solution: direction
+53,9x9_6,random,9,75.557457,50184,50184,1,,A,1

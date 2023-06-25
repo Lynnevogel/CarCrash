@@ -13,10 +13,10 @@ class AStar:
         self.states = [copy.deepcopy(self.board)]
         self.archive = [self.board.board]
 
-        self.number_of_moves = []
-        self.heuristic_values = []
+        self.number_of_moves: list[int] = []
+        self.heuristic_values: list[int] = []
         
-        self.best_solution = None
+        self.best_solution = []
         self.best_value = float('inf')
 
     def get_next_state(self) -> Board:    
@@ -33,7 +33,7 @@ class AStar:
                     self.states.append(move)
 
 
-    def check_solution(self, new_board: Optional[Board], heuristic_value: int) -> None:
+    def check_solution(self, new_board: "Board", heuristic_value: int) -> None:
 
         move_count = len(new_board.directions)
 
@@ -48,7 +48,6 @@ class AStar:
 
                     self.best_solution = []
                     self.best_solution.append(new_board.directions)
-                    
         elif move_count > 0: 
             self.number_of_moves.append(move_count)
         
@@ -110,15 +109,14 @@ class AStar:
 
             if new_board.is_won():
                 print("WON")
-                # remove winning state from archive
+                # Remove winning state from archive
                 self.archive.pop()
-                # print(new_board.directions)
                 self.check_solution(new_board, heuristic_value)
             else:
                 for car in new_board.cars:
                     child = copy.deepcopy(new_board)
                     # get possible board states from current car
-                    moves, can_move = child.get_possible_moves_2(child, car)
+                    moves, can_move = child.get_possible_moves(child, car)
                     # add possible board states to list of states
                     self.get_all_possible_states(new_board, can_move, moves)
         print(f"lowest amount of moves: {self.number_of_moves[-1]}")

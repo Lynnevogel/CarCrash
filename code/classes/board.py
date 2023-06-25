@@ -1,7 +1,7 @@
 from .cars import Car
 import random
 import copy
-from typing import Any
+from typing import Union
 import csv
 import re
 import time
@@ -12,17 +12,17 @@ class Board:
         """
         Initializes the Rush Hour game.
         Preconditions:
-            - The game_name format must be 'NxN_M', where N and M are positive integers.
+        - game_name is a string the format must be 'NxN_M', where N and M are positive integers
         """
         # Extract dimension from name
         self.dim: int = int(game_name.strip().split("x")[0])
         # Initialize board
         self.board = [["-" for _ in range(self.dim)] for _ in range(self.dim)]
         self.cars: dict[str, Car] = {}
-        self.directions = []
-        self.move_set = set()
-        self.last_move = None
-        self.set_boards = set()
+        self.directions: list[tuple[str, int]] = []
+        self.move_set: set[str] = set()
+        self.last_move = ""
+        self.set_boards: set[str] = set()
 
          # Load data
         self.load_cars(f"gameboards/Rushhour{game_name}.csv")
@@ -36,12 +36,26 @@ class Board:
     def __repr__(self) -> str:
         return f"{self.print_board()}"
 
-    def get_representation(self, board):
+    def get_representation(self, board: "Board") -> str:
+        """
+        Get the representation of the board
+        Preconditions:
+        - board is a Board object containing the current board
+        Postconditions:
+        - A string representation of the board and ... is returned
+        """
         representation = re.sub(r"[^\w-]", "", str(board))
         representation = re.sub(r"'", "", representation)
         return representation+str(len(board.directions))
     
-    def get_representation_breadth(self, board):
+    def get_representation_breadth(self, board: "Board") -> str:
+        """
+        Get the representation of the board in breadth first search
+        Preconditions:
+        - board is a Board object containing the current board
+        Postconditions:
+        - A string representation of the board is returned
+        """
         representation = re.sub(r"[^\w-]", "", str(board))
         representation = re.sub(r"'", "", representation)
         return representation
@@ -50,9 +64,9 @@ class Board:
         """
         Loads the initial empty board.
         Postconditions:
-            - The board is initialized with empty spaces ('-') in each cell.
+        - The board is initialized with empty spaces ('-') in each cell.
         """
-        # Loop through board and initialize with '-'
+        # Loop through board
         for row in range(self.dim):
             for col in range(self.dim):
                 self.board[row][col] = "-"
@@ -62,11 +76,12 @@ class Board:
         """
         Prints the current state of the game board.
         Postconditions:
-            - The current state of the game board is printed to the console.
+        - The current state of the game board is printed to the console and de board is returned.
         """
-        # Loop through board and print corresponding grids
+        # Loop through board
         for row in range(self.dim):
             for col in range(self.dim):
+                # Add grid of current board
                 self.draw_grid(self.board[row][col])
             print()
             print()
@@ -77,16 +92,16 @@ class Board:
         """
         Prints a single grid element with a letter.
         Precondition:
-            - Letter corresponds with a car and is a string.
+        - letter corresponds with a car and is a string.
         """
-        # Print letter of corresponding car
+        # Print letter of corresponding car letter
         print(f"{str(letter).rjust(4)}", end="")
 
     def load_cars(self, filename: str) -> None:
         """
         Loads the car data from a CSV file.
         Preconditions:
-            - The CSV file must exist and be properly formatted.
+        - filename is a string, the CSV file must exist and be properly formatted.
         """
         # Load data file
         with open(filename) as cars_data:
@@ -107,10 +122,9 @@ class Board:
         """
         Adds the cars to the game board.
         Preconditions:
-            - The board were the cars need to be added
+        - board is a nested list with strings, but has no cars yet
         Postconditions:
-            - The cars are added to the game board.
-            - The updated game board with the cars is returned.
+        - The updated game board with the cars is returned.
         """
         # Loop through all cars in current gameboard
         for car_key in self.cars:
@@ -129,94 +143,38 @@ class Board:
         """
         Returns a randomly selected car.
         Postconditions:
-            - A random carkey is selected and returned.
+            - A string of a random carkey is selected and returned.
         """
         # Choice random carkey from all cars in current gameboard
         random_car = random.choice(list(self.cars.keys()))
         return random_car
 
-    def get_possible_moves(self, car_key: str) -> tuple[list[Any], bool]:
+    def get_possible_moves(self, board: "Board", car_key: str) -> tuple[list["Board"], bool]:
         """
         Determines the possible moves for a given car.
         Precondition:
-            - car_key is a string
+        - board is a Board object representing the current board
+        - car_key is a string, representing a certain car
         Postconditions:
-            - The possible coordinates for the car are determined and returned in a list.
-        """
-        self.current_car = self.cars[car_key]
-        # Find coordinates of current car
-        list_coordinates = self.current_car.car_coordinates
-        # Make list to add boards
-        copy_boards = []
-        # Loop through car coordinates of current car
-        for car_position in list_coordinates:
-            y, x = car_position
-
-            # Check orientation
-            if self.current_car.car_orientation == "H":
-                # Loop through horizontal grid 
-                for dy, dx in [(0, 1), (0, -1)]:
-                    # Assign new coordinates
-                    new_y = y + dy
-                    new_x = x + dx
-                    # Check if grid of new coordinates is empty and not out of bounds
-                    if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
-                        possible_coordinate = (new_y, new_x) 
-                        # Make copy of board
-                        copy_board = copy.deepcopy(self)
-                        # Make movement in copied board
-                        copy_board.move(car_key, possible_coordinate)
-                        # Add copied board with movement cars to list
-                        copy_boards.append(copy_board)
-            elif self.current_car.car_orientation == "V":
-                # Loop through vertical grid
-                for dy, dx in [(1, 0), (-1, 0)]:
-                    # Assign new coordinates
-                    new_y = y + dy
-                    new_x = x + dx
-                    # Check if grid of new coordinates is empty and not out of bounds
-                    if new_y >= 0 and new_y < self.dim and new_x >= 0 and new_x < self.dim and self.board[new_y][new_x] == "-":
-                        possible_coordinate = (new_y, new_x)
-                        # Make copy of board
-                        copy_board = copy.deepcopy(self)
-                        # Make movement in copied board
-                        copy_board.move(car_key, possible_coordinate)
-                        # Add copied board with movement cars to list
-                        copy_boards.append(copy_board)
-
-            else:
-                print("Invalid orientation")
-
-        # If car cannot move, an empty list and False wil be returned
-        if len(copy_boards) == 0:
-            return copy_boards, False
-
-        return copy_boards, True
-    
-    def get_possible_moves_2(self, board, car_key: str) -> tuple[list[Any], bool]:
-        """
-        Determines the possible moves for a given car.
-        Precondition:
-            - car_key is a string
-        Postconditions:
-            - The possible coordinates for the car are determined and returned in a list.
+        - A list with the possible boards(Board objects) and a boolean, which is True
+        if the car can move, is returned
         """
         board.current_car = board.cars[car_key]
         # Find coordinates of current car
         list_coordinates = board.current_car.car_coordinates
         # Make list to add boards
         copy_boards = []
-        # get first car coordinate
+        # Get first car coordinate
         y, x = list_coordinates[0]
         # Check orientation
         if board.current_car.car_orientation == "H":
-            check_list = [(0, self.current_car.car_len), (0, -1)]
+            movement_list = [(0, self.current_car.car_len), (0, -1)]
         elif board.current_car.car_orientation == "V":
-            check_list = [(self.current_car.car_len, 0), (-1, 0)]
+            movement_list = [(self.current_car.car_len, 0), (-1, 0)]
         else:
             print("Invalid orientation")
-            # Loop through horizontal grid 
-        for dy, dx in check_list:
+        
+        for dy, dx in movement_list:
             # Assign new coordinates
             new_y = y + dy
             new_x = x + dx
@@ -230,7 +188,7 @@ class Board:
                 # Add copied board with movement cars to list
                 copy_boards.append(copy_board)
 
-        # If car cannot move, an empty list and False wil be returned
+        # If car cannot move, an empty list[] and False is returned
         if len(copy_boards) == 0:
             return copy_boards, False
 
@@ -240,11 +198,10 @@ class Board:
         """
         Moves a car to a new position on the game board.
         Preconditions:
-            - car is a Car object.
-            - The 'new_car_coordinates' is a list of possible coordinates for the variable car.
+            - car_key is a string, representing the current car
+            - new_car_coordinates is a list of possible coordinates for the current car
         Postconditions:
-            - The car is moved to the new position on the game board.
-            - Returns True if the car is successfully moved, False otherwise.
+            - The board were the car is moved is returned. 
         """
         self.current_car = self.cars[car_key]
         new_board: list[list[str]] = []
@@ -295,7 +252,7 @@ class Board:
                 current_car_coordinates.pop()
 
         self.current_car.car_coordinates = current_car_coordinates
-        # adding move to move set
+        # Adding move to move set
         move_id = 1
         if self.last_move:
             move_id = int(self.last_move.split()[-1]) + 1
@@ -348,9 +305,12 @@ class Board:
                     return False
         return True
 
-    def use_solution(self, board: "Board", solution: list[list[str]]) -> None:
+    def use_solution(self, board: "Board", solution: list[list[str]]) -> set[str]:
         """
         Uses a given solution to move the board into winning configuration.
+        Preconditions:
+        - board is a Board object
+        - solution is a nested list with strings containing the movements to solve the board
         """
         board.set_boards = {board.get_representation_breadth(board)}
         for move in solution:
@@ -362,41 +322,57 @@ class Board:
             # Assign current car coordinates
             current_car_coordinates = board.current_car.car_coordinates
 
+            # Check car orientation
             if board.current_car.car_orientation == "H":
-                if direction == 1:
+                # Check direction
+                if direction == "1":
+                    # Move to the right
                     new_y_coordinate = int(current_car_coordinates[0][0])
                     new_x_coordinate = current_car_coordinates[-1][1] + 1
                     new_right_car_coordinate = (new_y_coordinate, new_x_coordinate)
                     new_left_car_coordinate = current_car_coordinates[1]
+                    # Add new coordinate to list
                     current_car_coordinates.append(new_right_car_coordinate)
+                    # Remove old coordineate from list
                     current_car_coordinates.pop(0)
-                elif direction == -1:
+                elif direction == "-1":
+                    # Move to the left
                     new_y_coordinate = int(current_car_coordinates[0][0])
                     new_x_coordinate = current_car_coordinates[0][-1] - 1
                     new_left_car_coordinate = (new_y_coordinate, new_x_coordinate)
                     new_right_car_coordinate = current_car_coordinates[0]
+                    # Add new coordinate to list
                     current_car_coordinates.insert(0, new_left_car_coordinate)
+                    # Remove old coordinate from list
                     current_car_coordinates.pop()
             elif board.current_car.car_orientation == "V":
-                if direction == -1:
+                # Check direction
+                if direction == "-1":
+                    # Move down
                     new_x_coordinate = int(current_car_coordinates[0][1])
                     new_y_coordinate = current_car_coordinates[0][0] - 1
                     new_left_car_coordinate = (new_y_coordinate, new_x_coordinate)
                     new_right_car_coordinate = current_car_coordinates[0]
+                    # Add new coordinate to list
                     current_car_coordinates.insert(0, new_left_car_coordinate)
+                    # Remove old coordinate from list
                     current_car_coordinates.pop()
-                elif direction == 1:
+                elif direction == "1":
+                    # Move up
                     new_x_coordinate = int(current_car_coordinates[0][1])
                     new_y_coordinate = current_car_coordinates[-1][0] + 1
                     new_right_car_coordinate = (new_y_coordinate, new_x_coordinate)
                     new_left_car_coordinate = current_car_coordinates[1]
+                    # Add new coordinate to list
                     current_car_coordinates.append(new_right_car_coordinate)
+                    # Remove old coordinate from list
                     current_car_coordinates.pop(0)
 
+            # Load board with new car coordinates
             board.current_car.car_coordinates = current_car_coordinates
             board.load_board()
             board.add_cars(board.board)
-            # board.print_board()
+            # Add to set
             board.set_boards.add(board.get_representation_breadth(board))
 
         return board.set_boards
@@ -404,6 +380,8 @@ class Board:
     def output(self, solution: list[list[str]]) -> None:
         """
         Writes a solution for a board into a csv file.
+        Preconditions:
+        - solution is a nested list with strings containing the movements to solve the board
         """
         with open("output/output.csv", "w") as file:
             writer = csv.writer(file)
@@ -416,17 +394,34 @@ class Board:
                 direction = move[1]
                 writer.writerow([car_key, direction])
 
-    def order_strings_by_id(self):
+    def order_strings_by_id(self) -> list[str]:
+        """
+        Orders the strings in move_set by their IDs.
+        Postconditions:
+        - Returns a list of strings from move_set, ordered by their IDs.
+        """
         ordered_strings = sorted(self.move_set, key=lambda s: int(s.split(" ")[-1]))
         return ordered_strings
 
-    def make_solution(self, ordered_solution):
+    def make_solution(self, ordered_solution: list[str]) -> list[list[Union[str, int]]]:
+        """
+        Creates a solution list from the ordered_solution list.
+        Precondition:
+        - ordered_solution is a list of strings in the format "<car> <direction> <id>".
+        Postcondition:
+        - Returns a nested list with strings, where each sublist contains the car and its corresponding direction as [car, direction].
+        """
         for string in ordered_solution:
             car, direction, _ = string.split(" ")
             self.directions.append([car, int(direction)])
         return self.directions
     
-    def order_solution(self):
+    def order_solution(self) -> list[list[Union[str, int]]]:
+        """
+        Orders the solution based on the move_set.
+        Postcondition:
+        - Returns a list of lists, where each sublist contains the car and its corresponding direction as [car, direction].
+        """
         ordered_solution = self.order_strings_by_id()
         solution = self.make_solution(ordered_solution)
         return solution

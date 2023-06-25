@@ -7,21 +7,33 @@ from typing import Optional, Any
 
 class BreadthFirst(DepthFirst):
     def __init__(self, board: Board) -> None:
+        """
+        Initializes BreadthFirst class and inherits the DephtFirst class.
+        Precondtions:
+        - board is a Board object of the current board
+        """
         self.board = copy.deepcopy(board)
+        # Create the stack with the states
         self.states = [copy.deepcopy(self.board)]
+        # Create archive
         self.archive = {self.board.get_representation(self.board)}
         self.number_of_moves = []
+        # Create a set that stores the unique representations of all visited board states
         self.all_states = {self.board.get_representation(self.board)}
 
         self.win_count = 0
+        # List to add best solution
         self.best_solution = []
         self.best_value = float('inf')
     
-    def check_solution(self, new_board: Optional[Board]) -> None:
+    def check_solution(self, new_board: "Board") -> None:
         """
-        Checks whether the solution contains less moves than the current best solution.
+        Checks whether the solution contains fewer moves than the current best solution.
+        Preconditions:
+        - new_board is a Board object which represents a board in the next state in the tree
         """
         self.win_count += 1
+        # Order solution
         solution = new_board.order_solution()
         move_count = len(solution)
 
@@ -29,23 +41,31 @@ class BreadthFirst(DepthFirst):
             self.best_solution = solution
 
         if self.number_of_moves:
+                # Get lowest number of moves 
                 lowest_value = min(self.number_of_moves)
+                # If current number of moves is lower than before, set as new best solution
                 if move_count < lowest_value:
                     self.number_of_moves.append(move_count)
                     self.best_solution = []
                     self.best_solution.append(solution)
+        # For first solution
         elif move_count > 0:
             self.number_of_moves.append(move_count)
 
-    def get_next_state(self):
+    def get_next_state(self) -> "Board":
         """
-        
+        Get the next state from the stack of states.
+        Postconditions:
+        - the next state, a Board object, is returned
         """
         return self.states.pop(0)
 
-    def add_all_possible_states(self, new_board, can_move: bool, moves: list[Any]) -> None:
+    def add_all_possible_states(self, can_move: bool, moves: list["Board"]) -> None:
         """
-        
+        Adds possible board states to the archive
+        Preconditions:
+        - can_move is a boolean, which is true when the car can move
+        - moves is a list with the all the possible board states from the current board
         """
         if can_move:
             for move in moves:
@@ -54,34 +74,36 @@ class BreadthFirst(DepthFirst):
                     self.states.append(move)
                     self.archive.add(move_representation)
 
-    def go(self) -> None:
+    def go(self) -> list["Board"]:
         """
-        Runs the algorithm until all possible states have been visited.
+        Runs the algorithm until all possible board states have been visited.
+        Postconditions:
+        - A list with a Board object representing the best solution is returned
         """
+        # Until no board states left
         while self.states:
+            # Get new board state
             new_board = self.get_next_state()
             new_board_representation = new_board.get_representation(new_board)
+            
+            # Add new state to archive
             self.archive.add(new_board_representation)
             self.all_states.add(new_board_representation)
-            # print(f"states: {len(self.states)}")
+
             if new_board.is_won():
-                print("WON")
-                # remove winning state from archive
+                print("Won")
+                # Remove winning state from archive
                 self.archive.remove(new_board_representation)
-                # check whether solution is better than current best solution
+                # Check whether solution is better than current best solution
                 self.check_solution(new_board)
-                print(f"solution found (breadth first): {len(self.best_solution)}, {self.best_solution}")
             else:
+                # Loop through cars in new state
                 for car in new_board.cars:
                     child = copy.deepcopy(new_board)
-                    # get possible board states from current car
-                    moves, can_move = child.get_possible_moves_2(child, car)
-                    # add possible board states to list of states
-                    self.add_all_possible_states(new_board, can_move, moves)
+                    # Get possible board states from current car
+                    moves, can_move = child.get_possible_moves(child, car)
+                    # Add possible board states to list of states
+                    self.add_all_possible_states(can_move, moves)
         
-        # print best solution and amount of moves
-        # print(f"lowest amount of moves (breadth first): {self.number_of_moves[-1]}")
-        # print(f"moves of best solution (breadth first): {self.best_solution}")
-
         return self.best_solution
         
