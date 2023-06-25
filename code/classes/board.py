@@ -305,7 +305,7 @@ class Board:
                     return False
         return True
 
-    def use_solution(self, board: "Board", solution: list[list[str]]) -> set[str]:
+    def use_solution(self, board: "Board", solution) -> set[str]:
         """
         Uses a given solution to move the board into winning configuration.
         Preconditions:
@@ -325,7 +325,7 @@ class Board:
             # Check car orientation
             if board.current_car.car_orientation == "H":
                 # Check direction
-                if direction == "1":
+                if direction == 1:
                     # Move to the right
                     new_y_coordinate = int(current_car_coordinates[0][0])
                     new_x_coordinate = current_car_coordinates[-1][1] + 1
@@ -335,7 +335,7 @@ class Board:
                     current_car_coordinates.append(new_right_car_coordinate)
                     # Remove old coordineate from list
                     current_car_coordinates.pop(0)
-                elif direction == "-1":
+                elif direction == -1:
                     # Move to the left
                     new_y_coordinate = int(current_car_coordinates[0][0])
                     new_x_coordinate = current_car_coordinates[0][-1] - 1
@@ -347,7 +347,7 @@ class Board:
                     current_car_coordinates.pop()
             elif board.current_car.car_orientation == "V":
                 # Check direction
-                if direction == "-1":
+                if direction == -1:
                     # Move down
                     new_x_coordinate = int(current_car_coordinates[0][1])
                     new_y_coordinate = current_car_coordinates[0][0] - 1
@@ -357,7 +357,7 @@ class Board:
                     current_car_coordinates.insert(0, new_left_car_coordinate)
                     # Remove old coordinate from list
                     current_car_coordinates.pop()
-                elif direction == "1":
+                elif direction == 1:
                     # Move up
                     new_x_coordinate = int(current_car_coordinates[0][1])
                     new_y_coordinate = current_car_coordinates[-1][0] + 1
@@ -403,7 +403,7 @@ class Board:
         ordered_strings = sorted(self.move_set, key=lambda s: int(s.split(" ")[-1]))
         return ordered_strings
 
-    def make_solution(self, ordered_solution: list[str]) -> list[list[Union[str, int]]]:
+    def make_solution(self, ordered_solution: list[str]):
         """
         Creates a solution list from the ordered_solution list.
         Precondition:
@@ -416,7 +416,7 @@ class Board:
             self.directions.append([car, int(direction)])
         return self.directions
     
-    def order_solution(self) -> list[list[Union[str, int]]]:
+    def order_solution(self):
         """
         Orders the solution based on the move_set.
         Postcondition:

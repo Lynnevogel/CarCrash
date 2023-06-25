@@ -18,7 +18,7 @@ class DepthFirst:
         self.states = [copy.deepcopy(self.board)]
         # Create archive
         self.archive = {self.board.get_representation(self.board)}
-        self.number_of_moves: list[int] = []
+        self.number_of_moves = []
         # Create a set that stores the unique representations of all visited board states
         self.all_states = {self.board.get_representation(self.board)}
 
@@ -26,7 +26,7 @@ class DepthFirst:
         self.depth_list_won: list[int] = []
         self.lowest_depth_won = 0
 
-        self.best_solution: list[list[Union[str, int]]] = []
+        self.best_solution = []
         self.best_value = float('inf')
 
     def get_next_state(self) -> "Board":
@@ -37,7 +37,7 @@ class DepthFirst:
         """
         return self.states.pop()
 
-    def add_all_possible_states(self, can_move: bool, moves: list["Board"]) -> None:
+    def add_all_possible_states(self, can_move: bool, moves) -> None:
         """
         Adds possible board states to the archive
         Preconditions:
@@ -46,10 +46,10 @@ class DepthFirst:
         """
         if can_move:
             for move in moves:
-                if move.get_representation(move) not in self.archive and len(move.move_set) < 100:
+                 if move.get_representation(move) not in self.archive and len(move.move_set) < 100:
                     self.states.append(move)
 
-    def check_solution(self, new_board: "Board") -> None:
+    def check_solution(self, new_board) -> None:
         """
         Checks whether the solution contains fewer moves than the current best solution.
         Preconditions:
@@ -59,9 +59,14 @@ class DepthFirst:
         solution = new_board.order_solution()
         move_count = len(solution)
 
+        print(move_count)
+        print(f"number :{self.number_of_moves}")
+
         if self.number_of_moves:
+                print("hi")
                 # Get lowest number of moves 
                 lowest_value = min(self.number_of_moves)
+                print(f"Low: {lowest_value}")
                 # If current number of moves is lower than before, set as new best solution
                 if move_count < lowest_value:
                     self.number_of_moves.append(move_count)

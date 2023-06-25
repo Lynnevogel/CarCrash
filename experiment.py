@@ -4,7 +4,7 @@ import csv
 from typing import Optional
 import subprocess
 
-def run_experiment(game_name: str, algorithm: str, amount_of_times: int) -> None:
+def run_experiment(game_name: str, algorithm: str, amount_of_times: str) -> None:
     """
     Runs experiment by executing the main.py script with the specified arguments.
     Preconditions:
@@ -16,7 +16,7 @@ def run_experiment(game_name: str, algorithm: str, amount_of_times: int) -> None
     subprocess.run(command, shell=True)
 
 
-def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: float, number_of_moves: int, number_of_states: int, won: bool, solution: list[list[str]], state_space: Optional[str] = None) -> None:
+def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: float, number_of_moves: int, number_of_states: int, won: int, solution, state_space: Optional[str] = None) -> None:
     """
     Writes the solution for a board into a CSV file.
     Preconditions:
