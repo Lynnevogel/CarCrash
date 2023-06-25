@@ -37,6 +37,8 @@ python3 main.py 6x6_1 random 10
 ### Structuur
 
 Hieronder is een lijst te vinden van de mappen en bestanden in de repository van dit project.
+- **/main.py**: in dit bestand wordt het bord in geladen en het gewenste algoritme aangehaald.
+- **/experiment.py**: in dit bestand wordt de data per run gegenereert.
 - **/code**: deze map bevat code, die aangehaald wordt in main.py en experiment.py.
     - **/code/algorithms**: bevat de code voor de verschillende algoritmes.
     - **/code/classes**: bevat de code voor de verschillende classes.
