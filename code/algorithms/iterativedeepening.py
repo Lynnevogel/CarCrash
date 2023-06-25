@@ -31,7 +31,7 @@ class IterativeDeepening:
         """
         return self.states.pop()
     
-    def add_all_possible_states(self, new_board: Board, can_move: bool, moves: list[Any]) -> None:
+    def add_all_possible_states(self, can_move: bool, moves: list[Any]) -> None:
         """
         Adds states to the states list and keeps an archive of states that should not be 
         added to the states list.

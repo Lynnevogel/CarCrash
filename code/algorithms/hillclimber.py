@@ -56,7 +56,7 @@ class HillClimber(BreadthFirst):
             print(f"boards random solution: {boards_random_solution}")
             self.all_random_states.update(boards_random_solution)
 
-    def add_all_possible_states(self, new_board, can_move: bool, moves: list["Board"]) -> None:
+    def add_all_possible_states(self, can_move: bool, moves: list["Board"]) -> None:
         """
         Adds states to the states list and keeps an archive of states that should not be 
         added to the states list.
@@ -80,7 +80,7 @@ class HillClimber(BreadthFirst):
         Iterates the random solutions and breadth first search an x amount of times.
         """
         for _ in range(iterations):
-            self.generate_random_solutions(2)
+            self.generate_random_solutions(10)
             # add state so breadth first can start
             self.states = [copy.deepcopy(self.starting_board)]
             self.archive = {self.starting_board.get_representation(self.starting_board)}
