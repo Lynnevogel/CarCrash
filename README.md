@@ -2,7 +2,7 @@
 
 ## Rush Hour
 
-Rush Hour is een schuifpuzzel bestaande uit een veld, gevuld met auto's. Doorgaans wordt het spel gespeeld op een bord van 6 bij 6, maar er bestaan ook borden van 9 bij 9 en 12 bij 12. Op het bord staat een rode auto die naar de uitgang moet. De weg van de auto is versperd door andere auto's en vrachtwagens. Het doel van het spel is om de auto's zo te verplaatsen dat de rode auto naar de uitgang kan.
+Rush Hour is een schuifpuzzel bestaande uit een veld, gevuld met auto's. Doorgaans wordt het spel gespeeld op een bord van 6 bij 6, maar er bestaan ook borden van 9 bij 9 en 12 bij 12. Op het bord staat een rode auto die naar de uitgang moet. De weg van de auto is versperd door andere auto's en vrachtwagens. Het doel van het spel is om de auto's zo te verplaatsen dat de rode auto naar de uitgang kan. In deze opdracht is het de bedoeling om verschillende algoritmes toe te passen, op zoek naar de snelste manier om de puzzel op te lossen.
 
 ## Statespace van de case
 De statespace van de case kan berekend worden door alle mogelijke plaatsen voor alle auto's bij elkaar op te tellen. Wanneer het bord n lang is, kan de auto op n - lengte_auto aantal plekken staan. Hierbij wordt geen rekening gehouden met dat auto's niet over elkaar heen mogen bewegen. Dit geldt hetzelfde voor de vrachtwagens. Dit levert de volgende formule op:
@@ -13,9 +13,30 @@ De statespace van de case kan berekend worden door alle mogelijke plaatsen voor 
 
 ## Aan de slag
 
+### Algoritmes
+
+Voor deze case is gebruik gemaakt van vier verschillende algoritmes. 
+
+Random algoritme
+
+In het random algoritme wordt telkens een willekeurige auto op het bord geselecteerd. Afhankelijk van het aantal bewegingen dat de auto kan maken, wordt een richting gekozen. Wanneer er 0 mogelijke bewegingen zijn, blijft de auto staan. Bij 1 mogelijke beweging moet de auto die kant op. Wanneer er 2 mogelijkheden zijn, wordt de richting willekeurig gekozen. 
+
+Depth-first search
+
+Bij het depth-first search algoritme worden alle mogelijke oplossingen afgegaan. Het algoritme begint bij de begin-state. Vervolgens wordt gekeken welke auto's op het bord kunnen verschuiven en waarheen. Vervolgens wordt een bord gekozen en wordt dit herhaald. Wanneer het algoritme een oplossing tegenkomt, gaat hij terug naar een ondieper niveau in de "boom". Vanuit daar wordt verder gekeken naar mogelijke bewegingen. Op deze manier gaat het algoritme de hele boom af. Dit wordt geïmplementeerd door gebruik te maken van een stack.
+
+Breadth-first search
+
+Een breadt-first search algoritme verschilt in implementatie weinig van de depth-first search. Een belangrijk verschil is dat breadth-first search gebruik maakt van een queue in plaats van een stack. De breadth-first search gaat in een boom eerst alle mogelijkheden af op hetzelfde niveau, en gaat pas een niveau lager wanneer het huidige niveau geen mogelijkheden meer heeft. 
+
+Hillclimber
+
+Tot slot is gebruik gemaakt van een hillclimber algoritme. Bij dit algoritme is het van belang dat er een bestaande oplossing is die mogelijk verbeterd kan worden. De hillclimber is in deze case zo geïmplementeerd dat eerst tien random oplossingen worden gegenereerd. Vervolgens is dit de state space die wordt afgezocht door een breadth-first search.
+
+
 ### Vereisten
 
-De code voor het oplossen van de case is geschreven in 3.10.10 en 3.11.3. Voor de visualisatie van de case is gebruik gemaakt van matplotlib. Meer informatie hierover is te vinden in requirements.txt. Matplotlib is te downloaden via het volgende commando:
+De code voor het oplossen van de case is geschreven in 3.10.10 en 3.11.3. Voor de visualisatie van de case is gebruik gemaakt van matplotlib, scipy en numpy. De versies die zijn gebruikt tijdens dit project, zijn terug te vinden in requirements.txt. De requirements zijn te downloaden via het volgende commando:
 
 ```
 pip install -r requirements.txt
@@ -26,7 +47,7 @@ pip install -r requirements.txt
 De algoritmes kunnen gerund worden door het volgende commando: 
 
 ```
-"Usage: python main.py [game] [algorithm] [runs]"
+"python main.py [game] [algorithm] [amount of runs]"
 
 ```
 Dus dit zou het commando zijn om spelbord 6x6_1 10 keer op te lossen met het random algoritme: 

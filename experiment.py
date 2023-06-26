@@ -31,12 +31,13 @@ def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: f
     - solution is a nested list with a string (car_key) and an integer (direction).
     - state_space is an optional string
     """
+    # open a new CSV file
     with open(f"output/experiment_output_{game}_{algorithm}_{n}_{time}.csv", "w") as file:
         writer = csv.writer(file)
         field = ["n", "game", "algorithm", "dimension", "time", "number of moves", "number of states", "won", "state space", "solution: car", "solution: direction"]
 
         writer.writerow(field)
-
+        # add output to CSV file
         for move in solution:
             car_key = move[0]
             direction = move[1]
@@ -61,9 +62,10 @@ def end_time(start: float) -> float:
     Postconditions:
     - A float containing the elapsed time is returned.
     """
+    # set end time
     end = time.time()
+    # calculate change in time
     elapsed_time = round((end - start), 6)
-    print(f"Puzzle was solved in {elapsed_time}s.")
     return elapsed_time
 
 
