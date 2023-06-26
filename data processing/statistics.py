@@ -20,7 +20,14 @@ import numpy as np
 file_names_random = ["6x6_1_random", "6x6_2_random", "6x6_3_random", "9x9_4_random", "9x9_5_random", "9x9_6_random", "12x12_7_random"]
 file_names_hillclimber = ["6x6_1_hillclimber", "6x6_2_hillclimber", "9x9_4_hillclimber"]
 
-def load_data_multiple(file_names: list[str]) -> tuple[list[list[int]]|list[list[int]]|list[list[int]]]:
+def load_data_multiple(file_names: list[str]) -> tuple[list[list[float]],list[list[int]],list[list[int]]]:
+    """
+    Load data from multiple CSV files.
+    Preconditions:
+    - file_names is a list of strings containing the file names.
+    Postconditions:
+    - Three nested lists are returned with the time, moves and states for each gameboard.
+    """
     time_random = []
     number_of_moves_random = []
     number_of_states_random = []
@@ -33,11 +40,13 @@ def load_data_multiple(file_names: list[str]) -> tuple[list[list[int]]|list[list
     return time_random, number_of_moves_random, number_of_states_random
 
 
-def load_data(file_name: str):
+def load_data(file_name: str) -> tuple[list[float],list[int],list[int]]:
     """
     Load data from CSV file. 
     Preconditions: 
     - file_name is a string containing the file name. 
+    Postconditions:
+    - Three lists are returned with the time, moves and states for each gameboard.
     """
     time = []
     number_of_moves = []
@@ -56,9 +65,15 @@ def load_data(file_name: str):
     
     return time, number_of_moves, number_of_states
 
-def plot_histogram(data, hist_name: str, x_label: str, y_label: str, title: str) -> None:
+def plot_histogram(data: list[list[int]], hist_name: str, x_label: str, y_label: str, title: str) -> None:
     """
-    Make histogram with the given data.
+    Make a histogram with the given data.
+    Preconditions:
+    - data is a nested list with integers.
+    - hist_name is a string representing the name of the histogram.
+    - x_label is a string representing the label for the x-axis.
+    - y_label is a string representing the label for the y-axis.
+    - title is a string representing the title of the histogram.
     """
     plt.hist(data, color='green')
     plt.xlabel(x_label)
@@ -67,7 +82,12 @@ def plot_histogram(data, hist_name: str, x_label: str, y_label: str, title: str)
     plt.savefig(f"data_images/hist_{hist_name}", dpi=300, bbox_inches='tight')
 
 
-def plot_boxplot(data):
+def plot_boxplot_random(data: list[list[int]]) -> None:
+    """
+    Makes a boxplot with the given data.
+    Preconditions:
+    - data is a nested list with integers.
+    """
     data1 = data[0]
     data2 = data[1]
     data3 = data[2]
@@ -113,14 +133,25 @@ def plot_boxplot(data):
     # plt.show()
 
 
-def print_summary_statistics(data, labels):
-    for i in range(len(data)):
-        statistic, p_value = stats.shapiro(data[i])
-        median = np.median(data[i])
-        iqr = np.percentile(data[i], 75) - np.percentile(data[i], 25)
-        print(f"{labels[i]}: statistic: {statistic}, p_value: {p_value}, median: {median}, iqr: {iqr}")
+def print_summary_statistics(data: list[int], title: str) -> None:
+    """
+    Print summary statistics for the given data.
+    Preconditions:
+    - data is a list of integers.
+    - title is a string representing the title of the statistics.
+    """
+    statistic, p_value = stats.shapiro(data)
+    median = np.median(data)
+    iqr_25 = np.percentile(data, 25)
+    iqr_75 = np.percentile(data, 75)
+    print(f"{title}: statistic: {statistic}, p_value: {p_value}, median: {median}, iqr_25: {iqr_25}, iqr_75: {iqr_75}")
 
-def plot_boxplot_hillclimber(data):
+def plot_boxplot_hillclimber(data: list[list[int]]) -> None:
+    """
+    Makes a boxplot with the given data.
+    Preconditions:
+    - data is a nested list with integers.
+    """
     data1 = data[0]
     data2 = data[1]
     data3 = data[2]
@@ -161,7 +192,14 @@ def plot_boxplot_hillclimber(data):
     plt.savefig(f"data_images/boxplot_hillclimber", dpi=300, bbox_inches='tight')
     # plt.show()
 
-def plot_boxplot_hill_rand(data_random, data_hillclimber, title):
+def plot_boxplot_hill_rand(data_random: list[int], data_hillclimber: list[int], title: str) -> None:
+    """
+    Make a boxplot comparing the random and hillclimber algorithms.
+    Preconditions:
+    - data_random is a list of integers representing the data for the random algorithm.
+    - data_hillclimber is a list of integers representing the data for the hillclimber algorithm.
+    - title is a string representing the title of the plot. 
+    """
     boxprops = {'color': 'blue', 'linewidth': 2}
     whiskerprops = {'color': 'red', 'linewidth': 2}
     medianprops = {'color': 'black', 'linewidth': 2}
@@ -199,89 +237,27 @@ if __name__=="__main__":
     # print(f"number_of_moves: {number_of_moves_random}")
     # print(f"number_of_states: {number_of_states_random}")
 
-    # # Random 6x6_1 moves 
-    # statistic, p_value = stats.shapiro(number_of_moves_random[0])
-    # median_6x6_1_moves_random = np.median(number_of_moves_random[0])
-    # iqr_6x6_1_moves_random_25 = np.percentile(number_of_moves_random[0], 25)
-    # iqr_6x6_1_moves_random_75 = np.percentile(number_of_moves_random[0], 75)
-    # print(f"Random 6x6_1: statistic: {statistic}, p_value: {p_value}, median: {median_6x6_1_moves_random}, iqr_25: {iqr_6x6_1_moves_random_25}, iqr_75: {iqr_6x6_1_moves_random_75}")
+    # Random 6x6_1 moves 
+    # print_summary_statistics(number_of_moves_random[0], "6x6_1_random")
+    # Random 6x6_2 moves 
+    # print_summary_statistics(number_of_moves_random[1], "6x6_2_random")
+    # Random 6x6_3 moves 
+    # print_summary_statistics(number_of_moves_random[2], "6x6_3_random")
+    # Random 9x9_4 moves 
+    # print_summary_statistics(number_of_moves_random[3], "9x9_4_random")
+    # Random 9x9_5 moves 
+    # print_summary_statistics(number_of_moves_random[4], "9x9_5_random")
+    # Random 9x9_6 moves 
+    # print_summary_statistics(number_of_moves_random[5], "9x9_6_random")
+    # Random 12x12_7 moves 
+    # print_summary_statistics(number_of_moves_random[6], "12x12_7_random")
 
-    # # Random 6x6_2 moves 
-    # statistic, p_value = stats.shapiro(number_of_moves_random[1])
-    # median_6x6_2_moves_random = np.median(number_of_moves_random[1])
-    # iqr_6x6_2_moves_random_25 = np.percentile(number_of_moves_random[1], 25)
-    # iqr_6x6_2_moves_random_75 = np.percentile(number_of_moves_random[1], 75)
-    # print(f"Random 6x6_2: statistic: {statistic}, p_value: {p_value}, median: {median_6x6_2_moves_random}, iqr_25: {iqr_6x6_2_moves_random_25}, iqr_75: {iqr_6x6_2_moves_random_75}")
-
-    # statistic, p_value = stats.shapiro(number_of_moves_random[2])
-    # median_6x6_3_moves_random = np.median(number_of_moves_random[2])
-    # iqr_6x6_3_moves_random_25 = np.percentile(number_of_moves_random[2], 25)
-    # iqr_6x6_3_moves_random_75 = np.percentile(number_of_moves_random[2], 75)
-    # print(f"Random 6x6_3: statistic: {statistic}, p_value: {p_value}, median: {median_6x6_3_moves_random}, iqr_25: {iqr_6x6_3_moves_random_25}, iqr_75: {iqr_6x6_3_moves_random_75}")
-
-    # # Random 9x9_4 moves 
-    # statistic, p_value = stats.shapiro(number_of_moves_random[3])
-    # median_9x9_4_moves_random = np.median(number_of_moves_random[3])
-    # iqr_9x9_4_moves_random_25 = np.percentile(number_of_moves_random[3], 25)
-    # iqr_9x9_4_moves_random_75 = np.percentile(number_of_moves_random[3], 75)
-    # print(f"Random 9x9_4: statistic: {statistic}, p_value: {p_value}, median: {median_9x9_4_moves_random}, iqr_25: {iqr_9x9_4_moves_random_25}, iqr_75: {iqr_9x9_4_moves_random_75}")
-
-    # # Random 9x9_5 moves 
-    # statistic, p_value = stats.shapiro(number_of_moves_random[4])
-    # median_9x9_5_moves_random = np.median(number_of_moves_random[4])
-    # iqr_9x9_5_moves_random_25 = np.percentile(number_of_moves_random[4], 25)
-    # iqr_9x9_5_moves_random_75 = np.percentile(number_of_moves_random[4], 75)
-    # print(f"Random 9x9_5: statistic: {statistic}, p_value: {p_value}, median: {median_9x9_5_moves_random}, iqr_25: {iqr_9x9_5_moves_random_25}, iqr_75: {iqr_9x9_5_moves_random_75}")
-
-    # # Random 9x9_6 moves 
-    # statistic, p_value = stats.shapiro(number_of_moves_random[5])
-    # median_9x9_6_moves_random = np.median(number_of_moves_random[5])
-    # iqr_9x9_6_moves_random_25 = np.percentile(number_of_moves_random[5], 25)
-    # iqr_9x9_6_moves_random_75 = np.percentile(number_of_moves_random[5], 75)
-    # print(f"Random 9x9_6: statistic: {statistic}, p_value: {p_value}, median: {median_9x9_6_moves_random}, iqr_25: {iqr_9x9_6_moves_random_25}, iqr_75: {iqr_9x9_6_moves_random_75}")
-
-    # # Random 12x12_7 moves 
-    # statistic, p_value = stats.shapiro(number_of_moves_random[5])
-    # median_12x12_7_moves_random = np.median(number_of_moves_random[5])
-    # iqr_12x12_7_moves_random_25 = np.percentile(number_of_moves_random[5], 25)
-    # iqr_12x12_7_moves_random_75 = np.percentile(number_of_moves_random[5], 75)
-    # print(f"Random 12x12_7: statistic: {statistic}, p_value: {p_value}, median: {median_12x12_7_moves_random}, iqr_25: {iqr_12x12_7_moves_random_25}, iqr_75: {iqr_12x12_7_moves_random_75}")
-
-    # # Hillclimber 6x6_1 moves 
-    # statistic, p_value = stats.shapiro(number_of_moves_hillclimber[0])
-    # median_6x6_1_moves_hillclimber = np.median(number_of_moves_hillclimber[0])
-    # iqr_6x6_1_moves_hillclimber_25 = np.percentile(number_of_moves_hillclimber[0], 25)
-    # iqr_6x6_1_moves_hillclimber_75 = np.percentile(number_of_moves_hillclimber[0], 75)
-    # print(f"Hillclimber 6x6_1: statistic: {statistic}, p_value: {p_value}, median: {median_6x6_1_moves_hillclimber}, iqr_25: {iqr_6x6_1_moves_hillclimber_25}, iqr_75: {iqr_6x6_1_moves_hillclimber_75}")
-
-    # # Hillclimber 6x6_2 moves 
-    # statistic, p_value = stats.shapiro(number_of_moves_hillclimber[1])
-    # median_6x6_2_moves_hillclimber = np.median(number_of_moves_hillclimber[1])
-    # iqr_6x6_2_moves_hillclimber_25 = np.percentile(number_of_moves_hillclimber[1], 25)
-    # iqr_6x6_2_moves_hillclimber_75 = np.percentile(number_of_moves_hillclimber[1], 75)
-    # print(f"Hillclimber 6x6_2: statistic: {statistic}, p_value: {p_value}, median: {median_6x6_2_moves_hillclimber}, iqr_25: {iqr_6x6_2_moves_hillclimber_25}, iqr_75: {iqr_6x6_2_moves_hillclimber_75}")
-
-    # # Hillclimber 9x9_4 moves 
-    # statistic, p_value = stats.shapiro(number_of_moves_hillclimber[2])
-    # median_9x9_4_moves_hillclimber = np.median(number_of_moves_hillclimber[2])
-    # iqr_9x9_4_moves_hillclimber_25 = np.percentile(number_of_moves_hillclimber[2], 25)
-    # iqr_9x9_4_moves_hillclimber_75 = np.percentile(number_of_moves_hillclimber[2], 75)
-    # print(f"Hillclimber 9x9_4: statistic: {statistic}, p_value: {p_value}, median: {median_9x9_4_moves_hillclimber}, iqr_25: {iqr_9x9_4_moves_hillclimber_25}, iqr_75: {iqr_9x9_4_moves_hillclimber_75}")
-
-    # labels = [
-    # "Random 6x6_1 time",
-    # "Random 6x6_2 time",
-    # "Random 9x9_4 time",
-    # "Random 6x6_1 moves",
-    # "Random 6x6_2 moves",
-    # "Random 9x9_4 moves",
-    # "Random 6x6_1 states",
-    # "Random 6x6_2 states",
-    # "Random 9x9-4 states"
-    #     ]
-    # print_summary_statistics(time_random, labels)
-    # print_summary_statistics(number_of_moves_random, labels)
-    # print_summary_statistics(number_of_states_random, labels)
+    # Hillclimber 6x6_1 moves 
+    # print_summary_statistics(number_of_moves_hillclimber[0], "6x6_1_hillclimber")
+    # Hillclimber 6x6_2 moves 
+    # print_summary_statistics(number_of_moves_hillclimber[1], "6x6_2_hillclimber")
+    # Hillclimber 9x9_4 moves 
+    # print_summary_statistics(number_of_moves_hillclimber[2], "9x9_4_hillclimber")
 
 
     # Random histogrammen 
@@ -295,7 +271,7 @@ if __name__=="__main__":
 
 
     # Random boxplot
-    # plot_boxplot(number_of_moves_random)
+    # plot_boxplot_random(number_of_moves_random)
 
     # Hillclimber boxplot
     # plot_boxplot_hillclimber(number_of_moves_hillclimber)

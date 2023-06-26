@@ -131,12 +131,12 @@ class HillClimber(BreadthFirst):
 
     def generate_output(self) -> tuple[int, int, list[list[str|int]], int]:
         """
-        Returns the output needed for the CSV file
+        Return generated ouput from every run.
         Postconditions: 
-        - number_of_moves is the amount of moves made and is an integer
-        - number_of_states if the amound of states visited and is an integer
-        - solution is a nested list with a string and an integers
-        - state_space is a list with integers
+        - number_of_moves is the amount of moves made and is an integer.
+        - number_of_states if the amound of states visited and is an integer.
+        - solution is a nested list with a string and an integers.
+        - state_space is an integers.
         """
         number_of_moves = len(self.best_solution)
         number_of_states = len(self.all_states)

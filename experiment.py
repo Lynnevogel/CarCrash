@@ -1,6 +1,7 @@
 import time
 import csv
 import subprocess
+from typing import Optional
 
 
 def run_experiment(game_name: str, algorithm: str, amount_of_times: str) -> None:
@@ -15,7 +16,7 @@ def run_experiment(game_name: str, algorithm: str, amount_of_times: str) -> None
     subprocess.run(command, shell=True)
 
 
-def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: time, number_of_moves: int, number_of_states: int, won: int, solution: list[list[str|int]], state_space: int = None) -> None:
+def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: time, number_of_moves: int, number_of_states: int, won: int, solution: list[list[str|int]], state_space: Optional[int] = None) -> None:
     """
     Writes the solution for a board into a CSV file.
     Preconditions:

@@ -2,11 +2,9 @@ from .depth_first import DepthFirst
 from code.classes.board import Board
 from typing import Any
 import copy
-from typing import Optional, Any
-
 
 class BreadthFirst(DepthFirst):
-    def __init__(self, board: Board) -> None:
+    def __init__(self, board: "Board") -> None:
         """
         Initializes BreadthFirst class and inherits the DephtFirst class.
         Precondtions:

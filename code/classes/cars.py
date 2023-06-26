@@ -7,6 +7,7 @@ class Car:
             - car_orientation is either "H" or "V".
             - car_col, car_row and car_len are positive integers.
         """
+        # Get car information
         self.car_name: str = car_name
         self.car_orientation: str = car_orientation
         self.car_col: int = car_col
