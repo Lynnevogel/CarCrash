@@ -106,7 +106,7 @@ if __name__ == "__main__":
         elif algorithm == 'hillclimber':
             start = start_time()
             hill_climber = HillClimber(board)
-            hill_climber.run_iterations(2)
+            hill_climber.run_iterations(1)
             elapsed_time = end_time(start)
 
             # Get output

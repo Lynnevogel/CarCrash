@@ -68,7 +68,7 @@ def end_time(start: float) -> float:
 
 
 if __name__ == "__main__":
-    game_name = "6x6_3"
-    algorithm = "random"
-    amount_of_times = "100"
+    game_name = "9x9_4"
+    algorithm = "hillclimber"
+    amount_of_times = "10"
     run_experiment(game_name, algorithm, amount_of_times)
