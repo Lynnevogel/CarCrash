@@ -17,23 +17,17 @@ iqr = np.percentile(data, 75) - np.percentile(data, 25)
 # shapiro-wilk test
 statistic, p_value = stats.shapiro(data)
 
-plt.hist(data)
-# plt.show()
-
 file_names = ["6x6_1_random", "6x6_2_random", "6x6_3_random", "9x9_4_random", "9x9_5_random", "9x9_6_random", "12x12_7_random"]
 
-def load_random_data(file_names):
+def load_random_data_multiple(file_names):
     for file_name in file_names:
-        with open(f"data/{file_name}.csv") as file:
-            next(file)
-            for line in file: 
-                data = line.strip().split(",")
+        load_random_data(file_name)
 
-def load_random_data_test():
+def load_random_data(file_name):
     time = []
     number_of_moves = []
     number_of_states = []
-    with open(f"data/6x6_2_random.csv") as file:
+    with open(f"data/{file_name}.csv") as file:
         next(file)
         for line in file: 
             data = line.strip().split(",")
@@ -57,7 +51,9 @@ def plot_boxplot(data):
 
 
 if __name__=="__main__":
-    time, number_of_moves, number_of_states = load_random_data_test()
+    time, number_of_moves, number_of_states = load_random_data("6x6_1_random")
+
+    statistic, p_value = stats.shapiro(number_of_moves)
 
     # plot_histogram(time)
     # plot_histogram(number_of_moves)
@@ -77,7 +73,7 @@ if __name__=="__main__":
     medianprops = {'color': 'black', 'linewidth': 2}
     flierprops = {'marker': 'o', 'markeredgecolor': 'gray', 'markerfacecolor': 'gray'}
 
-    positions = [1, 2, 3]  # Positions of the box plots
+    positions = [1, 2, 3]
 
     # Create the boxplots and get the box artists
     boxplot = plt.boxplot([data1, data2, data3], positions=positions, patch_artist=True,
