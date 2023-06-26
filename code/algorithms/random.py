@@ -45,11 +45,9 @@ class Random:
             print(f"number of moves: {self.num_moves}")
             # visualize_board(self.board.board, self.board.cars, None)
 
-            # print(f"directions: {self.board.directions}")
-            # self.board.output(self.board.directions)
         return self.board
 
-    def generate_output(self):
+    def generate_output(self) -> tuple[int, int, list[list[str|int]]]:
         """
         Return generated ouput from every run, to save for the experiment
         """

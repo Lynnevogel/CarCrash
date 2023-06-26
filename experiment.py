@@ -1,8 +1,7 @@
-from code.algorithms.random import Random
 import time
 import csv
-from typing import Optional
 import subprocess
+
 
 def run_experiment(game_name: str, algorithm: str, amount_of_times: str) -> None:
     """
@@ -16,7 +15,7 @@ def run_experiment(game_name: str, algorithm: str, amount_of_times: str) -> None
     subprocess.run(command, shell=True)
 
 
-def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: float, number_of_moves: int, number_of_states: int, won: int, solution, state_space: Optional[str] = None) -> None:
+def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: time, number_of_moves: int, number_of_states: int, won: int, solution: list[list[str|int]], state_space: int = None) -> None:
     """
     Writes the solution for a board into a CSV file.
     Preconditions:
@@ -31,13 +30,13 @@ def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: f
     - solution is a nested list with a string (car_key) and an integer (direction).
     - state_space is an optional string
     """
-    # open a new CSV file
+    # Open a new CSV file
     with open(f"output/experiment_output_{game}_{algorithm}_{n}_{time}.csv", "w") as file:
         writer = csv.writer(file)
         field = ["n", "game", "algorithm", "dimension", "time", "number of moves", "number of states", "won", "state space", "solution: car", "solution: direction"]
 
         writer.writerow(field)
-        # add output to CSV file
+        # Add output to CSV file
         for move in solution:
             car_key = move[0]
             direction = move[1]
@@ -54,7 +53,7 @@ def start_time() -> float:
     return start
 
 
-def end_time(start: float) -> float:
+def end_time(start: time) -> time:
     """
     Calculates the elapsed time since the start time.
     Preconditions:
@@ -62,15 +61,15 @@ def end_time(start: float) -> float:
     Postconditions:
     - A float containing the elapsed time is returned.
     """
-    # set end time
+    # Set end time
     end = time.time()
-    # calculate change in time
+    # Calculate change in time
     elapsed_time = round((end - start), 6)
     return elapsed_time
 
 
 if __name__ == "__main__":
-    game_name = "9x9_5"
+    game_name = "9x9_4"
     algorithm = "hillclimber"
-    amount_of_times = "2"
+    amount_of_times = "1"
     run_experiment(game_name, algorithm, amount_of_times)

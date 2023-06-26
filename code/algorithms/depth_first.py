@@ -7,7 +7,7 @@ class DepthFirst:
     """
     A Depth First algorithm.
     """
-    def __init__(self, board: Board) -> None:
+    def __init__(self, board: "Board") -> None:
         """
         Initializes DepthFirst class.
         Preconditions:
@@ -18,7 +18,7 @@ class DepthFirst:
         self.states = [copy.deepcopy(self.board)]
         # Create archive
         self.archive = {self.board.get_representation(self.board)}
-        self.number_of_moves = []
+        self.number_of_moves: list[int] = []
         # Create a set that stores the unique representations of all visited board states
         self.all_states = {self.board.get_representation(self.board)}
 
@@ -26,7 +26,7 @@ class DepthFirst:
         self.depth_list_won: list[int] = []
         self.lowest_depth_won = 0
 
-        self.best_solution = []
+        self.best_solution: list[list[str|int]] = []
         self.best_value = float('inf')
 
     def get_next_state(self) -> "Board":
@@ -37,7 +37,7 @@ class DepthFirst:
         """
         return self.states.pop()
 
-    def add_all_possible_states(self, can_move: bool, moves) -> None:
+    def add_all_possible_states(self, can_move: bool, moves: list["Board"]) -> None:
         """
         Adds possible board states to the archive
         Preconditions:
@@ -49,7 +49,7 @@ class DepthFirst:
                  if move.get_representation(move) not in self.archive and len(move.move_set) < 100:
                     self.states.append(move)
 
-    def check_solution(self, new_board) -> None:
+    def check_solution(self, new_board: "Board") -> None:
         """
         Checks whether the solution contains fewer moves than the current best solution.
         Preconditions:
@@ -57,8 +57,8 @@ class DepthFirst:
         """
         # Order solution
         solution = new_board.order_solution()
+        print(solution)
         move_count = len(solution)
-
         print(move_count)
         print(f"number :{self.number_of_moves}")
 
@@ -104,7 +104,7 @@ class DepthFirst:
                     self.add_all_possible_states(can_move, moves)
 
 
-    def generate_output(self):
+    def generate_output(self) -> tuple[int, int, list[list[str|int]]]:
         """
         Return generated ouput from every run, to save for the experiment
         """

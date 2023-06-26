@@ -74,7 +74,7 @@ class BreadthFirst(DepthFirst):
                     self.states.append(move)
                     self.archive.add(move_representation)
 
-    def go(self) -> list["Board"]:
+    def go(self) -> list[list[str|int]]:
         """
         Runs the algorithm until all possible board states have been visited.
         Postconditions:
