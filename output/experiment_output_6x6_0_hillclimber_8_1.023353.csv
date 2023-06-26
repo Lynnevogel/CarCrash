@@ -1,3 +1,0 @@
-n,game,algorithm,dimension,time,number of moves,number of states,won,state space,solution: car,solution: direction
-8,6x6_0,hillclimber,6,1.023353,2,60,1,61,D,1
-8,6x6_0,hillclimber,6,1.023353,2,60,1,61,E,-1
