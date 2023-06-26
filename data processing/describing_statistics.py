@@ -59,10 +59,50 @@ def plot_boxplot(data):
 if __name__=="__main__":
     time, number_of_moves, number_of_states = load_random_data_test()
 
-    plot_histogram(time)
-    plot_histogram(number_of_moves)
-    plot_histogram(number_of_states)
+    # plot_histogram(time)
+    # plot_histogram(number_of_moves)
+    # plot_histogram(number_of_states)
 
-    plot_boxplot(time)
-    plot_boxplot(number_of_moves)
-    plot_boxplot(number_of_states)
+    # plot_boxplot(time)
+    # plot_boxplot(number_of_moves)
+    # plot_boxplot(number_of_states)
+
+    # load_data()
+    data1 = [1, 2, 3, 3, 3, 4, 4, 5]
+    data2 = [2, 3, 4, 4, 4, 5, 5, 6]
+    data3 = [3, 4, 5, 5, 5, 6, 6, 7]
+
+    boxprops = {'color': 'blue', 'linewidth': 2}
+    whiskerprops = {'color': 'red', 'linewidth': 2}
+    medianprops = {'color': 'black', 'linewidth': 2}
+    flierprops = {'marker': 'o', 'markeredgecolor': 'gray', 'markerfacecolor': 'gray'}
+
+    positions = [1, 2, 3]  # Positions of the box plots
+
+    # Create the boxplots and get the box artists
+    boxplot = plt.boxplot([data1, data2, data3], positions=positions, patch_artist=True,
+                          boxprops=boxprops, whiskerprops=whiskerprops,
+                          capprops=whiskerprops, medianprops=medianprops,
+                          flierprops=flierprops)
+
+    # Customize box colors
+    colors = ['lightblue', 'lightgreen', 'lightyellow']
+    for box, color in zip(boxplot['boxes'], colors):
+        box.set(facecolor=color)
+
+    plt.xlabel("Category")
+    plt.ylabel("Values")
+    plt.title("Multiple Box Plots")
+
+    # Customize x-axis ticks
+    x_ticks = positions
+    x_tick_labels = ["Data 1", "Data 2", "Data 3"]
+    plt.xticks(x_ticks, x_tick_labels)
+
+    # Customize y-axis ticks
+    y_ticks = [0, 2, 4, 6, 8]
+    y_tick_labels = ["0", "2", "4", "6", "8"]
+    plt.yticks(y_ticks, y_tick_labels)
+
+    plt.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
+    plt.show()
