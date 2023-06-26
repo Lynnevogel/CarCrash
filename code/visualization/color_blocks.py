@@ -111,7 +111,7 @@ def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: Uni
     # timer.start()
 
     # Save the plot as an image
-    # if save_path:
-    #     plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
 
     plt.show()
