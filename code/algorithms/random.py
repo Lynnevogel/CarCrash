@@ -4,7 +4,7 @@ import random
 from code.visualization.color_blocks import visualize_board
 
 class Random:
-    def __init__(self, board) -> None:
+    def __init__(self, board: "Board") -> None:
         """
         Initialize Random class with current board and counter for number of moves.
         Preconditions:
@@ -13,7 +13,7 @@ class Random:
         self.board = board
         self.num_moves = 0
 
-    def random_move(self, possible_boards: list[Board]) -> Union[Board, None]:
+    def random_move(self, possible_boards: list[Board]) -> "Board":
         """
         Chooses a random board from the possible board, if list is not empty.  
         Preconditions: 
@@ -45,13 +45,15 @@ class Random:
             print(f"number of moves: {self.num_moves}")
             # visualize_board(self.board.board, self.board.cars, None)
 
-            # print(f"directions: {self.board.directions}")
-            # self.board.output(self.board.directions)
         return self.board
 
-    def generate_output(self):
+    def generate_output(self) -> tuple[int, int, list[list[str|int]]]:
         """
-        Return generated ouput from every run, to save for the experiment
+        Return generated ouput from every run.
+        Postconditions: 
+        - number_of_moves is the amount of moves made and is an integer.
+        - number_of_states if the amound of states visited and is an integer.
+        - solution is a nested list with a string and an integers.
         """
         number_of_moves = self.num_moves
         number_of_states = self.num_moves

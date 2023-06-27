@@ -30,7 +30,7 @@ class HillClimber(BreadthFirst):
         self.depth_list: list[int] = []
         self.depth = 0  
 
-    def generate_new_random_solution(self) -> list[list[Union[str, int]]]:
+    def generate_new_random_solution(self) -> "Board":
         """
         Returns the directions of a random solution. 
         Postconditions:
@@ -83,7 +83,7 @@ class HillClimber(BreadthFirst):
                     # if not yet in archive, add to archive
                     self.archive.add(move_representation)
 
-    def check_move_in_all_random_states(self, move_representation):
+    def check_move_in_all_random_states(self, move_representation: str) -> bool:
         """
         Checks whether possible moves is in the possible states set.
         Precondition: 
@@ -93,7 +93,7 @@ class HillClimber(BreadthFirst):
         """
         return move_representation in self.all_random_states
 
-    def run_iterations(self, iterations: int):
+    def run_iterations(self, iterations: int) -> None:
         """
         Iterates the random solutions and breadth first search an x amount of times.
         Precondition: 
@@ -114,7 +114,7 @@ class HillClimber(BreadthFirst):
             self.state_spaces.append(len(self.all_random_states))
 
 
-    def check_for_best_solution(self, solution) -> None:
+    def check_for_best_solution(self, solution: list[list[str|int]]) -> None:
         """
         Checks if new solution if better than previous best solution.
         Precondition: 
@@ -129,14 +129,14 @@ class HillClimber(BreadthFirst):
             self.best_solution = solution
             self.number_of_moves = len(new_solution)
 
-    def generate_output(self):
+    def generate_output(self) -> tuple[int, int, list[list[str|int]], int]:
         """
-        Returns the output needed for the CSV file
+        Return generated ouput from every run.
         Postconditions: 
-        - number_of_moves is the amount of moves made and is an integer
-        - number_of_states if the amound of states visited and is an integer
-        - solution is a nested list with a string and an integers
-        - state_space is a list with integers
+        - number_of_moves is the amount of moves made and is an integer.
+        - number_of_states if the amound of states visited and is an integer.
+        - solution is a nested list with a string and an integers.
+        - state_space is an integers.
         """
         number_of_moves = len(self.best_solution)
         number_of_states = len(self.all_states)
