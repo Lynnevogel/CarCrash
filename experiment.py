@@ -16,7 +16,7 @@ def run_experiment(game_name: str, algorithm: str, amount_of_times: str) -> None
     subprocess.run(command, shell=True)
 
 
-def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: time, number_of_moves: int, number_of_states: int, won: int, solution: list[list[str|int]], state_space: Optional[int] = None) -> None:
+def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: float, number_of_moves: int, number_of_states: int, won: int, solution: list[list[str|int]], state_space: Optional[int] = None) -> None:
     """
     Writes the solution for a board into a CSV file.
     Preconditions:
@@ -54,7 +54,7 @@ def start_time() -> float:
     return start
 
 
-def end_time(start: time) -> time:
+def end_time(start: float) -> float:
     """
     Calculates the elapsed time since the start time.
     Preconditions:

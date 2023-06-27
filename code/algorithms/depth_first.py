@@ -59,23 +59,21 @@ class DepthFirst:
         print(solution)
         move_count = len(solution)
         print(move_count)
-        print(f"number :{self.number_of_moves}")
 
         if self.number_of_moves:
-                print("hi")
                 # Get lowest number of moves 
                 lowest_value = min(self.number_of_moves)
-                print(f"Low: {lowest_value}")
                 # If current number of moves is lower than before, set as new best solution
                 if move_count < lowest_value:
                     self.number_of_moves.append(move_count)
                     self.best_solution = []
-                    self.best_solution.append(solution)
+                    self.best_solution = solution
         # For first solution
         elif move_count > 0:
+            self.best_solution = solution
             self.number_of_moves.append(move_count)
 
-    def go(self) -> None:
+    def go(self) -> list[list[str|int]]:
         """
         Runs the algorithm until all possible board states have been visited.
         """
@@ -101,6 +99,8 @@ class DepthFirst:
                     moves, can_move = child.get_possible_moves(child, car)
                     # Add possible board states to list of states
                     self.add_all_possible_states(can_move, moves)
+            
+        return self.best_solution
 
 
     def generate_output(self) -> tuple[int, int, list[list[str|int]]]:
@@ -113,10 +113,6 @@ class DepthFirst:
         """
         number_of_moves = len(self.best_solution)
         number_of_states = len(self.all_states)
-        # check length of best_solution for indexing
-        if len(self.best_solution) > 1:
-            solution = self.best_solution
-        else:
-            solution = self.best_solution[0]
-            number_of_moves = len(self.best_solution[0])
+        solution = self.best_solution
+        
         return number_of_moves, number_of_states, solution

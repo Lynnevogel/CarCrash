@@ -39,13 +39,13 @@ class BreadthFirst(DepthFirst):
             self.best_solution = solution
 
         if self.number_of_moves:
-            # Get lowest number of moves
-            lowest_value = min(self.number_of_moves)
-            # If current number of moves is lower than before,set as new best solution
-            if move_count < lowest_value:
-                self.number_of_moves.append(move_count)
-                self.best_solution = []
-                self.best_solution.append(solution)
+                # Get lowest number of moves 
+                lowest_value = min(self.number_of_moves)
+                # If current number of moves is lower than before, set as new best solution
+                if move_count < lowest_value:
+                    self.number_of_moves.append(move_count)
+                    self.best_solution = []
+                    self.best_solution = solution
         # For first solution
         elif move_count > 0:
             self.number_of_moves.append(move_count)

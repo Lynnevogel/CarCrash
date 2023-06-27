@@ -307,7 +307,7 @@ class Board:
                     return False
         return True
 
-    def use_solution(self, board: "Board", solution: "Board") -> set[str]:
+    def use_solution(self, board: "Board", solution: list[list[str|int]]) -> set[str]:
         """
         Uses a given solution to move the board into winning configuration.
         Preconditions:
@@ -431,7 +431,7 @@ class Board:
         solution = self.make_solution(ordered_solution)
         return solution
     
-    def save_move_set(self, filename: str):
+    def save_move_set(self, filename: str) -> None:
         """
         Saves the move set data to a file using pickle.
         Preconditions:
@@ -442,7 +442,7 @@ class Board:
 
         print(f"Move set saved to {filename}.")
 
-    def load_move_set(self, filename: str):
+    def load_move_set(self, filename: str) -> None:
         """
         Loads the move set data from a file using pickle.
         Preconditions:

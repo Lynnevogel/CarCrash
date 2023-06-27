@@ -29,7 +29,7 @@ class HillClimber(BreadthFirst):
         self.depth_list: list[int] = []
         self.depth = 0
 
-    def generate_new_random_solution(self) -> "Board":
+    def generate_new_random_solution(self) -> list[list[str|int]]:
         """
         Returns the directions of a random solution.
         Postconditions:
@@ -140,11 +140,7 @@ class HillClimber(BreadthFirst):
         number_of_moves = len(self.best_solution)
         number_of_states = len(self.all_states)
         # check length of best_solution for indexing
-        if len(self.best_solution) > 1:
-            solution = self.best_solution
-        else:
-            solution = self.best_solution[0]
-            number_of_moves = len(self.best_solution[0])
+        solution = self.best_solution
         # calculate max state space
         state_space = max(self.state_spaces) + 1
         return number_of_moves, number_of_states, solution, state_space

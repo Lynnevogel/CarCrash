@@ -3,7 +3,7 @@ import random
 
 
 class Random:
-    def __init__(self, board: "Board") -> None:
+    def __init__(self, board: Board) -> None:
         """
         Initialize Random class with current board and counter
         for number of moves.
@@ -13,7 +13,7 @@ class Random:
         self.board = board
         self.num_moves = 0
 
-    def random_move(self, possible_boards: list[Board]) -> "Board":
+    def random_move(self, possible_boards: list["Board"]):
         """
         Chooses a random board from the possible board, if list is not empty.
         Preconditions:
@@ -27,7 +27,7 @@ class Random:
         else:
             return random.choice(possible_boards)
 
-    def go(self) -> "Board":
+    def go(self) -> list[list[str|int]]:
         # Run game until it is won
         while not self.board.is_won():
             # Pick a random car

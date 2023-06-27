@@ -7,7 +7,6 @@ from code.algorithms.hillclimber import HillClimber
 from experiment import start_time, end_time, output_experiment
 
 from sys import argv
-import time
 
 
 if __name__ == "__main__":
@@ -40,7 +39,6 @@ if __name__ == "__main__":
 
             # Get output
             n = i + 1
-            time = elapsed_time
 
             number_of_moves, number_of_states, solution = random.generate_output()
             # General solution (moet ws nog weg)
@@ -48,11 +46,11 @@ if __name__ == "__main__":
             print(f"Number of moves: {number_of_moves}")
             print(f"Number of states: {number_of_states}")
             print(f"Solution: {solution}")
-            output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution)
+            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, won, solution)
 
             ordered_solution = random.board.order_solution()
             print(f"Ordered solution: {ordered_solution}")
-            print(f"Time: {time}")
+            print(f"Time: {elapsed_time}")
 
 
 # ------------------------------------- Breadth-first search ------------------------------------------------------------------------
@@ -64,13 +62,12 @@ if __name__ == "__main__":
 
             # Get output
             n = i + 1
-            time = elapsed_time
 
             number_of_moves, number_of_states, solution = breadth_first.generate_output()
             print(f"Number of moves: {number_of_moves}")
             print(f"Number of states: {number_of_states}")
             print(f"Solution: {solution}")
-            output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution)
+            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, won, solution)
 
 # -------------------------------------- Depth-first search ------------------------------------------------------------------------
         elif algorithm == 'depthfirst':
@@ -81,13 +78,12 @@ if __name__ == "__main__":
 
             # Get output
             n = i + 1
-            time = elapsed_time
 
             number_of_moves, number_of_states, solution = depth_first.generate_output()
             print(f"Number of moves: {number_of_moves}")
             print(f"Number of states: {number_of_states}")
             print(f"Solution: {solution}")
-            output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution)
+            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, won, solution)
 
 # -------------------------------------- Hill Climber search ------------------------------------------------------------------------
         elif algorithm == 'hillclimber':
@@ -98,11 +94,10 @@ if __name__ == "__main__":
 
             # Get output
             n = i + 1
-            time = elapsed_time
 
             number_of_moves, number_of_states, solution, state_space = hill_climber.generate_output()
             print(f"number of moves: {number_of_moves}")
             print(f"number of states: {number_of_states}")
             print(f"solution: {solution}")
             print(f"state space: {state_space}")
-            output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution, state_space)
+            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, won, solution, state_space)
