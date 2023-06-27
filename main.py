@@ -24,7 +24,11 @@ if __name__ == "__main__":
     # Extract command line argument
     game_name = argv[1]
     # Initialize game
-    board = Board(game_name)   
+    board = Board(game_name)  
+    game = game_name
+    algorithm = algorithm
+    dimension = board.dim 
+    won = 1
     
     for i in range(amount_of_times):
 # -------------------------------------- Random search ------------------------------------------------------------------------------
@@ -36,11 +40,7 @@ if __name__ == "__main__":
 
             # Get output
             n = i + 1
-            game = game_name
-            algorithm = algorithm
-            dimension = board.dim
             time = elapsed_time
-            won = 1
 
             number_of_moves, number_of_states, solution = random.generate_output()
             # General solution (moet ws nog weg)
@@ -54,7 +54,6 @@ if __name__ == "__main__":
             print(f"Ordered solution: {ordered_solution}")
             print(f"Time: {time}")
 
-            i += 1
 
 # ------------------------------------- Breadth-first search ------------------------------------------------------------------------
         elif algorithm == 'breadthfirst':
@@ -65,11 +64,7 @@ if __name__ == "__main__":
 
             # Get output
             n = i + 1
-            game = game_name
-            algorithm = algorithm
-            dimension = board.dim
             time = elapsed_time
-            won = 1
 
             number_of_moves, number_of_states, solution = breadth_first.generate_output()
             print(f"Number of moves: {number_of_moves}")
@@ -77,7 +72,6 @@ if __name__ == "__main__":
             print(f"Solution: {solution}")
             output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution)
 
-            i += 1
 # -------------------------------------- Depth-first search ------------------------------------------------------------------------
         elif algorithm == 'depthfirst':
             start = start_time()
@@ -87,11 +81,7 @@ if __name__ == "__main__":
 
             # Get output
             n = i + 1
-            game = game_name
-            algorithm = algorithm
-            dimension = board.dim
             time = elapsed_time
-            won = 1
 
             number_of_moves, number_of_states, solution = depth_first.generate_output()
             print(f"Number of moves: {number_of_moves}")
@@ -99,7 +89,6 @@ if __name__ == "__main__":
             print(f"Solution: {solution}")
             output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution)
 
-            i += 1
 # -------------------------------------- Hill Climber search ------------------------------------------------------------------------
         elif algorithm == 'hillclimber':
             start = start_time()
@@ -109,11 +98,7 @@ if __name__ == "__main__":
 
             # Get output
             n = i + 1
-            game = game_name
-            algorithm = algorithm
-            dimension = board.dim
             time = elapsed_time
-            won = 1
 
             number_of_moves, number_of_states, solution, state_space = hill_climber.generate_output()
             print(f"number of moves: {number_of_moves}")
@@ -121,9 +106,3 @@ if __name__ == "__main__":
             print(f"solution: {solution}")
             print(f"state space: {state_space}")
             output_experiment(n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, solution, state_space)
-
-            i += 1
-
-
-
-    
