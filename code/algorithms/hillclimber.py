@@ -102,7 +102,7 @@ class HillClimber(BreadthFirst):
         
         # repeat for amount of iterations
         for _ in range(iterations):
-            self.generate_random_solutions(1)
+            self.generate_random_solutions(3)
             # add state so breadth first can start
             self.states = [copy.deepcopy(self.starting_board)]
             self.archive = {self.starting_board.get_representation(self.starting_board)}

@@ -370,7 +370,7 @@ class Board:
                     current_car_coordinates.append(new_right_car_coordinate)
                     # Remove old coordinate from list
                     current_car_coordinates.pop(0)
-            visualize_board(board.board, board.cars, save_path=f"code/visualization/board_images/board{counter}.png")
+            # visualize_board(board.board, board.cars, save_path=f"code/visualization/board_images/board{counter}.png")
             # Load board with new car coordinates
             board.current_car.car_coordinates = current_car_coordinates
             board.load_board()
