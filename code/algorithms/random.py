@@ -1,14 +1,12 @@
 from code.classes.board import Board
-from typing import Union
 import random
-from code.visualization.color_blocks import visualize_board
 
 class Random:
     def __init__(self, board: "Board") -> None:
         """
         Initialize Random class with current board and counter for number of moves.
         Preconditions:
-        - board is a Board object with the current board
+        - board is a Board object with the current board.
         """
         self.board = board
         self.num_moves = 0
@@ -17,9 +15,9 @@ class Random:
         """
         Chooses a random board from the possible board, if list is not empty.  
         Preconditions: 
-        - possible_boards is a list of Board objects, that are possible state from the current board
+        - possible_boards is a list of Board objects, that are possible state from the current board.
         Postconditions:
-        - A random chosen board is returned
+        - A random chosen board is returned.
         """
         if len(possible_boards) == 0:
             return None
@@ -43,7 +41,6 @@ class Random:
             else:
                 print("cannot move car")
             print(f"number of moves: {self.num_moves}")
-            # visualize_board(self.board.board, self.board.cars, None)
 
         return self.board
 

@@ -1,7 +1,6 @@
 from .cars import Car
 import random
 import copy
-from typing import Literal
 import csv
 import re
 import pickle
@@ -13,7 +12,7 @@ class Board:
         """
         Initializes the Rush Hour game.
         Preconditions:
-        - game_name is a string the format must be 'NxN_M', where N and M are positive integers
+        - game_name is a string the format must be 'NxN_M', where N and M are positive integers.
         """
         # Extract dimension from name
         self.dim: int = int(game_name.strip().split("x")[0])
@@ -39,24 +38,26 @@ class Board:
 
     def get_representation(self, board: "Board") -> str:
         """
-        Get the representation of the board
+        Get the representation of the board.
         Preconditions:
-        - board is a Board object containing the current board
+        - board is a Board object containing the current board.
         Postconditions:
-        - A string representation of the board and ... is returned
+        - A string representation of the board and the length of the solution is returned.
         """
+        # Translate list to a string
         representation = re.sub(r"[^\w-]", "", str(board))
         representation = re.sub(r"'", "", representation)
         return representation+str(len(board.directions))
     
     def get_representation_breadth(self, board: "Board") -> str:
         """
-        Get the representation of the board in breadth first search
+        Get the representation of the board in breadth first search.
         Preconditions:
-        - board is a Board object containing the current board
+        - board is a Board object containing the current board.
         Postconditions:
-        - A string representation of the board is returned
+        - A string representation of the board is returned.
         """
+        # Translate list to a string
         representation = re.sub(r"[^\w-]", "", str(board))
         representation = re.sub(r"'", "", representation)
         return representation
@@ -123,7 +124,7 @@ class Board:
         """
         Adds the cars to the game board.
         Preconditions:
-        - board is a nested list with strings, but has no cars yet
+        - board is a nested list with strings, but has no cars yet.
         Postconditions:
         - The updated game board with the cars is returned.
         """
@@ -154,11 +155,11 @@ class Board:
         """
         Determines the possible moves for a given car.
         Precondition:
-        - board is a Board object representing the current board
-        - car_key is a string, representing a certain car
+        - board is a Board object representing the current board.
+        - car_key is a string, representing a certain car.
         Postconditions:
         - A list with the possible boards(Board objects) and a boolean, which is True
-        if the car can move, is returned
+        if the car can move, is returned.
         """
         board.current_car = board.cars[car_key]
         # Find coordinates of current car
@@ -199,8 +200,8 @@ class Board:
         """
         Moves a car to a new position on the game board.
         Preconditions:
-            - car_key is a string, representing the current car
-            - new_car_coordinates is a list of possible coordinates for the current car
+            - car_key is a string, representing the current car.
+            - new_car_coordinates is a list of possible coordinates for the current car.
         Postconditions:
             - The board were the car is moved is returned. 
         """
@@ -310,8 +311,8 @@ class Board:
         """
         Uses a given solution to move the board into winning configuration.
         Preconditions:
-        - board is a Board object
-        - solution is a nested list with strings containing the movements to solve the board
+        - board is a Board object.
+        - solution is a nested list with strings containing the movements to solve the board.
         """
         board.set_boards = {board.get_representation_breadth(board)}
         counter = 0
@@ -384,14 +385,15 @@ class Board:
         """
         Writes a solution for a board into a csv file.
         Preconditions:
-        - solution is a nested list with strings containing the movements to solve the board
+        - solution is a nested list with strings containing the movements to solve the board.
         """
+        # Create CSV file
         with open("output/output.csv", "w") as file:
             writer = csv.writer(file)
             field = ["car", "move"]
 
             writer.writerow(field)
-
+        # 
             for move in solution:
                 car_key = move[0]
                 direction = move[1]

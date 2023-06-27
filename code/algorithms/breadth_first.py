@@ -8,7 +8,7 @@ class BreadthFirst(DepthFirst):
         """
         Initializes BreadthFirst class and inherits the DephtFirst class.
         Precondtions:
-        - board is a Board object of the current board
+        - board is a Board object of the current board.
         """
         self.board = copy.deepcopy(board)
         # Create the stack with the states
@@ -28,7 +28,7 @@ class BreadthFirst(DepthFirst):
         """
         Checks whether the solution contains fewer moves than the current best solution.
         Preconditions:
-        - new_board is a Board object which represents a board in the next state in the tree
+        - new_board is a Board object which represents a board in the next state in the tree.
         """
         self.win_count += 1
         # Order solution
@@ -54,7 +54,7 @@ class BreadthFirst(DepthFirst):
         """
         Get the next state from the stack of states.
         Postconditions:
-        - the next state, a Board object, is returned
+        - The next state, a Board object, is returned.
         """
         return self.states.pop(0)
 
@@ -62,8 +62,8 @@ class BreadthFirst(DepthFirst):
         """
         Adds possible board states to the archive
         Preconditions:
-        - can_move is a boolean, which is true when the car can move
-        - moves is a list with the all the possible board states from the current board
+        - can_move is a boolean, which is true when the car can move.
+        - moves is a list with the all the possible board states from the current board.
         """
         if can_move:
             for move in moves:
@@ -76,7 +76,7 @@ class BreadthFirst(DepthFirst):
         """
         Runs the algorithm until all possible board states have been visited.
         Postconditions:
-        - A list with a Board object representing the best solution is returned
+        - A list with a Board object representing the best solution is returned.
         """
         # Until no board states left
         while self.states:

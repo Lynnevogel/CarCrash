@@ -1,6 +1,5 @@
 import copy
 from code.classes.board import Board
-from typing import Union
 
 
 class DepthFirst:
@@ -11,7 +10,7 @@ class DepthFirst:
         """
         Initializes DepthFirst class.
         Preconditions:
-        - board is a Board object with the current board
+        - board is a Board object with the current board.
         """
         self.board = copy.deepcopy(board)
         # Create the stack with the states
@@ -33,16 +32,16 @@ class DepthFirst:
         """
         Get the next state from the stack of states.
         Postconditions:
-        - the next state, a Board object, is returned
+        - The next state, a Board object, is returned.
         """
         return self.states.pop()
 
     def add_all_possible_states(self, can_move: bool, moves: list["Board"]) -> None:
         """
-        Adds possible board states to the archive
+        Adds possible board states to the archive.
         Preconditions:
-        - can_move is a boolean, which is true when the car can move
-        - moves is a list with the all the possible board states from the current board
+        - can_move is a boolean, which is true when the car can move.
+        - moves is a list with the all the possible board states from the current board.
         """
         if can_move:
             for move in moves:
@@ -53,7 +52,7 @@ class DepthFirst:
         """
         Checks whether the solution contains fewer moves than the current best solution.
         Preconditions:
-        - new_board is a Board object which represents a board in the next state in the tree
+        - new_board is a Board object which represents a board in the next state in the tree.
         """
         # Order solution
         solution = new_board.order_solution()
@@ -114,6 +113,7 @@ class DepthFirst:
         """
         number_of_moves = len(self.best_solution)
         number_of_states = len(self.all_states)
+        # check length of best_solution for indexing
         if len(self.best_solution) > 1:
             solution = self.best_solution
         else:

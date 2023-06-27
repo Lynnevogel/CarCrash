@@ -2,7 +2,6 @@ import copy
 from code.algorithms.random import Random
 from code.classes.board import Board
 from .breadth_first import BreadthFirst
-from typing import Union
 
 
 class HillClimber(BreadthFirst):
