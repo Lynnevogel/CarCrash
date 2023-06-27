@@ -55,6 +55,16 @@ Dus dit zou het commando zijn om spelbord 6x6_1 10 keer op te lossen met het ran
 python3 main.py 6x6_1 random 10
 ```
 
+
+### Gebruik experiment
+
+Om te experimenteren met het random algoritme, moet in experiment.py de main ingevuld worden. Game_name is het bord dat wordt getest, Algorithm is het algoritme dat getest wordt, en amount_of_times geeft aan hoevaak het algoritme moet runnen. Het experiment kan vervolgens gestart worden met onderstaand commando: 
+
+```
+python3 experiment.py
+```
+De resultaten van de experimenten worden per run in een apart CSV bestand opgeslagen in de map output. Voor de analyse van de data worden deze gegevens samengevoegd in één CSV per algoritme per bord.
+
 ### Structuur
 
 Hieronder is een lijst te vinden van de mappen en bestanden in de repository van dit project.

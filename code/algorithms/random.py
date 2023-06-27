@@ -1,10 +1,12 @@
 from code.classes.board import Board
 import random
 
+
 class Random:
     def __init__(self, board: "Board") -> None:
         """
-        Initialize Random class with current board and counter for number of moves.
+        Initialize Random class with current board and counter
+        for number of moves.
         Preconditions:
         - board is a Board object with the current board.
         """
@@ -13,9 +15,10 @@ class Random:
 
     def random_move(self, possible_boards: list[Board]) -> "Board":
         """
-        Chooses a random board from the possible board, if list is not empty.  
-        Preconditions: 
-        - possible_boards is a list of Board objects, that are possible state from the current board.
+        Chooses a random board from the possible board, if list is not empty.
+        Preconditions:
+        - possible_boards is a list of Board objects, that
+        are possible state from the current board.
         Postconditions:
         - A random chosen board is returned.
         """
@@ -44,10 +47,10 @@ class Random:
 
         return self.board
 
-    def generate_output(self) -> tuple[int, int, list[list[str|int]]]:
+    def generate_output(self) -> tuple[int, int, list[list[str | int]]]:
         """
         Return generated ouput from every run.
-        Postconditions: 
+        Postconditions:
         - number_of_moves is the amount of moves made and is an integer.
         - number_of_states if the amound of states visited and is an integer.
         - solution is a nested list with a string and an integers.
@@ -56,4 +59,3 @@ class Random:
         number_of_states = self.num_moves
         solution = self.board.directions
         return number_of_moves, number_of_states, solution
-        

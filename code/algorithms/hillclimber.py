@@ -27,11 +27,11 @@ class HillClimber(BreadthFirst):
         self.best_solution = []
         self.best_value = float('inf')
         self.depth_list: list[int] = []
-        self.depth = 0  
+        self.depth = 0
 
     def generate_new_random_solution(self) -> "Board":
         """
-        Returns the directions of a random solution. 
+        Returns the directions of a random solution.
         Postconditions:
         - A nested list with a car and a direction is returned.
         """
@@ -45,8 +45,8 @@ class HillClimber(BreadthFirst):
     def generate_random_solutions(self, iterations: int) -> None:
         """
         Generates x amount of random solutions and adds all possible states to a
-        set, self.all_random_states. 
-        Precondition: 
+        set, self.all_random_states.
+        Precondition:
         - Amount of iterations as an integer
         """
         self.iterations = iterations
@@ -63,9 +63,9 @@ class HillClimber(BreadthFirst):
 
     def add_all_possible_states(self, can_move: bool, moves: list["Board"]) -> None:
         """
-        Adds states to the states list and keeps an archive of states that should not be 
+        Adds states to the states list and keeps an archive of states that should not be
         added to the states list.
-        Preconditions: 
+        Preconditions:
         - can_move is true of false
         - moves is a list with board objects
         """
@@ -85,20 +85,21 @@ class HillClimber(BreadthFirst):
     def check_move_in_all_random_states(self, move_representation: str) -> bool:
         """
         Checks whether possible moves is in the possible states set.
-        Precondition: 
+        Precondition:
         - move_representation is a string
-        Postcondition: 
+        Postcondition:
         - returns true if mvoe_representation is in all_random_states
         """
         return move_representation in self.all_random_states
 
     def run_iterations(self, iterations: int) -> None:
         """
-        Iterates the random solutions and breadth first search an x amount of times.
-        Precondition: 
+        Iterates the random solutions and breadth first search
+        an x amount of times.
+        Precondition:
         - iterations is an integer
         """
-        
+
         # repeat for amount of iterations
         for _ in range(iterations):
             self.generate_random_solutions(3)
@@ -112,11 +113,10 @@ class HillClimber(BreadthFirst):
             # Add statespace of solution to list
             self.state_spaces.append(len(self.all_random_states))
 
-
-    def check_for_best_solution(self, solution: list[list[str|int]]) -> None:
+    def check_for_best_solution(self, solution: list[list[str | int]]) -> None:
         """
         Checks if new solution if better than previous best solution.
-        Precondition: 
+        Precondition:
         - solution is a nested list with a string and an integer
         """
         # get length of solutions
@@ -128,10 +128,10 @@ class HillClimber(BreadthFirst):
             self.best_solution = solution
             self.number_of_moves = len(new_solution)
 
-    def generate_output(self) -> tuple[int, int, list[list[str|int]], int]:
+    def generate_output(self) -> tuple[int, int, list[list[str | int]], int]:
         """
         Return generated ouput from every run.
-        Postconditions: 
+        Postconditions:
         - number_of_moves is the amount of moves made and is an integer.
         - number_of_states if the amound of states visited and is an integer.
         - solution is a nested list with a string and an integers.

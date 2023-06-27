@@ -1,6 +1,6 @@
 from .depth_first import DepthFirst
-from typing import Any, Optional
-import copy 
+import copy
+
 
 class DepthFirstLimit(DepthFirst):
 
@@ -13,7 +13,7 @@ class DepthFirstLimit(DepthFirst):
             new_board = self.get_next_state()
             new_board_representation = new_board.get_representation(new_board)
             # Add new reperesentation to archive
-            self.archive.add(new_board_representation)    
+            self.archive.add(new_board_representation)
             if new_board.is_won():
                 print("WON")
                 # append current depth of winning configuration to list

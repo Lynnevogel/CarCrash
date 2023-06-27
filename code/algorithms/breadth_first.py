@@ -1,7 +1,7 @@
 from .depth_first import DepthFirst
 from code.classes.board import Board
-from typing import Any
 import copy
+
 
 class BreadthFirst(DepthFirst):
     def __init__(self, board: "Board") -> None:
@@ -23,7 +23,7 @@ class BreadthFirst(DepthFirst):
         # List to add best solution
         self.best_solution = []
         self.best_value = float('inf')
-    
+
     def check_solution(self, new_board: "Board") -> None:
         """
         Checks whether the solution contains fewer moves than the current best solution.
@@ -39,13 +39,13 @@ class BreadthFirst(DepthFirst):
             self.best_solution = solution
 
         if self.number_of_moves:
-                # Get lowest number of moves 
-                lowest_value = min(self.number_of_moves)
-                # If current number of moves is lower than before, set as new best solution
-                if move_count < lowest_value:
-                    self.number_of_moves.append(move_count)
-                    self.best_solution = []
-                    self.best_solution.append(solution)
+            # Get lowest number of moves
+            lowest_value = min(self.number_of_moves)
+            # If current number of moves is lower than before,set as new best solution
+            if move_count < lowest_value:
+                self.number_of_moves.append(move_count)
+                self.best_solution = []
+                self.best_solution.append(solution)
         # For first solution
         elif move_count > 0:
             self.number_of_moves.append(move_count)
@@ -72,7 +72,7 @@ class BreadthFirst(DepthFirst):
                     self.states.append(move)
                     self.archive.add(move_representation)
 
-    def go(self) -> list[list[str|int]]:
+    def go(self) -> list[list[str | int]]:
         """
         Runs the algorithm until all possible board states have been visited.
         Postconditions:
@@ -83,7 +83,7 @@ class BreadthFirst(DepthFirst):
             # Get new board state
             new_board = self.get_next_state()
             new_board_representation = new_board.get_representation(new_board)
-            
+
             # Add new state to archive
             self.archive.add(new_board_representation)
             self.all_states.add(new_board_representation)
@@ -102,6 +102,5 @@ class BreadthFirst(DepthFirst):
                     moves, can_move = child.get_possible_moves(child, car)
                     # Add possible board states to list of states
                     self.add_all_possible_states(can_move, moves)
-        
+
         return self.best_solution
-        
