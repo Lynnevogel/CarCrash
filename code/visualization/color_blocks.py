@@ -91,15 +91,15 @@ def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: str
                 ax.add_patch(plt.Rectangle((col, row), 1, 1, facecolor=color, edgecolor='#000010'))
                 ax.text(col + 0.5, row + 0.5, car, ha='center', va='center', fontsize=28, color='#000010', fontname='Monospace')
 
-    for row in range(dim):
-        if 'X' in board[row]:
-            exit_row = row
-            break
+    # for row in range(dim):
+    #     if 'X' in board[row]:
+    #         exit_row = row
+    #         break
 
-    exit_col = dim - 1
-    exit_color = '#000010'
-    ax.add_patch(plt.Rectangle((exit_col, exit_row), 1, 1, facecolor=exit_color, edgecolor='#000010'))
-    ax.text(exit_col + 0.5, exit_row + 0.5, 'EXIT', ha='center', va='center', fontsize=13, color='#00ff7b', fontname='Monospace', fontweight='bold')
+    # exit_col = dim - 1
+    # exit_color = '#000010'
+    # ax.add_patch(plt.Rectangle((exit_col, exit_row), 1, 1, facecolor=exit_color, edgecolor='#000010'))
+    # ax.text(exit_col + 0.5, exit_row + 0.5, 'EXIT', ha='center', va='center', fontsize=13, color='#00ff7b', fontname='Monospace', fontweight='bold')
 
     ax.set_xlim(0, dim + 0.5)
     ax.set_ylim(0, dim + 0.5)
@@ -114,4 +114,4 @@ def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: str
     if save_path:
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
 
-    plt.show()
+    # plt.show()

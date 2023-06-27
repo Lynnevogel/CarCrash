@@ -37,7 +37,7 @@ class Random:
             if can_move:
                 # Pick a random move
                 self.board = self.random_move(copy_boards)
-                # self.board.print_board()
+                self.board.print_board()
                 # visualize_board(board.board, board.cars, save_path=f"code/visualization/board_images/board{num_moves}.png")
                 self.num_moves += 1
             else:

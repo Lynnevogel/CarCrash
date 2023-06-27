@@ -70,7 +70,7 @@ def end_time(start: time) -> time:
 
 
 if __name__ == "__main__":
-    game_name = "9x9_4"
+    game_name = "9x9_6"
     algorithm = "hillclimber"
-    amount_of_times = "1"
+    amount_of_times = "3"
     run_experiment(game_name, algorithm, amount_of_times)

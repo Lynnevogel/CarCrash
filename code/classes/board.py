@@ -4,7 +4,8 @@ import copy
 from typing import Literal
 import csv
 import re
-import time
+import pickle
+from code.visualization.color_blocks import visualize_board
 
 
 class Board:
@@ -313,7 +314,9 @@ class Board:
         - solution is a nested list with strings containing the movements to solve the board
         """
         board.set_boards = {board.get_representation_breadth(board)}
+        counter = 0
         for move in solution:
+            counter += 1
             # Get car key and direction from move
             car_key = move[0]
             direction = move[1]
@@ -367,7 +370,7 @@ class Board:
                     current_car_coordinates.append(new_right_car_coordinate)
                     # Remove old coordinate from list
                     current_car_coordinates.pop(0)
-
+            visualize_board(board.board, board.cars, save_path=f"code/visualization/board_images/board{counter}.png")
             # Load board with new car coordinates
             board.current_car.car_coordinates = current_car_coordinates
             board.load_board()
@@ -425,3 +428,25 @@ class Board:
         ordered_solution = self.order_strings_by_id()
         solution = self.make_solution(ordered_solution)
         return solution
+    
+    def save_move_set(self, filename: str):
+        """
+        Saves the move set data to a file using pickle.
+        Preconditions:
+        - filename is a string representing the name of the file to save.
+        """
+        with open(filename, 'wb') as file:
+            pickle.dump(self.move_set, file)
+
+        print(f"Move set saved to {filename}.")
+
+    def load_move_set(self, filename: str):
+        """
+        Loads the move set data from a file using pickle.
+        Preconditions:
+        - filename is a string representing the name of the file to load.
+        """
+        with open(filename, 'rb') as file:
+            self.move_set = pickle.load(file)
+
+        print(f"Move set loaded from {filename}.")

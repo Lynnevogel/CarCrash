@@ -75,7 +75,7 @@ def plot_histogram(data: list[list[int]], hist_name: str, x_label: str, y_label:
     - y_label is a string representing the label for the y-axis.
     - title is a string representing the title of the histogram.
     """
-    plt.hist(data, color='green')
+    plt.hist(data, color='#097a75')
     plt.xlabel(x_label)
     plt.ylabel(y_label)
     plt.title(title)
@@ -88,49 +88,36 @@ def plot_boxplot_random(data: list[list[int]]) -> None:
     Preconditions:
     - data is a nested list with integers.
     """
-    data1 = data[0]
-    data2 = data[1]
-    data3 = data[2]
-    data4 = data[3]
-    data5 = data[4]
-    data6 = data[5]
-    data7 = data[6]
 
-    boxprops = {'color': 'blue', 'linewidth': 2}
-    whiskerprops = {'color': 'red', 'linewidth': 2}
-    medianprops = {'color': 'black', 'linewidth': 2}
-    flierprops = {'marker': 'o', 'markeredgecolor': 'gray', 'markerfacecolor': 'gray'}
+    boxprops = {'color': 'black', 'linewidth': 1.5}
+    whiskerprops = {'color': 'black', 'linewidth': 1.5}
+    medianprops = {'color': 'black', 'linewidth': 1.5}
+    flierprops = {'marker': 'o', 'markeredgecolor': 'black', 'markerfacecolor': 'black'}
 
     positions = [1, 2, 3, 4, 5, 6, 7]
 
     # Create the boxplots and get the box artists
-    boxplot = plt.boxplot([data1, data2, data3, data4, data5, data6, data7], positions=positions, patch_artist=True,
+    boxplot = plt.boxplot(data, positions=positions, patch_artist=True,
                           boxprops=boxprops, whiskerprops=whiskerprops,
                           capprops=whiskerprops, medianprops=medianprops,
                           flierprops=flierprops)
 
-    # Customize box colors
-    colors = ['lightblue', 'lightgreen', 'lightyellow']
-    for box, color in zip(boxplot['boxes'], colors):
+    # Customize box colors using a colormap
+    cmap = plt.get_cmap('Spectral')
+    for box, color in zip(boxplot['boxes'], cmap(np.linspace(0, 1, len(positions)))):
         box.set(facecolor=color)
 
     plt.xlabel("Gameboard")
     plt.ylabel("Moves")
-    plt.title("Random Algoritme")
+    plt.title("Random Algorithm")
 
     # Customize x-axis ticks
     x_ticks = positions
-    x_tick_labels = ["6x6_1", "6x6_2", "6x6_3", "9x9_4", "9x9_5", "9x9_6", "12x12_7"]
+    x_tick_labels = ["1 (6)", "2 (6)", "3 (6)", "4 (9)", "5 (9)", "6 (9)", "7 (12)"]
     plt.xticks(x_ticks, x_tick_labels)
-
-    # Customize y-axis ticks
-    # y_ticks = [0, 2, 4, 6, 8]
-    # y_tick_labels = ["0", "2", "4", "6", "8"]
-    # plt.yticks(y_ticks, y_tick_labels)
 
     plt.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
     plt.savefig(f"data_images/boxplot_random", dpi=300, bbox_inches='tight')
-    # plt.show()
 
 
 def print_summary_statistics(data: list[int], title: str) -> None:
@@ -152,27 +139,24 @@ def plot_boxplot_hillclimber(data: list[list[int]]) -> None:
     Preconditions:
     - data is a nested list with integers.
     """
-    data1 = data[0]
-    data2 = data[1]
-    data3 = data[2]
 
-    boxprops = {'color': 'blue', 'linewidth': 2}
-    whiskerprops = {'color': 'red', 'linewidth': 2}
-    medianprops = {'color': 'black', 'linewidth': 2}
-    flierprops = {'marker': 'o', 'markeredgecolor': 'gray', 'markerfacecolor': 'gray'}
+    boxprops = {'color': 'black', 'linewidth': 1}
+    whiskerprops = {'color': 'black', 'linewidth': 1}
+    medianprops = {'color': 'black', 'linewidth': 1}
+    flierprops = {'marker': 'o', 'markeredgecolor': 'black', 'markerfacecolor': 'black'}
 
     positions = [1, 2, 3]
 
     # Create the boxplots and get the box artists
-    boxplot = plt.boxplot([data1, data2, data3], positions=positions, patch_artist=True,
+    boxplot = plt.boxplot(data, positions=positions, patch_artist=True,
                           boxprops=boxprops, whiskerprops=whiskerprops,
                           capprops=whiskerprops, medianprops=medianprops,
                           flierprops=flierprops)
 
-    # Customize box colors
-    # colors = ['lightblue', 'lightgreen', 'lightyellow']
-    # for box, color in zip(boxplot['boxes'], colors):
-    #     box.set(facecolor=color)
+    # Customize box colors using a colormap
+    cmap = plt.get_cmap('Spectral')
+    for box, color in zip(boxplot['boxes'], cmap(np.linspace(0, 1, len(positions)))):
+        box.set(facecolor=color)
 
     plt.xlabel("Gameboard")
     plt.ylabel("Moves")
@@ -183,14 +167,8 @@ def plot_boxplot_hillclimber(data: list[list[int]]) -> None:
     x_tick_labels = ["6x6_1", "6x6_2","9x9_4"]
     plt.xticks(x_ticks, x_tick_labels)
 
-    # Customize y-axis ticks
-    # y_ticks = [0, 2, 4, 6, 8]
-    # y_tick_labels = ["0", "2", "4", "6", "8"]
-    # plt.yticks(y_ticks, y_tick_labels)
-
     plt.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
     plt.savefig(f"data_images/boxplot_hillclimber", dpi=300, bbox_inches='tight')
-    # plt.show()
 
 def plot_boxplot_hill_rand(data_random: list[int], data_hillclimber: list[int], title: str) -> None:
     """
@@ -200,10 +178,10 @@ def plot_boxplot_hill_rand(data_random: list[int], data_hillclimber: list[int], 
     - data_hillclimber is a list of integers representing the data for the hillclimber algorithm.
     - title is a string representing the title of the plot. 
     """
-    boxprops = {'color': 'blue', 'linewidth': 2}
-    whiskerprops = {'color': 'red', 'linewidth': 2}
-    medianprops = {'color': 'black', 'linewidth': 2}
-    flierprops = {'marker': 'o', 'markeredgecolor': 'gray', 'markerfacecolor': 'gray'}
+    boxprops = {'color': 'black', 'linewidth': 1.5}
+    whiskerprops = {'color': 'black', 'linewidth': 1.5}
+    medianprops = {'color': 'black', 'linewidth': 1.5}
+    flierprops = {'marker': 'o', 'markeredgecolor': 'black', 'markerfacecolor': 'black'}
 
     positions = [1, 2]
 
@@ -212,6 +190,11 @@ def plot_boxplot_hill_rand(data_random: list[int], data_hillclimber: list[int], 
                           boxprops=boxprops, whiskerprops=whiskerprops,
                           capprops=whiskerprops, medianprops=medianprops,
                           flierprops=flierprops)
+
+    # Customize box colors using a colormap
+    cmap = plt.get_cmap('Spectral')
+    for box, color in zip(boxplot['boxes'], cmap(np.linspace(0, 1, len(positions)))):
+        box.set(facecolor=color)
 
     plt.xlabel("Algorithm")
     plt.ylabel("Number of moves")
@@ -224,7 +207,6 @@ def plot_boxplot_hill_rand(data_random: list[int], data_hillclimber: list[int], 
 
     plt.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
     plt.savefig(f"data_images/boxplot_{title}", dpi=300, bbox_inches='tight')
-    # plt.show()
 
 
 if __name__=="__main__":
