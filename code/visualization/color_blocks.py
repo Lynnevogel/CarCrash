@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from code.classes.cars import Car
-from typing import Union, Any
 
 
 def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: str) -> None:
@@ -12,7 +11,6 @@ def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: str
     - cars is a dictionary containing car objects, where the keys are car IDs and the values are Car objects.
     - save_path is de directory where the file is saved
     """
-
     dim = len(board)
     car_list = []
 
@@ -22,7 +20,7 @@ def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: str
     # Create a grid
     grid = np.zeros((dim, dim), dtype=int)
 
-    # Define color mappings for each car using hex values
+    # Define color for each car using hex values
     car_colors = {'A': '#1f9dfa',
                   'B': '#f7175d',
                   'C': '#b314e2',
@@ -76,10 +74,9 @@ def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: str
                 grid[row][col] = car_list.index(car) + 1
 
     figure_size = dim * (2/3)
-    # Display the plot in the terminal
     fig, ax = plt.subplots(figsize=(figure_size, figure_size))
 
-    # Set the background color of the figure
+    # Set the background color
     fig.set_facecolor('#000010')  # Light gray
 
     # Loop through the grid and plot each car as a block of color with the letter on top
@@ -96,6 +93,7 @@ def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: str
             exit_row = row
             break
 
+    # plot "exit" on exit block
     exit_col = dim - 1
     exit_color = '#000010'
     ax.add_patch(plt.Rectangle((exit_col, exit_row), 1, 1, facecolor=exit_color, edgecolor='#000010'))
@@ -106,12 +104,7 @@ def visualize_board(board: list[list[str]], cars: dict[str, Car], save_path: str
     ax.grid(color='#fff', linewidth=0.3)
     ax.axis('off')
     ax.invert_yaxis()
-    # timer = fig.canvas.new_timer(interval = 1000)
-    # timer.add_callback(plt.close)
-    # timer.start()
 
     # Save the plot as an image
     if save_path:
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
-
-    # plt.show()

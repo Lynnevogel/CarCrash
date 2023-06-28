@@ -24,7 +24,6 @@ if __name__ == "__main__":
     # Initialize game
     board = Board(game_name)  
     game = game_name
-    algorithm = algorithm
     dimension = board.dim 
     
     for i in range(amount_of_times):

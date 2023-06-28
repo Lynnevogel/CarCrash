@@ -199,7 +199,6 @@ def plot_boxplot_hillclimber_6_9(data: list[list[int]]) -> None:
     # x_tick_labels_9 = ["4: 9", "5: 9", "6: 9"]
     plt.ylim(0,5000)
 
-    # x_tick_labels = ["6x6_1", "6x6_2","9x9_4"]
     plt.xticks(x_ticks, x_tick_labels)
 
     plt.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)

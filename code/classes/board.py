@@ -2,8 +2,6 @@ from .cars import Car
 import random
 import copy
 import csv
-import re
-import pickle
 from code.visualization.color_blocks import visualize_board
 
 
