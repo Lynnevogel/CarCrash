@@ -35,10 +35,10 @@ class HillClimber(BreadthFirst):
         Postconditions:
         - A nested list with a car and a direction is returned.
         """
-        # run random algorithm
+        # Run random algorithm
         random_algorithm = Random(self.starting_board)
         new_random_solution = random_algorithm.go()
-        # get solution random algorithm
+        # Get solution random algorithm
         new_random_solution = random_algorithm.board.order_solution()
         return new_random_solution
 
@@ -51,14 +51,14 @@ class HillClimber(BreadthFirst):
         """
         self.iterations = iterations
 
-        # checks for every iteration
+        # Checks for every iteration
         for _ in range(iterations):
-            # make copy of current board
+            # Make copy of current board
             current_board = copy.deepcopy(self.starting_board)
-            # generates new solution
+            # Generates new solution
             new_random_solution = self.generate_new_random_solution()
             boards_random_solution = current_board.use_solution(current_board, new_random_solution)
-            # adds solution to set
+            # Adds solution to set
             self.all_random_states.update(boards_random_solution)
 
     def add_all_possible_states(self, can_move: bool, moves: list["Board"]) -> None:
@@ -69,17 +69,17 @@ class HillClimber(BreadthFirst):
         - can_move is true of false
         - moves is a list with board objects
         """
-        # if possible child states
+        # If possible child states
         if can_move:
-            # loop through possibilities
+            # Loop through possibilities
             for move in moves:
-                # make a string of board
+                # Make a string of board
                 move_representation = move.get_representation(move, "hillclimber")
                 valid_move = self.check_move_in_all_random_states(move_representation)
                 if move_representation not in self.archive and valid_move:
-                    # add to states
+                    # Add to states
                     self.states.append(move)
-                    # if not yet in archive, add to archive
+                    # If not yet in archive, add to archive
                     self.archive.add(move_representation)
 
     def check_move_in_all_random_states(self, move_representation: str) -> bool:
@@ -99,15 +99,14 @@ class HillClimber(BreadthFirst):
         Precondition:
         - iterations is an integer
         """
-
-        # repeat for amount of iterations
+        # Repeat for amount of iterations
         self.generate_random_solutions(3)
-        # start breadth-first search
+        # Start breadth-first search
         best_solution = self.go()
-        # Add statespace of solution to list
-        self.state_spaces.append(len(self.all_random_states))
+        self.best_solution = best_solution
 
-    def generate_output(self) -> tuple[int, int, list[list[str|int]], int]:
+
+    def generate_output(self) -> tuple[int, int, list[list[str|int]]]:
         """
         Return generated ouput from every run.
         Postconditions:
@@ -118,8 +117,7 @@ class HillClimber(BreadthFirst):
         """
         number_of_moves = len(self.best_solution)
         number_of_states = len(self.all_states)
-        # check length of best_solution for indexing
+        # Check length of best_solution for indexing
         solution = self.best_solution
-        # calculate max state space
-        state_space = max(self.state_spaces) + 1
-        return number_of_moves, number_of_states, solution, state_space
+        # Calculate max state space
+        return number_of_moves, number_of_states, solution

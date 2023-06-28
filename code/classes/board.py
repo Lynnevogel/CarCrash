@@ -36,7 +36,7 @@ class Board:
     def __repr__(self) -> str:
         return f"{self.print_board()}"
     
-    def get_representation(self, board: "Board", algorithm) -> str:
+    def get_representation(self, board: "Board", algorithm: str) -> str:
         """
         Get the representation of the board.
         Preconditions:
@@ -131,7 +131,7 @@ class Board:
         """
         Returns a randomly selected car.
         Postconditions:
-            - A string of a random carkey is selected and returned.
+        - A string of a random carkey is selected and returned.
         """
         # Choice random carkey from all cars in current gameboard
         random_car = random.choice(list(self.cars.keys()))
@@ -186,10 +186,10 @@ class Board:
         """
         Moves a car to a new position on the game board.
         Preconditions:
-            - car_key is a string, representing the current car.
-            - new_car_coordinates is a list of possible coordinates for the current car.
+        - car_key is a string, representing the current car.
+        - new_car_coordinates is a list of possible coordinates for the current car.
         Postconditions:
-            - The board were the car is moved is returned. 
+        - The board were the car is moved is returned. 
         """
         self.current_car = self.cars[car_key]
         new_board: list[list[str]] = []
@@ -258,7 +258,7 @@ class Board:
         """
         Checks if the red car (X) is in winning configuration.
         Postconditions:
-            - Returns True if the game has been won, False otherwise.
+        - Returns True if the game has been won, False otherwise.
         """
         # Check size of board
         if self.dim == 6:
@@ -379,7 +379,6 @@ class Board:
             field = ["car", "move"]
 
             writer.writerow(field)
-        # 
             for move in solution:
                 car_key = move[0]
                 direction = move[1]
@@ -416,13 +415,3 @@ class Board:
             car, direction, _ = string.split(" ")
             self.directions.append([car, int(direction)])
         return self.directions
-    
-    def order_solution(self) -> list[list[str|int]]:
-        """
-        Orders the solution based on the move_set.
-        Postcondition:
-        - Returns a list of lists, where each sublist contains the car and its corresponding direction as [car, direction].
-        """
-        ordered_solution = self.order_strings_by_id()
-        solution = self.make_solution(ordered_solution)
-        return solution

@@ -16,7 +16,7 @@ def run_experiment(game_name: str, algorithm: str, amount_of_times: str) -> None
     subprocess.run(command, shell=True)
 
 
-def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: float, number_of_moves: int, number_of_states: int, won: int, solution: list[list[str|int]], state_space: Optional[int] = None) -> None:
+def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: float, number_of_moves: int, number_of_states: int, won: int, solution: list[list[str|int]]) -> None:
     """
     Writes the solution for a board into a CSV file.
     Preconditions:
@@ -34,14 +34,14 @@ def output_experiment(n: int, game: str, algorithm: str, dimension: int, time: f
     # Open a new CSV file
     with open(f"output/experiment_output_{game}_{algorithm}_{n}_{time}.csv", "w") as file:
         writer = csv.writer(file)
-        field = ["n", "game", "algorithm", "dimension", "time", "number of moves", "number of states", "won", "state space", "solution: car", "solution: direction"]
+        field = ["n", "game", "algorithm", "dimension", "time", "number of moves", "number of states", "won", "solution: car", "solution: direction"]
 
         writer.writerow(field)
         # Add output to CSV file
         for move in solution:
             car_key = move[0]
             direction = move[1]
-            writer.writerow([n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, state_space, car_key, direction])
+            writer.writerow([n, game, algorithm, dimension, time, number_of_moves, number_of_states, won, car_key, direction])
 
 
 def start_time() -> float:

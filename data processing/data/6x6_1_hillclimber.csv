@@ -8,3 +8,4 @@ n,game,algorithm,dimension,time,number of moves,number of states,won,state space
 7,6x6_1,hillclimber,6,1728.415596,35,721,1,722,A,-1
 8,6x6_1,hillclimber,6,1929.797411,34,750,1,751,A,-1
 9,6x6_1,hillclimber,6,8178.571027,36,755,1,756,A,-1
+10,6x6_1,hillclimber,6,8741.563659,36,749,1,750,A,-1

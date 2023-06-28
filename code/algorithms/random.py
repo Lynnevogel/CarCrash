@@ -13,7 +13,7 @@ class Random:
         self.board = board
         self.num_moves = 0
 
-    def random_move(self, possible_boards: list["Board"]):
+    def random_move(self, possible_boards: list[Board]) -> Board|None:
         """
         Chooses a random board from the possible board, if list is not empty.
         Preconditions:
@@ -27,7 +27,7 @@ class Random:
         else:
             return random.choice(possible_boards)
 
-    def go(self) -> list[list[str|int]]:
+    def go(self) -> Board:
         # Run game until it is won
         while not self.board.is_won():
             # Pick a random car

@@ -18,7 +18,10 @@ import numpy as np
 # statistic, p_value = stats.shapiro(data)
 
 file_names_random = ["6x6_1_random", "6x6_2_random", "6x6_3_random", "9x9_4_random", "9x9_5_random", "9x9_6_random", "12x12_7_random"]
-file_names_hillclimber = ["6x6_1_hillclimber", "6x6_2_hillclimber", "9x9_4_hillclimber"]
+file_names_hillclimber = ["6x6_1_hillclimber", "6x6_2_hillclimber", "6x6_3_hillclimber", "9x9_4_hillclimber", "9x9_5_hillclimber", "9x9_6_hillclimber"]
+file_names_hillclimber_6 = ["6x6_1_hillclimber", "6x6_2_hillclimber", "6x6_3_hillclimber"]
+file_names_hillclimber_9 = ["9x9_4_hillclimber", "9x9_5_hillclimber", "9x9_6_hillclimber"]
+
 
 def load_data_multiple(file_names: list[str]) -> tuple[list[list[float]],list[list[int]],list[list[int]]]:
     """
@@ -65,6 +68,7 @@ def load_data(file_name: str) -> tuple[list[float],list[int],list[int]]:
     
     return time, number_of_moves, number_of_states
 
+
 def plot_histogram(data: list[list[int]], hist_name: str, x_label: str, y_label: str, title: str) -> None:
     """
     Make a histogram with the given data.
@@ -75,7 +79,6 @@ def plot_histogram(data: list[list[int]], hist_name: str, x_label: str, y_label:
     - y_label is a string representing the label for the y-axis.
     - title is a string representing the title of the histogram.
     """
-    
     plt.hist(data, color='#097a75')
     plt.xlabel(x_label)
     plt.ylabel(y_label)
@@ -89,7 +92,6 @@ def plot_boxplot_random(data: list[list[int]]) -> None:
     Preconditions:
     - data is a nested list with integers.
     """
-
     boxprops = {'color': 'black', 'linewidth': 1.5}
     whiskerprops = {'color': 'black', 'linewidth': 1.5}
     medianprops = {'color': 'black', 'linewidth': 1.5}
@@ -134,6 +136,7 @@ def print_summary_statistics(data: list[int], title: str) -> None:
     iqr_75 = np.percentile(data, 75)
     print(f"{title}: statistic: {statistic}, p_value: {p_value}, median: {median}, iqr_25: {iqr_25}, iqr_75: {iqr_75}")
 
+
 def plot_boxplot_hillclimber(data: list[list[int]]) -> None:
     """
     Makes a boxplot with the given data.
@@ -141,6 +144,45 @@ def plot_boxplot_hillclimber(data: list[list[int]]) -> None:
     - data is a nested list with integers.
     """
 
+    boxprops = {'color': 'black', 'linewidth': 1}
+    whiskerprops = {'color': 'black', 'linewidth': 1}
+    medianprops = {'color': 'black', 'linewidth': 1}
+    flierprops = {'marker': 'o', 'markeredgecolor': 'black', 'markerfacecolor': 'black'}
+
+    positions = [1, 2, 3, 4, 5, 6]
+
+    # Create the boxplots and get the box artists
+    boxplot = plt.boxplot(data, positions=positions, patch_artist=True,
+                          boxprops=boxprops, whiskerprops=whiskerprops,
+                          capprops=whiskerprops, medianprops=medianprops,
+                          flierprops=flierprops)
+
+    # Customize box colors using a colormap
+    cmap = plt.get_cmap('PRGn')
+    for box, color in zip(boxplot['boxes'], cmap(np.linspace(0, 1, len(positions)))):
+        box.set(facecolor=color)
+
+    plt.xlabel("Gameboard")
+    plt.ylabel("Moves")
+    plt.title("Hill Climber Algorithm")
+
+    # Customize x-axis ticks
+    x_ticks = positions
+    # x_tick_labels = ["1: 6", "2: 6", "3: 6", "4: 9", "5: 9", "6: 9", "7: 12"]
+    x_tick_labels = ["1: 6", "2: 6", "3: 6", "4: 9", "5: 9", "6: 9"]
+
+    # x_tick_labels = ["6x6_1", "6x6_2","9x9_4"]
+    plt.xticks(x_ticks, x_tick_labels)
+
+    plt.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
+    plt.savefig(f"data_images/boxplot_hillclimber", dpi=300, bbox_inches='tight')
+
+def plot_boxplot_hillclimber_6_9(data: list[list[int]]) -> None:
+    """
+    Makes a boxplot with the given data.
+    Preconditions:
+    - data is a nested list with integers.
+    """
     boxprops = {'color': 'black', 'linewidth': 1}
     whiskerprops = {'color': 'black', 'linewidth': 1}
     medianprops = {'color': 'black', 'linewidth': 1}
@@ -161,16 +203,21 @@ def plot_boxplot_hillclimber(data: list[list[int]]) -> None:
 
     plt.xlabel("Gameboard")
     plt.ylabel("Moves")
-    plt.title("Hillclimber Algoritme")
+    plt.title("Hill Climber Algorithm 9x9")
 
     # Customize x-axis ticks
     x_ticks = positions
     # x_tick_labels = ["1: 6", "2: 6", "3: 6", "4: 9", "5: 9", "6: 9", "7: 12"]
-    x_tick_labels = ["6x6_1", "6x6_2","9x9_4"]
-    plt.xticks(x_ticks, x_tick_labels)
+    x_tick_labels_6 = ["1: 6", "2: 6", "3: 6"]
+    x_tick_labels_9 = ["4: 9", "5: 9", "6: 9"]
+    plt.ylim(0,5000)
+
+    # x_tick_labels = ["6x6_1", "6x6_2","9x9_4"]
+    plt.xticks(x_ticks, x_tick_labels_9)
 
     plt.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
-    plt.savefig(f"data_images/boxplot_hillclimber", dpi=300, bbox_inches='tight')
+    plt.savefig(f"data_images/boxplot_hillclimber_9", dpi=300, bbox_inches='tight')
+
 
 def plot_boxplot_hill_rand(data_random: list[int], data_hillclimber: list[int], title: str) -> None:
     """
@@ -204,7 +251,7 @@ def plot_boxplot_hill_rand(data_random: list[int], data_hillclimber: list[int], 
 
     # Customize x-axis ticks
     x_ticks = positions
-    x_tick_labels = ["Random", "Hillclimber"]
+    x_tick_labels = ["Random", "Hill Climber"]
     plt.xticks(x_ticks, x_tick_labels)
 
     plt.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
@@ -215,7 +262,9 @@ if __name__=="__main__":
     # time, number_of_moves, number_of_states = load_random_data("6x6_1_random")
     
     time_random, number_of_moves_random, number_of_states_random = load_data_multiple(file_names_random)
-    time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber)
+    # time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber)
+    # time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber_6)
+    time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber_9)
 
     # print(f"time random: {time_random}")
     # print(f"number_of_moves: {number_of_moves_random}")
@@ -245,13 +294,13 @@ if __name__=="__main__":
 
 
     # Random histogrammen 
-    # plot_histogram(number_of_moves_random[0], "6x6_1_moves_random", "Number of moves", "Frequency", "Random Algoritme 6x6_1")
-    # plot_histogram(number_of_moves_random[1], "6x6_2_moves_random", "Number of moves", "Frequency", "Random Algoritme 6x6_2")
-    # plot_histogram(number_of_moves_random[2], "6x6_3_moves_random", "Number of moves", "Frequency", "Random Algoritme 6x6_3")
-    # plot_histogram(number_of_moves_random[3], "9x9_4_moves_random", "Number of moves", "Frequency", "Random Algoritme 9x9_4")
-    # plot_histogram(number_of_moves_random[4], "9x9_5_moves_random", "Number of moves", "Frequency", "Random Algoritme 9x9_5")
-    # plot_histogram(number_of_moves_random[5], "9x9_6_moves_random", "Number of moves", "Frequency", "Random Algoritme 9x9_6")
-    # plot_histogram(number_of_moves_random[6], "12x12_7_moves_random", "Number of moves", "Frequency", "Random Algoritme 12x12_7")
+    # plot_histogram(number_of_moves_random[0], "6x6_1_moves_random", "Number of moves", "Frequency", "Random Algorithm 1: 6")
+    # plot_histogram(number_of_moves_random[1], "6x6_2_moves_random", "Number of moves", "Frequency", "Random Algorithm 2: 6")
+    # plot_histogram(number_of_moves_random[2], "6x6_3_moves_random", "Number of moves", "Frequency", "Random Algorithm 3: 6")
+    # plot_histogram(number_of_moves_random[3], "9x9_4_moves_random", "Number of moves", "Frequency", "Random Algorithm 4: 9")
+    # plot_histogram(number_of_moves_random[4], "9x9_5_moves_random", "Number of moves", "Frequency", "Random Algorithm 5: 9")
+    # plot_histogram(number_of_moves_random[5], "9x9_6_moves_random", "Number of moves", "Frequency", "Random Algorithm 6: 9")
+    # plot_histogram(number_of_moves_random[6], "12x12_7_moves_random", "Number of moves", "Frequency", "Random Algorithm 7: 12")
 
 
     # Random boxplot
@@ -259,11 +308,13 @@ if __name__=="__main__":
 
     # Hillclimber boxplot
     # plot_boxplot_hillclimber(number_of_moves_hillclimber)
+    plot_boxplot_hillclimber_6_9(number_of_moves_hillclimber)
+
 
     # Random en Hillclimber boxplot
     # 6x6_1
-    # plot_boxplot_hill_rand(number_of_moves_random[0], number_of_moves_hillclimber[0], "Gameboard 6x6_1")
+    # plot_boxplot_hill_rand(number_of_moves_random[0], number_of_moves_hillclimber[0], "Gameboard 1: 6")
     # 6x6_2
-    # plot_boxplot_hill_rand(number_of_moves_random[1], number_of_moves_hillclimber[1], "Gameboard 6x6_2")
+    # plot_boxplot_hill_rand(number_of_moves_random[1], number_of_moves_hillclimber[1], "Gameboard 2: 6")
     # 9x9_4
-    # plot_boxplot_hill_rand(number_of_moves_random[3], number_of_moves_hillclimber[2], "Gameboard 9x9_4")
+    # plot_boxplot_hill_rand(number_of_moves_random[3], number_of_moves_hillclimber[2], "Gameboard 9: 4")

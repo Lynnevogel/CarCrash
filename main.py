@@ -46,11 +46,14 @@ if __name__ == "__main__":
             print(f"Number of moves: {number_of_moves}")
             print(f"Number of states: {number_of_states}")
             print(f"Solution: {solution}")
-            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, won, solution)
+            # output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, won, solution)
 
             ordered_solution = random.board.order_solution()
             print(f"Ordered solution: {ordered_solution}")
             print(f"Time: {elapsed_time}")
+
+            visualize_board(board.board, board.cars, save_path=f"code/visualization/board_images/board{n}.png")
+
 
 
 # ------------------------------------- Breadth-first search ------------------------------------------------------------------------
@@ -95,9 +98,8 @@ if __name__ == "__main__":
             # Get output
             n = i + 1
 
-            number_of_moves, number_of_states, solution, state_space = hill_climber.generate_output()
+            number_of_moves, number_of_states, solution = hill_climber.generate_output()
             print(f"number of moves: {number_of_moves}")
             print(f"number of states: {number_of_states}")
             print(f"solution: {solution}")
-            print(f"state space: {state_space}")
-            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, won, solution, state_space)
+            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, won, solution)
