@@ -56,9 +56,7 @@ class DepthFirst:
         """
         # Order solution
         solution = new_board.order_solution()
-        print(solution)
         move_count = len(solution)
-        print(move_count)
 
         if self.number_of_moves:
                 # Get lowest number of moves 
