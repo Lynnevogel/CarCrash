@@ -27,7 +27,6 @@ if __name__ == "__main__":
     game = game_name
     algorithm = algorithm
     dimension = board.dim 
-    won = 1
     
     for i in range(amount_of_times):
 # -------------------------------------- Random search ------------------------------------------------------------------------------
@@ -46,7 +45,7 @@ if __name__ == "__main__":
             print(f"Number of moves: {number_of_moves}")
             print(f"Number of states: {number_of_states}")
             print(f"Solution: {solution}")
-            # output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, won, solution)
+            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, solution)
 
             ordered_solution = random.board.order_solution()
             print(f"Ordered solution: {ordered_solution}")
@@ -70,7 +69,7 @@ if __name__ == "__main__":
             print(f"Number of moves: {number_of_moves}")
             print(f"Number of states: {number_of_states}")
             print(f"Solution: {solution}")
-            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, won, solution)
+            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, solution)
 
 # -------------------------------------- Depth-first search ------------------------------------------------------------------------
         elif algorithm == 'depthfirst':
@@ -86,7 +85,7 @@ if __name__ == "__main__":
             print(f"Number of moves: {number_of_moves}")
             print(f"Number of states: {number_of_states}")
             print(f"Solution: {solution}")
-            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, won, solution)
+            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, solution)
 
 # -------------------------------------- Hill Climber search ------------------------------------------------------------------------
         elif algorithm == 'hillclimber':
@@ -102,4 +101,4 @@ if __name__ == "__main__":
             print(f"number of moves: {number_of_moves}")
             print(f"number of states: {number_of_states}")
             print(f"solution: {solution}")
-            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, won, solution)
+            output_experiment(n, game, algorithm, dimension, elapsed_time, number_of_moves, number_of_states, solution)

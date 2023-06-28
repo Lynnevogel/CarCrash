@@ -3,22 +3,9 @@ from scipy import stats
 import matplotlib.pyplot as plt
 import numpy as np
 
-# # Test
-# data = [1, 2, 3, 3, 3, 4, 4, 5]
-
-# # mean
-# mean = np.mean(data)
-# # median
-# median = np.median(data)
-# # standard deviation
-# std_dev = np.std(data)
-# # interquartile range
-# iqr = np.percentile(data, 75) - np.percentile(data, 25)
-# # shapiro-wilk test
-# statistic, p_value = stats.shapiro(data)
 
 file_names_random = ["6x6_1_random", "6x6_2_random", "6x6_3_random", "9x9_4_random", "9x9_5_random", "9x9_6_random", "12x12_7_random"]
-file_names_hillclimber = ["6x6_1_hillclimber", "6x6_2_hillclimber", "6x6_3_hillclimber", "9x9_4_hillclimber", "9x9_5_hillclimber", "9x9_6_hillclimber"]
+file_names_hillclimber = ["6x6_1_hillclimber", "6x6_2_hillclimber", "6x6_3_hillclimber", "9x9_4_hillclimber", "9x9_5_hillclimber", "9x9_6_hillclimber", "12x12_7_hillclimber"]
 file_names_hillclimber_6 = ["6x6_1_hillclimber", "6x6_2_hillclimber", "6x6_3_hillclimber"]
 file_names_hillclimber_9 = ["9x9_4_hillclimber", "9x9_5_hillclimber", "9x9_6_hillclimber"]
 
@@ -149,7 +136,7 @@ def plot_boxplot_hillclimber(data: list[list[int]]) -> None:
     medianprops = {'color': 'black', 'linewidth': 1}
     flierprops = {'marker': 'o', 'markeredgecolor': 'black', 'markerfacecolor': 'black'}
 
-    positions = [1, 2, 3, 4, 5, 6]
+    positions = [1, 2, 3, 4, 5, 6, 7]
 
     # Create the boxplots and get the box artists
     boxplot = plt.boxplot(data, positions=positions, patch_artist=True,
@@ -168,8 +155,7 @@ def plot_boxplot_hillclimber(data: list[list[int]]) -> None:
 
     # Customize x-axis ticks
     x_ticks = positions
-    # x_tick_labels = ["1: 6", "2: 6", "3: 6", "4: 9", "5: 9", "6: 9", "7: 12"]
-    x_tick_labels = ["1: 6", "2: 6", "3: 6", "4: 9", "5: 9", "6: 9"]
+    x_tick_labels = ["1: 6", "2: 6", "3: 6", "4: 9", "5: 9", "6: 9", "7: 12"]
 
     # x_tick_labels = ["6x6_1", "6x6_2","9x9_4"]
     plt.xticks(x_ticks, x_tick_labels)
@@ -262,9 +248,9 @@ if __name__=="__main__":
     # time, number_of_moves, number_of_states = load_random_data("6x6_1_random")
     
     time_random, number_of_moves_random, number_of_states_random = load_data_multiple(file_names_random)
-    # time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber)
-    # time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber_6)
     time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber)
+    # time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber_6)
+    # time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber_9)
 
     # print(f"time random: {time_random}")
     # print(f"number_of_moves: {number_of_moves_random}")
@@ -313,7 +299,7 @@ if __name__=="__main__":
     # plot_boxplot_random(number_of_moves_random)
 
     # Hillclimber boxplot
-    # plot_boxplot_hillclimber(number_of_moves_hillclimber)
+    plot_boxplot_hillclimber(number_of_moves_hillclimber)
     # plot_boxplot_hillclimber_6_9(number_of_moves_hillclimber)
 
 
@@ -322,5 +308,11 @@ if __name__=="__main__":
     # plot_boxplot_hill_rand(number_of_moves_random[0], number_of_moves_hillclimber[0], "Gameboard 1: 6")
     # 6x6_2
     # plot_boxplot_hill_rand(number_of_moves_random[1], number_of_moves_hillclimber[1], "Gameboard 2: 6")
+    # 6x6_3
+    # plot_boxplot_hill_rand(number_of_moves_random[2], number_of_moves_hillclimber[2], "Gameboard 3: 6")
     # 9x9_4
-    # plot_boxplot_hill_rand(number_of_moves_random[3], number_of_moves_hillclimber[2], "Gameboard 9: 4")
+    # plot_boxplot_hill_rand(number_of_moves_random[3], number_of_moves_hillclimber[3], "Gameboard 9: 4")
+    # 9x9_5
+    # plot_boxplot_hill_rand(number_of_moves_random[4], number_of_moves_hillclimber[4], "Gameboard 9: 5")
+    # 9x9_6
+    plot_boxplot_hill_rand(number_of_moves_random[5], number_of_moves_hillclimber[5], "Gameboard 9: 6")
