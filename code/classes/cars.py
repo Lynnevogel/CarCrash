@@ -3,9 +3,9 @@ class Car:
         """
         Initializes a car object.
         Preconditions:
-            - car_name is a string.
-            - car_orientation is either "H" or "V".
-            - car_col, car_row and car_len are positive integers.
+        - car_name is a string.
+        - car_orientation is either "H" or "V".
+        - car_col, car_row and car_len are positive integers.
         """
         # Get car information
         self.car_name: str = car_name
@@ -20,7 +20,7 @@ class Car:
         """
         Returns a string representation of the car object.
         Postconditions:
-            - Returns a string representation of the car object.
+        - Returns a string representation of the car object.
         """
         return f"{self.car_name} + {self.car_orientation} + {self.car_len} + {self.car_coordinates}"
 
