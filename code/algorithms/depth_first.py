@@ -16,10 +16,10 @@ class DepthFirst:
         # Create the stack with the states
         self.states = [copy.deepcopy(self.board)]
         # Create archive
-        self.archive = {self.board.get_representation(self.board)}
+        self.archive = {self.board.get_representation(self.board, "depthfirst")}
         self.number_of_moves: list[int] = []
         # Create a set that stores the unique representations of all visited board states
-        self.all_states = {self.board.get_representation(self.board)}
+        self.all_states = {self.board.get_representation(self.board, "depthfirst")}
 
         # List to add depth when a winning configuration is found
         self.depth_list_won: list[int] = []
@@ -45,7 +45,7 @@ class DepthFirst:
         """
         if can_move:
             for move in moves:
-                 if move.get_representation(move) not in self.archive and len(move.move_set) < 100:
+                 if move.get_representation(move, "depthfirst") not in self.archive and len(move.move_set) < 100:
                     self.states.append(move)
 
     def check_solution(self, new_board: "Board") -> None:
@@ -81,7 +81,7 @@ class DepthFirst:
         while self.states:
             # Get new board state
             new_board = self.get_next_state()
-            new_board_representation = new_board.get_representation(new_board)
+            new_board_representation = new_board.get_representation(new_board, "depthfirst")
 
             # Add new state to archive
             self.archive.add(new_board_representation)

@@ -19,9 +19,9 @@ class HillClimber(BreadthFirst):
         self.all_random_states: set[str] = set()
         # Breadth first attributes
         self.states = [copy.deepcopy(self.starting_board)]
-        self.archive = {self.starting_board.get_representation(self.starting_board)}
+        self.archive = {self.starting_board.get_representation(self.starting_board, "hillclimber")}
         self.number_of_moves: list[int] = []
-        self.all_states = {self.starting_board.get_representation(self.starting_board)}
+        self.all_states = {self.starting_board.get_representation(self.starting_board, "hillclimber")}
         self.state_spaces: list[int] = []
         self.win_count = 0
         self.best_solution = []
@@ -74,7 +74,7 @@ class HillClimber(BreadthFirst):
             # loop through possibilities
             for move in moves:
                 # make a string of board
-                move_representation = move.get_representation_breadth(move)
+                move_representation = move.get_representation(move, "hillclimber")
                 valid_move = self.check_move_in_all_random_states(move_representation)
                 if move_representation not in self.archive and valid_move:
                     # add to states
@@ -92,7 +92,7 @@ class HillClimber(BreadthFirst):
         """
         return move_representation in self.all_random_states
 
-    def run_iterations(self, iterations: int) -> None:
+    def run_iterations(self) -> None:
         """
         Iterates the random solutions and breadth first search
         an x amount of times.
@@ -101,34 +101,13 @@ class HillClimber(BreadthFirst):
         """
 
         # repeat for amount of iterations
-        for _ in range(iterations):
-            self.generate_random_solutions(3)
-            # add state so breadth first can start
-            self.states = [copy.deepcopy(self.starting_board)]
-            self.archive = {self.starting_board.get_representation(self.starting_board)}
-            self.all_states = {self.starting_board.get_representation(self.starting_board)}
-            # start breadth-first search
-            best_solution = self.go()
-            self.check_for_best_solution(best_solution)
-            # Add statespace of solution to list
-            self.state_spaces.append(len(self.all_random_states))
+        self.generate_random_solutions(3)
+        # start breadth-first search
+        best_solution = self.go()
+        # Add statespace of solution to list
+        self.state_spaces.append(len(self.all_random_states))
 
-    def check_for_best_solution(self, solution: list[list[str | int]]) -> None:
-        """
-        Checks if new solution if better than previous best solution.
-        Precondition:
-        - solution is a nested list with a string and an integer
-        """
-        # get length of solutions
-        current_best_solution = len(self.best_solution)
-        new_solution = len(solution)
-
-        # compare solutions and change new best solution
-        if new_solution < current_best_solution:
-            self.best_solution = solution
-            self.number_of_moves = len(new_solution)
-
-    def generate_output(self) -> tuple[int, int, list[list[str | int]], int]:
+    def generate_output(self) -> tuple[int, int, list[list[str|int]], int]:
         """
         Return generated ouput from every run.
         Postconditions:

@@ -14,10 +14,10 @@ class BreadthFirst(DepthFirst):
         # Create the stack with the states
         self.states = [copy.deepcopy(self.board)]
         # Create archive
-        self.archive = {self.board.get_representation(self.board)}
+        self.archive = {self.board.get_representation(self.board, "breadthfirst")}
         self.number_of_moves = []
         # Create a set that stores the unique representations of all visited board states
-        self.all_states = {self.board.get_representation(self.board)}
+        self.all_states = {self.board.get_representation(self.board, "breadthfirst")}
 
         self.win_count = 0
         # List to add best solution
@@ -67,7 +67,7 @@ class BreadthFirst(DepthFirst):
         """
         if can_move:
             for move in moves:
-                move_representation = move.get_representation_breadth(move)
+                move_representation = move.get_representation(move, "breadthfirst")
                 if move_representation not in self.archive:
                     self.states.append(move)
                     self.archive.add(move_representation)
@@ -82,8 +82,8 @@ class BreadthFirst(DepthFirst):
         while self.states:
             # Get new board state
             new_board = self.get_next_state()
-            new_board_representation = new_board.get_representation(new_board)
-
+            new_board_representation = new_board.get_representation(new_board, "breadthfirst")
+            
             # Add new state to archive
             self.archive.add(new_board_representation)
             self.all_states.add(new_board_representation)

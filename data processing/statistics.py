@@ -75,6 +75,7 @@ def plot_histogram(data: list[list[int]], hist_name: str, x_label: str, y_label:
     - y_label is a string representing the label for the y-axis.
     - title is a string representing the title of the histogram.
     """
+    
     plt.hist(data, color='#097a75')
     plt.xlabel(x_label)
     plt.ylabel(y_label)
@@ -103,7 +104,7 @@ def plot_boxplot_random(data: list[list[int]]) -> None:
                           flierprops=flierprops)
 
     # Customize box colors using a colormap
-    cmap = plt.get_cmap('Spectral')
+    cmap = plt.get_cmap('PRGn')
     for box, color in zip(boxplot['boxes'], cmap(np.linspace(0, 1, len(positions)))):
         box.set(facecolor=color)
 
@@ -113,7 +114,7 @@ def plot_boxplot_random(data: list[list[int]]) -> None:
 
     # Customize x-axis ticks
     x_ticks = positions
-    x_tick_labels = ["1 (6)", "2 (6)", "3 (6)", "4 (9)", "5 (9)", "6 (9)", "7 (12)"]
+    x_tick_labels = ["1: 6", "2: 6", "3: 6", "4: 9", "5: 9", "6: 9", "7: 12"]
     plt.xticks(x_ticks, x_tick_labels)
 
     plt.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
@@ -154,7 +155,7 @@ def plot_boxplot_hillclimber(data: list[list[int]]) -> None:
                           flierprops=flierprops)
 
     # Customize box colors using a colormap
-    cmap = plt.get_cmap('Spectral')
+    cmap = plt.get_cmap('PRGn')
     for box, color in zip(boxplot['boxes'], cmap(np.linspace(0, 1, len(positions)))):
         box.set(facecolor=color)
 
@@ -164,6 +165,7 @@ def plot_boxplot_hillclimber(data: list[list[int]]) -> None:
 
     # Customize x-axis ticks
     x_ticks = positions
+    # x_tick_labels = ["1: 6", "2: 6", "3: 6", "4: 9", "5: 9", "6: 9", "7: 12"]
     x_tick_labels = ["6x6_1", "6x6_2","9x9_4"]
     plt.xticks(x_ticks, x_tick_labels)
 
@@ -192,7 +194,7 @@ def plot_boxplot_hill_rand(data_random: list[int], data_hillclimber: list[int], 
                           flierprops=flierprops)
 
     # Customize box colors using a colormap
-    cmap = plt.get_cmap('Spectral')
+    cmap = plt.get_cmap('PRGn')
     for box, color in zip(boxplot['boxes'], cmap(np.linspace(0, 1, len(positions)))):
         box.set(facecolor=color)
 

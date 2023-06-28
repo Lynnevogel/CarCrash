@@ -35,43 +35,29 @@ class Board:
     
     def __repr__(self) -> str:
         return f"{self.print_board()}"
-
-    def get_representation(self, board: "Board") -> str:
+    
+    def get_representation(self, board: "Board", algorithm) -> str:
         """
         Get the representation of the board.
         Preconditions:
         - board is a Board object containing the current board.
         Postconditions:
-        - A string representation of the board and the length of the solution is returned.
+        - A string representation of the board is returned. When the algorithm is Depth First, 
+        a number is added to the end of the string representation to make it (more) unique.
         """
-        # Translate list to a string
-        representation = re.sub(r"[^\w-]", "", str(board))
-        representation = re.sub(r"'", "", representation)
-        return representation+str(len(board.directions))
-    
-    def get_representation_breadth(self, board: "Board") -> str:
-        """
-        Get the representation of the board in breadth first search.
-        Preconditions:
-        - board is a Board object containing the current board.
-        Postconditions:
-        - A string representation of the board is returned.
-        """
-        # Translate list to a string
-        representation = re.sub(r"[^\w-]", "", str(board))
-        representation = re.sub(r"'", "", representation)
-        return representation
+        representation = ''.join(''.join(row) for row in board.board)
+        if algorithm == "depthfirst":
+            return representation+str(len(board.directions))
+        else:
+            return representation
 
     def load_board(self) -> list[list[str]]:
         """
-        Loads the initial empty board.
+        Loads the initial empty board with "-" as the empty spots.
         Postconditions:
         - The board is initialized with empty spaces ('-') in each cell.
         """
-        # Loop through board
-        for row in range(self.dim):
-            for col in range(self.dim):
-                self.board[row][col] = "-"
+        self.board = [["-" for _ in range(self.dim)] for _ in range(self.dim)]
         return self.board
 
     def print_board(self) -> list[list[str]]:
@@ -314,7 +300,7 @@ class Board:
         - board is a Board object.
         - solution is a nested list with strings containing the movements to solve the board.
         """
-        board.set_boards = {board.get_representation_breadth(board)}
+        board.set_boards = {board.get_representation(board, "breadthfirst")}
         counter = 0
         for move in solution:
             counter += 1
@@ -377,7 +363,7 @@ class Board:
             board.load_board()
             board.add_cars(board.board)
             # Add to set
-            board.set_boards.add(board.get_representation_breadth(board))
+            board.set_boards.add(board.get_representation(board, "breadthfirst"))
 
         return board.set_boards
 
@@ -408,6 +394,16 @@ class Board:
         ordered_strings = sorted(self.move_set, key=lambda s: int(s.split(" ")[-1]))
         return ordered_strings
 
+    def order_solution(self) -> list[list[str|int]]:
+        """
+        Orders the solution based on the move_set.
+        Postcondition:
+        - Returns a list of lists, where each sublist contains the car and its corresponding direction as [car, direction].
+        """
+        ordered_solution = self.order_strings_by_id()
+        solution = self.make_solution(ordered_solution)
+        return solution
+    
     def make_solution(self, ordered_solution: list[str]) -> list[list[str|int]]:
         """
         Creates a solution list from the ordered_solution list.
@@ -430,25 +426,3 @@ class Board:
         ordered_solution = self.order_strings_by_id()
         solution = self.make_solution(ordered_solution)
         return solution
-    
-    def save_move_set(self, filename: str) -> None:
-        """
-        Saves the move set data to a file using pickle.
-        Preconditions:
-        - filename is a string representing the name of the file to save.
-        """
-        with open(filename, 'wb') as file:
-            pickle.dump(self.move_set, file)
-
-        print(f"Move set saved to {filename}.")
-
-    def load_move_set(self, filename: str) -> None:
-        """
-        Loads the move set data from a file using pickle.
-        Preconditions:
-        - filename is a string representing the name of the file to load.
-        """
-        with open(filename, 'rb') as file:
-            self.move_set = pickle.load(file)
-
-        print(f"Move set loaded from {filename}.")
