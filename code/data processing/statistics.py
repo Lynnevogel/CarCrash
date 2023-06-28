@@ -163,6 +163,7 @@ def plot_boxplot_hillclimber(data: list[list[int]]) -> None:
     plt.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
     plt.savefig(f"data_images/boxplot_hillclimber", dpi=300, bbox_inches='tight')
 
+
 def plot_boxplot_hillclimber_6_9(data: list[list[int]]) -> None:
     """
     Makes a boxplot with the given data.
@@ -244,75 +245,66 @@ def plot_boxplot_hill_rand(data_random: list[int], data_hillclimber: list[int], 
     plt.savefig(f"data_images/boxplot_{title}", dpi=300, bbox_inches='tight')
 
 
-if __name__=="__main__":
-    # time, number_of_moves, number_of_states = load_random_data("6x6_1_random")
-    
+if __name__=="__main__":    
     time_random, number_of_moves_random, number_of_states_random = load_data_multiple(file_names_random)
     time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber)
-    # time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber_6)
-    # time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber_9)
-
-    # print(f"time random: {time_random}")
-    # print(f"number_of_moves: {number_of_moves_random}")
-    # print(f"number_of_states: {number_of_states_random}")
+    time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber_6)
+    time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber_9)
 
     # Random 6x6_1 moves 
-    # print_summary_statistics(number_of_moves_random[0], "6x6_1_random")
+    print_summary_statistics(number_of_moves_random[0], "6x6_1_random")
     # Random 6x6_2 moves 
-    # print_summary_statistics(number_of_moves_random[1], "6x6_2_random")
+    print_summary_statistics(number_of_moves_random[1], "6x6_2_random")
     # Random 6x6_3 moves 
-    # print_summary_statistics(number_of_moves_random[2], "6x6_3_random")
+    print_summary_statistics(number_of_moves_random[2], "6x6_3_random")
     # Random 9x9_4 moves 
-    # print_summary_statistics(number_of_moves_random[3], "9x9_4_random")
+    print_summary_statistics(number_of_moves_random[3], "9x9_4_random")
     # Random 9x9_5 moves 
-    # print_summary_statistics(number_of_moves_random[4], "9x9_5_random")
+    print_summary_statistics(number_of_moves_random[4], "9x9_5_random")
     # Random 9x9_6 moves 
-    # print_summary_statistics(number_of_moves_random[5], "9x9_6_random")
+    print_summary_statistics(number_of_moves_random[5], "9x9_6_random")
     # Random 12x12_7 moves 
-    # print_summary_statistics(number_of_moves_random[6], "12x12_7_random")
+    print_summary_statistics(number_of_moves_random[6], "12x12_7_random")
 
     # Hillclimber 6x6_1 moves 
-    # print_summary_statistics(number_of_moves_hillclimber[0], "6x6_1_hillclimber")
+    print_summary_statistics(number_of_moves_hillclimber[0], "6x6_1_hillclimber")
     # Hillclimber 6x6_2 moves 
-    # print_summary_statistics(number_of_moves_hillclimber[1], "6x6_2_hillclimber")
+    print_summary_statistics(number_of_moves_hillclimber[1], "6x6_2_hillclimber")
     # Hillclimber 6x6_3 moves 
-    # print_summary_statistics(number_of_moves_hillclimber[2], "6x6_3_hillclimber")
+    print_summary_statistics(number_of_moves_hillclimber[2], "6x6_3_hillclimber")
     # Hillclimber 9x9_4 moves 
-    # print_summary_statistics(number_of_moves_hillclimber[3], "9x9_4_hillclimber")
+    print_summary_statistics(number_of_moves_hillclimber[3], "9x9_4_hillclimber")
     # Hillclimber 9x9_5 moves 
-    # print_summary_statistics(number_of_moves_hillclimber[4], "9x9_5_hillclimber")
+    print_summary_statistics(number_of_moves_hillclimber[4], "9x9_5_hillclimber")
     # Hillclimber 9x9_6 moves 
-    # print_summary_statistics(number_of_moves_hillclimber[5], "9x9_6_hillclimber")
-
+    print_summary_statistics(number_of_moves_hillclimber[5], "9x9_6_hillclimber")
 
     # Random histogrammen 
-    # plot_histogram(number_of_moves_random[0], "6x6_1_moves_random", "Number of moves", "Frequency", "Random Algorithm 1: 6")
-    # plot_histogram(number_of_moves_random[1], "6x6_2_moves_random", "Number of moves", "Frequency", "Random Algorithm 2: 6")
-    # plot_histogram(number_of_moves_random[2], "6x6_3_moves_random", "Number of moves", "Frequency", "Random Algorithm 3: 6")
-    # plot_histogram(number_of_moves_random[3], "9x9_4_moves_random", "Number of moves", "Frequency", "Random Algorithm 4: 9")
-    # plot_histogram(number_of_moves_random[4], "9x9_5_moves_random", "Number of moves", "Frequency", "Random Algorithm 5: 9")
-    # plot_histogram(number_of_moves_random[5], "9x9_6_moves_random", "Number of moves", "Frequency", "Random Algorithm 6: 9")
-    # plot_histogram(number_of_moves_random[6], "12x12_7_moves_random", "Number of moves", "Frequency", "Random Algorithm 7: 12")
-
+    plot_histogram(number_of_moves_random[0], "6x6_1_moves_random", "Number of moves", "Frequency", "Random Algorithm 1: 6")
+    plot_histogram(number_of_moves_random[1], "6x6_2_moves_random", "Number of moves", "Frequency", "Random Algorithm 2: 6")
+    plot_histogram(number_of_moves_random[2], "6x6_3_moves_random", "Number of moves", "Frequency", "Random Algorithm 3: 6")
+    plot_histogram(number_of_moves_random[3], "9x9_4_moves_random", "Number of moves", "Frequency", "Random Algorithm 4: 9")
+    plot_histogram(number_of_moves_random[4], "9x9_5_moves_random", "Number of moves", "Frequency", "Random Algorithm 5: 9")
+    plot_histogram(number_of_moves_random[5], "9x9_6_moves_random", "Number of moves", "Frequency", "Random Algorithm 6: 9")
+    plot_histogram(number_of_moves_random[6], "12x12_7_moves_random", "Number of moves", "Frequency", "Random Algorithm 7: 12")
 
     # Random boxplot
-    # plot_boxplot_random(number_of_moves_random)
+    plot_boxplot_random(number_of_moves_random)
 
     # Hillclimber boxplot
     plot_boxplot_hillclimber(number_of_moves_hillclimber)
-    # plot_boxplot_hillclimber_6_9(number_of_moves_hillclimber)
-
+    plot_boxplot_hillclimber_6_9(number_of_moves_hillclimber)
 
     # Random en Hillclimber boxplot
     # 6x6_1
-    # plot_boxplot_hill_rand(number_of_moves_random[0], number_of_moves_hillclimber[0], "Gameboard 1: 6")
+    plot_boxplot_hill_rand(number_of_moves_random[0], number_of_moves_hillclimber[0], "Gameboard 1: 6")
     # 6x6_2
-    # plot_boxplot_hill_rand(number_of_moves_random[1], number_of_moves_hillclimber[1], "Gameboard 2: 6")
+    plot_boxplot_hill_rand(number_of_moves_random[1], number_of_moves_hillclimber[1], "Gameboard 2: 6")
     # 6x6_3
-    # plot_boxplot_hill_rand(number_of_moves_random[2], number_of_moves_hillclimber[2], "Gameboard 3: 6")
+    plot_boxplot_hill_rand(number_of_moves_random[2], number_of_moves_hillclimber[2], "Gameboard 3: 6")
     # 9x9_4
-    # plot_boxplot_hill_rand(number_of_moves_random[3], number_of_moves_hillclimber[3], "Gameboard 9: 4")
+    plot_boxplot_hill_rand(number_of_moves_random[3], number_of_moves_hillclimber[3], "Gameboard 9: 4")
     # 9x9_5
-    # plot_boxplot_hill_rand(number_of_moves_random[4], number_of_moves_hillclimber[4], "Gameboard 9: 5")
+    plot_boxplot_hill_rand(number_of_moves_random[4], number_of_moves_hillclimber[4], "Gameboard 9: 5")
     # 9x9_6
     plot_boxplot_hill_rand(number_of_moves_random[5], number_of_moves_hillclimber[5], "Gameboard 9: 6")

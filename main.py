@@ -5,7 +5,6 @@ from code.algorithms.breadth_first import BreadthFirst
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.hillclimber import HillClimber
 from experiment import start_time, end_time, output_experiment
-
 from sys import argv
 
 
@@ -52,8 +51,6 @@ if __name__ == "__main__":
             print(f"Time: {elapsed_time}")
 
             visualize_board(board.board, board.cars, save_path=f"code/visualization/board_images/board{n}.png")
-
-
 
 # ------------------------------------- Breadth-first search ------------------------------------------------------------------------
         elif algorithm == 'breadthfirst':
