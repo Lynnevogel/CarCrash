@@ -188,7 +188,7 @@ def plot_boxplot_hillclimber_6_9(data: list[list[int]]) -> None:
     medianprops = {'color': 'black', 'linewidth': 1}
     flierprops = {'marker': 'o', 'markeredgecolor': 'black', 'markerfacecolor': 'black'}
 
-    positions = [1, 2, 3]
+    positions = [1, 2, 3, 4, 5, 6]
 
     # Create the boxplots and get the box artists
     boxplot = plt.boxplot(data, positions=positions, patch_artist=True,
@@ -203,20 +203,20 @@ def plot_boxplot_hillclimber_6_9(data: list[list[int]]) -> None:
 
     plt.xlabel("Gameboard")
     plt.ylabel("Moves")
-    plt.title("Hill Climber Algorithm 9x9")
+    plt.title("Hill Climber Algorithm")
 
     # Customize x-axis ticks
     x_ticks = positions
-    # x_tick_labels = ["1: 6", "2: 6", "3: 6", "4: 9", "5: 9", "6: 9", "7: 12"]
-    x_tick_labels_6 = ["1: 6", "2: 6", "3: 6"]
-    x_tick_labels_9 = ["4: 9", "5: 9", "6: 9"]
+    x_tick_labels = ["1: 6", "2: 6", "3: 6", "4: 9", "5: 9", "6: 9"]
+    # x_tick_labels_6 = ["1: 6", "2: 6", "3: 6"]
+    # x_tick_labels_9 = ["4: 9", "5: 9", "6: 9"]
     plt.ylim(0,5000)
 
     # x_tick_labels = ["6x6_1", "6x6_2","9x9_4"]
-    plt.xticks(x_ticks, x_tick_labels_9)
+    plt.xticks(x_ticks, x_tick_labels)
 
     plt.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
-    plt.savefig(f"data_images/boxplot_hillclimber_9", dpi=300, bbox_inches='tight')
+    plt.savefig(f"data_images/boxplot_hillclimber", dpi=300, bbox_inches='tight')
 
 
 def plot_boxplot_hill_rand(data_random: list[int], data_hillclimber: list[int], title: str) -> None:
@@ -264,7 +264,7 @@ if __name__=="__main__":
     time_random, number_of_moves_random, number_of_states_random = load_data_multiple(file_names_random)
     # time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber)
     # time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber_6)
-    time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber_9)
+    time_hillclimber, number_of_moves_hillclimber, number_of_states_hillclimber = load_data_multiple(file_names_hillclimber)
 
     # print(f"time random: {time_random}")
     # print(f"number_of_moves: {number_of_moves_random}")
@@ -289,8 +289,14 @@ if __name__=="__main__":
     # print_summary_statistics(number_of_moves_hillclimber[0], "6x6_1_hillclimber")
     # Hillclimber 6x6_2 moves 
     # print_summary_statistics(number_of_moves_hillclimber[1], "6x6_2_hillclimber")
+    # Hillclimber 6x6_3 moves 
+    # print_summary_statistics(number_of_moves_hillclimber[2], "6x6_3_hillclimber")
     # Hillclimber 9x9_4 moves 
-    # print_summary_statistics(number_of_moves_hillclimber[2], "9x9_4_hillclimber")
+    # print_summary_statistics(number_of_moves_hillclimber[3], "9x9_4_hillclimber")
+    # Hillclimber 9x9_5 moves 
+    # print_summary_statistics(number_of_moves_hillclimber[4], "9x9_5_hillclimber")
+    # Hillclimber 9x9_6 moves 
+    # print_summary_statistics(number_of_moves_hillclimber[5], "9x9_6_hillclimber")
 
 
     # Random histogrammen 
@@ -308,7 +314,7 @@ if __name__=="__main__":
 
     # Hillclimber boxplot
     # plot_boxplot_hillclimber(number_of_moves_hillclimber)
-    plot_boxplot_hillclimber_6_9(number_of_moves_hillclimber)
+    # plot_boxplot_hillclimber_6_9(number_of_moves_hillclimber)
 
 
     # Random en Hillclimber boxplot

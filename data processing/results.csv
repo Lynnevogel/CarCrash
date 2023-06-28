@@ -10,3 +10,7 @@ Moves random:
 Moves hillclimber: 
 6x6_1_hillclimber: statistic: 0.7630134224891663, p_value: 0.007670536637306213, median: 34.0, iqr_25: 34.0, iqr_75: 35.0
 6x6_2_hillclimber: statistic: 0.7808946967124939, p_value: 0.00848899781703949, median: 26.5, iqr_25: 26.0, iqr_75: 27.0
+6x6_3_hillclimber: statistic: 0.728634238243103, p_value: 0.02385682798922062, median: 79.5, iqr_25: 79.0, iqr_75: 80.0
+9x9_4_hillclimber: statistic: 0.8471049070358276, p_value: 0.2327380500806404, median: 97.0, iqr_25: 93.5, iqr_75: 120.0
+9x9_5_hillclimber: statistic: 0.8086906671524048, p_value: 0.13541927986286117, median: 460.0, iqr_25: 422.5, iqr_75: 898.5
+9x9_6_hillclimber: statistic: 0.9669433236122131, p_value: 0.8713085055351257, median: 2568.5, iqr_25: 2214.25, iqr_75: 3109.5
